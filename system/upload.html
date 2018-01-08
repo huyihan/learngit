@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+	var data={
+		'weid':'4',
+    	'storeid':'1'
+	}
+	$.ajax({
+		type:"post",
+		url:"http://101.132.109.253:8881/index.php/Index/good/index",
+		data:data,
+		async:true,
+		success:function(info){
+			console.log(info);
+		}
+	});
+</script>

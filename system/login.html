@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta id="i18n_pagename" content="strings">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>登录</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<style>
+			body{
+				width:100%;
+				height:100%;
+				background:url(img/login_bg.png) no-repeat center;
+				background-size:cover;
+				position: relative;
+			}
+			.formWrap{
+				width:4.10rem;
+				height:3.00rem;
+				background:transparent;
+				position:fixed;
+				top:50%;
+				left:50%;
+				margin-left:-2.05rem;
+				margin-top:-1.50rem;
+				border-radius: .05rem;
+			}
+			.formWrap input{
+				width:100%;
+				height:.55rem;
+				display:block;
+				border:solid .02rem #fff;
+				border-radius:.05rem;
+				margin-bottom:.21rem;
+				font-size:.23rem;
+				color:#fff;
+				padding-left:.65rem;
+				font-family: "PingFang SC";
+			}
+		
+			.formWrap input.active{
+				border:solid .02rem #ffd800;
+			}
+			.formWrap .userInput{
+				background:rgba(146,146,146,0.45) url(img/icon_user.png) no-repeat .15rem center;
+			}
+			.formWrap .passwordInput{
+				background:rgba(146,146,146,0.45) url(img/icon_psd.png) no-repeat .15rem center;
+			}
+			.formWrap .submitBtn{
+				width:100%;
+				height:.58rem;
+				line-height: .58rem;
+				display:block;
+				border-radius:.05rem;
+				margin-bottom:.21rem;
+				border:none;
+				outline:none;
+				background: #ffe401;
+				font-size:.23rem;
+				color:#52416f;
+				margin-top:.46rem;
+			}
+			
+			.formWrap input::-webkit-input-placeholder{
+				color:#fff;
+			}
+		　	.formWrap input::-moz-placeholder{ 
+		　　		color:#fff;
+		　　	}
+		　　	.formWrap input::-moz-placeholder{ 
+		　　		color:#fff;
+		　　	}
+		　　	.formWrap input::-ms-input-placeholder{ 
+		　　		color:#fff;
+		　　	}
+		</style>
+	</head>
+	<body>
+		<!--<div id="container" data-role="page">
+			<div class = "formWrap">
+				<lable>
+					<input type = "text" selectname="userPlaceholder" selectattr="placeholder" name = "userInput" class = "i18n-input userInput" />
+				</lable>
+				<lable>
+					<input type = "text" selectname="passwordPlaceholder" selectattr="placeholder" name = "passwordInput" class = "i18n-input passwordInput"/>
+				</lable>
+				<button class = "submitBtn i18n" iname = "loginmsg">
+					<a href = "load.html"></a>
+				</button>
+				<button class = "submitBtn" id = "submitBtn">
+					<a href = "load.html">登录</a>
+				</button>
+			</div>
+			
+			
+		</div>
+		-->
+		<div id="container" data-role="page">
+			<div class = "formWrap">
+				<lable>
+					<input type = "text" placeholder="请输入用户名" name = "userInput" class = "userInput" id = "username"/>
+				</lable>
+				<lable>
+					<input type = "text" placeholder="请输入密码" name = "passwordInput" class = "passwordInput" id = "password"/>
+				</lable>
+				<button class = "submitBtn" id = "submitBtn">
+					<a>登录</a>
+				</button>
+			</div>
+			
+			
+		</div>
+		
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript">
+	$('input').on('focus',function(){
+		$(this).addClass('active');
+	})
+	$('input').on('blur',function(){
+		$(this).removeClass('active');
+	})
+	$('#submitBtn').on('click',function(){
+		/*var loginData = {
+			'username':$('#username').val(),
+			'password':$('#password').val()
+		}*/
+		var loginData = {
+			'username':'测试',
+			'password':'123456'
+		}
+		$.ajax({
+			type:"post",
+			url:"http://101.132.109.253:8881/index.php/Index/login/login",
+			data:loginData,
+			success:function(info){
+				console.log(info)
+				if(info.code==0){
+					//window.location.href = "index00.html";
+					window.localStorage.setItem('storeid',info.data.storeid);
+					window.localStorage.setItem('weid',info.data.weid);
+					
+				}else if(info.code==1){
+					var mask = new mask();
+					mask.show({
+						noticeMsg:'info.message',
+						submitCallback:function(){
+							
+						},
+						cancelCallback:function(){
+							
+						}
+					});
+				}
+			}
+		});
+	})
+	
+	
+	
+	
+</script>
+<!--<script type="text/javascript" src="plugin/jquery-i18n-properties-master/js/jquery.i18n.properties.js" ></script>-->
+<!--<script src="plugin/jquery-i18n-properties-master/js/language.js"></script>-->

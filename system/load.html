@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+	</head>
+	<style>
+		main{
+			background: url(img/load.png) no-repeat center;
+			background-size:cover;
+		}
+	</style>
+	<body>
+		<main data-role = "content">
+			<!--<header class = "headerWrap"></header>-->
+		</main>
+		<div class = "menuWrap"></div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
+<script>
+	template()
+	//window.location.href="index00.html";
+	
+	/*menu_id:1 冬季菜单  menu_id:14 夏季菜单*/
+	
+	db.transaction(function(context){
+		context.executeSql('CREATE TABLE IF NOT EXISTS menuidTable(menu_id unique)',[]);
+		context.executeSql('INSERT OR REPLACE INTO menuidTable VALUES(?)',['1']);
+	})
+	
+	
+	var data={
+		'weid':'4',
+    	'storeid':'1'
+	}
+	
+	/*餐桌区域*/
+	comm.getAjax('/tablezone/index',data,tablezone);
+	
+	function tablezone(info){
+		console.log(info);
+		if(info.code!=0){
+			return;
+		}
+		var len = info.data.length;
+		var tablezoneData = info.data;
+		db.transaction(function(context){
+			
+			context.executeSql('CREATE TABLE IF NOT EXISTS tablezoneTable(dateline,displayorder,id unique,limit_price,reservation_price,service_rate,status,storeid,table_count,title,weid)',[],function(tx,result){
+				console.log(result);
+			},function(tx,result){
+				console.log(result);
+			});
+			
+			
+			for(var i = 0; i < len; i++){
+				console.log(tablezoneData[i].dateline)
+					context.executeSql('INSERT OR REPLACE INTO tablezoneTable VALUES (?,?,?,?,?,?,?,?,?,?,?)',[tablezoneData[i].dateline,tablezoneData[i].displayorder,tablezoneData[i].id,tablezoneData[i].limit_price,tablezoneData[i].reservation_price,tablezoneData[i].service_rate,tablezoneData[i].status,tablezoneData[i].storeid,tablezoneData[i].table_count,tablezoneData[i].title,tablezoneData[i].weid],function(tx,result){
+						//console.log(result)
+					},function(tx,result){
+						console.log(result)
+					})
+				}
+		})
+		
+	}
+	
+	
+	/*商品列表*/
+	comm.getAjax('/good/index',data,good);
+	function good(info){
+		console.log(info);
+		if(info.code!=0){
+			return;
+		}
+		var len = info.data.length;
+		console.log(info)
+		var goodData = info.data;
+		db.transaction(function(context){
+			context.executeSql('CREATE TABLE IF NOT EXISTS goodTable(id unique,marketprice,number,thumb,title)',[],function(tx,result){
+				//console.log(result);
+			},function(tx,result){
+				console.log(result);
+			});
+			for(var i = 0; i < len; i++){
+					context.executeSql('INSERT OR REPLACE INTO goodTable VALUES (?,?,?,?,?)',[goodData[i].id, goodData[i].marketprice,goodData[i].number,goodData[i].thumb,goodData[i].title],function(tx,result){
+						//console.log(result)
+					},function(tx,result){
+						console.log(result);
+					})
+				}
+		})
+		
+	}
+	
+	/*会员列表*/
+	comm.getAjax('/fan/index',data,fan);
+	
+	function fan(info){
+		console.log(info);
+		if(info.code!=0){
+			return;
+		}
+		db.transaction(function(context){
+			context.executeSql('CREATE TABLE IF NOT EXISTS fanTable(id unique,headimg,nickname,sname,surname)',[],function(tx,result){
+			},function(tx,result){
+				console.log(result);
+			});
+			
+		})
+		db.transaction(function(context){
+			for(var i in info.data){
+				for(var j = 0; j < info.data[i].length;j++){
+					context.executeSql('INSERT OR REPLACE INTO fanTable VALUES (?,?,?,?,?)',[info.data[i][j].id, info.data[i][j].headimg,info.data[i][j].nickname,info.data[i][j].sname,info.data[i][j].surname],function(tx,result){
+						//console.log(result)
+					},function(tx,result){
+						console.log(result);
+					})
+				}
+			}
+		})
+		
+	}
+		/*var goodData = info.data;
+		db.transaction(function(context){
+			context.executeSql('CREATE TABLE IF NOT EXISTS goodTable(id unique,marketprice,number,thumb,title)',[],function(tx,result){
+				//console.log(result);
+			},function(tx,result){
+				console.log(result);
+			});
+			for(var i = 0; i < len; i++){
+					context.executeSql('INSERT OR REPLACE INTO goodTable VALUES (?,?,?,?,?)',[goodData[i].id, goodData[i].marketprice,goodData[i].number,goodData[i].thumb,goodData[i].title],function(tx,result){
+						//console.log(result)
+					},function(tx,result){
+						console.log(result);
+					})
+				}
+		})*/
+		
+		
+		var data={
+	    	'weid':'4',
+	    	'storeid':'1'
+	    }
+	    /*菜单列表*/
+	   	comm.getAjax('/menu/index',data,callback);
+		function callback(info){
+			console.log(info);
+			if(info.code!=1){
+	   			return;
+	   		}
+			var len = info.data.length;
+	   		var menuindexData = info.data;
+			db.transaction(function(context){
+				context.executeSql('CREATE TABLE IF NOT EXISTS menuindexTable(id unique,weid,storeid,title)',[],function(tx,result){
+					//console.log(result);
+				},function(tx,result){
+					console.log(result);
+				});
+				for(var i = 0; i < len; i++){
+				
+					context.executeSql('INSERT OR REPLACE INTO menuindexTable VALUES (?,?,?,?)',[menuindexData[i].id,menuindexData[i].weid,menuindexData[i].storeid,menuindexData[i].title],function(tx,result){
+						//console.log(result)
+					},function(tx,result){
+						console.log(result)
+					})
+					/*此处应为正在使用的菜单的id*/
+					getcategory({'menu_id':menuindexData[i].id});
+				}
+				
+			})
+	   		
+		}
+		//getcategory({'menu_id':'1'});
+		
+		/*菜单分类*/
+	   	function getcategory(data){
+		   	comm.getAjax('/menu/menu_category',data,callback1);
+			function callback1(info){
+				console.log(info);
+				if(info.code!=1){
+		   			return;
+		   		}
+				
+				if(info.data!=undefined){
+					
+					var len = info.data.length;
+			   		var menucategoryData = info.data;
+			   		for(var m = 0;m < len;m++){
+			   			//console.log(menucategoryData[m].menu_id);
+			   			var menucategoryStr = 'CREATE TABLE IF NOT EXISTS menucategoryTable'+menucategoryData[m].menu_id+'(num unique,id ,classfyId,_Title,menu_id,thumb,title,marketprice)';
+			   			
+			   			db.transaction(function(context){
+							context.executeSql(menucategoryStr,[],function(tx,result){
+								//console.log(result);
+							},function(tx,result){
+								console.log(result);
+							});
+					
+			   			})
+			   			getCategory(menucategoryData[m].id,menucategoryData[m].title,menucategoryData[m].menu_id)
+			   			
+			   			console.log(menucategoryData[m].goods)
+							//if(menucategoryData[m].goods){
+								
+						for(var i = 0; i < menucategoryData[m].goods.length; i++){
+							if(menucategoryData[m].goods[i]){
+								fun(menucategoryData[m].goods[i].id,menucategoryData[m].id,menucategoryData[m].title,menucategoryData[m].menu_id,menucategoryData[m].goods[i].thumb,menucategoryData[m].goods[i].title,menucategoryData[m].goods[i].marketprice) 
+							}
+							//
+						}
+									//console.log(menucategoryData[i].id)
+									//getgood({'categoey_id':menucategoryData[i].id});
+								
+							//}
+			   		}
+				}
+		   		
+			}
+		}
+	   	function getCategory(id,title,menu_id){
+	   		db.transaction(function(context){
+   				context.executeSql('CREATE TABLE IF NOT EXISTS categoryTable(id unique,menu_id,title)',[],function(tx,result){},function(tx,result){console.log(result)});
+   				context.executeSql('INSERT OR REPLACE INTO categoryTable VALUES (?,?,?)',[id,menu_id,title],function(tx,result){},function(tx,result){console.log(result)})
+   				
+   			})
+	   	}
+	   	
+	   	
+	   	
+	   
+	   function fun(id,classfyId,Title,menu_id,thumb,title,marketprice){
+	   	var num = classfyId+'_'+id;
+	   		db.transaction(function(context){
+				var menucategoryStr1 = 'INSERT OR REPLACE INTO menucategoryTable'+menu_id+' VALUES (?,?,?,?,?,?,?,?)';
+				//console.log(menucategoryData[m].goods);
+				context.executeSql(menucategoryStr1,[num,id,classfyId,Title,menu_id,thumb,title,marketprice],function(tx,result){
+				//console.log(result)
+				},function(tx,result){
+					console.log(result)
+				})
+			})
+			
+	   }
+	   
+	   
+	   /*菜单商品*/
+	   /*	function getgood(data){
+		   	comm.getAjax('/menu/category_good',data,callback);
+			function callback(info){
+				console.log(info);
+				if(info.code!=1){
+		   			return;
+		   		}else if(!info.data){
+		   			return
+		   		}
+				var len = info.data.length;
+		   		var menucategoryData = info.data;
+				db.transaction(function(context){
+					context.executeSql('CREATE TABLE IF NOT EXISTS menucategoryTable(id unique,menu_id,title,goods)',[],function(tx,result){
+						//console.log(result);
+					},function(tx,result){
+						console.log(result);
+					});
+				for(var i = 0; i < len; i++){
+						context.executeSql('INSERT OR REPLACE INTO menucategoryTable VALUES (?,?,?,?)',[menucategoryData[i].id,menucategoryData[i].menu_id,menucategoryData[i].title,menucategoryData[i].goods],function(tx,result){
+							//console.log(result)
+						},function(tx,result){
+							console.log(result)
+						})
+					}
+				})
+		   		
+			}
+		}*/
+	
+</script>

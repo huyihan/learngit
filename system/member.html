@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>会员</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/select.css" />
+	</head>
+	<style>
+		.headerIcon2{
+			background:url(img/icon--tj--0.png) no-repeat right center;
+		}
+		#container{
+			display:flex;
+			flex-flow:row;
+			background: url(img/BG--01.png) no-repeat center;
+			background-size:cover;
+			padding: .04rem .02rem .6rem .02rem;
+		}
+		#container>div{
+			border:solid .01rem #ffe243;
+			border-radius:.04rem;
+		}
+		#container ._left{
+			width:3.9rem;
+			margin-right:.10rem;
+			display:flex;
+			flex-flow:column;
+		}
+		._left .searchInput{
+			width:3.5rem;
+			height:.35rem;
+			border:solid .01rem #fff;
+			border-radius:.04rem;
+			font-size:.17rem;
+			color:#fff;
+			text-align:center;
+			margin:.21rem auto .1rem;
+		}
+		._left .memberList{
+			flex:1;
+			overflow-y: auto;
+		}
+		._left .memberList dt{
+			color:#241f32;
+			width:100%;
+			height:.17rem;
+			background:#7a7878;
+			font-size:.17rem;
+			line-height:.17rem;
+			padding-left:.1rem;
+		}
+		._left .memberList dd{
+			border-bottom:solid .01rem #fff;
+			padding:.12rem 0 .11rem .25rem;
+			overflow:hidden;
+			
+		}
+		
+		._left .memberList dd img{
+			width:.78rem;
+			height:.78rem;
+			border-radius:50%;
+			float:left;
+			margin-right:.22rem;
+		}
+		._left .memberList dd h3{
+			color:#fff;
+			font-size:.17rem;
+			line-height:.75rem;
+			
+		}
+		
+		
+		#container ._right{
+			flex:1;
+			color:#fff;
+		}
+		._right ul li{
+			padding:0 .15rem;
+			width:100%;
+			height:.45rem;
+			line-height:.45rem;
+			font-size:.21rem;
+			border-bottom:solid .01rem #fff;
+			display:flex;
+			flex-flow:row;
+			/*width:60%;*/
+		}
+		._right ul li span{
+			width:1.2rem;
+		}
+		._right ul li div{
+			flex:1;
+		}
+		._right ul li input{
+			flex:1;
+			height:.44rem;
+			line-height:.44rem;
+			color:#fff;
+			background:transparent;
+			border:none;
+			outline:none;
+		}
+		._right ul li .editBtn{
+			background:url(img/icon--bj.png) no-repeat center center;
+			flex:1;
+			margin-right:.1rem;
+		}
+		
+		._select::after{
+			right:7%;
+			top:.05rem;
+		}
+		#demo1{
+			text-align: center;
+			margin-right:30%;
+			line-height:.3rem;
+		}
+		
+		#demo2{
+			text-align: center;
+			margin-right:30%;
+			line-height:.3rem;
+		}
+		
+		/*新增会员*/
+		.addWrap{
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			background:transparent;
+			z-index:1;
+			display:flex;
+			flex-flow:row;
+			transform: translateX(-100%);
+			transition: all 300ms;
+		}
+		.addWrap.active{
+			transform:translateX(0);
+		}
+		.addWrap .empty{
+			width:3.9rem;
+			height:100%;
+			background:rgba(255,255,255,.3);
+		}
+		.addWrap .content{
+			flex:1;
+			border:solid .01rem #ffe243;
+			border-radius:.04rem;
+			margin:.02rem .04rem .43rem .1rem;
+			background:url(img/BG--01.png) no-repeat center;
+			color:#fff;
+		}
+		.content ul li{
+			padding:0 .15rem;
+			width:100%;
+			height:.45rem;
+			line-height:.45rem;
+			font-size:.21rem;
+			border-bottom:solid .01rem #fff;
+			display:flex;
+			flex-flow:row;
+		}
+		.content ul li span{
+			width:1.2rem;
+		}
+		.content ul li div{
+			flex:1;
+		}
+		.content ul li div input{
+			height:.44rem;
+			line-height:.44rem;
+			color:#fff;
+		}
+		.content ul li .editBtn{
+			background:url(img/icon--bj.png) no-repeat right center;
+			flex:1;
+			margin-right:.1rem;
+		}
+		
+		.list li button{
+			width:1.73rem;
+			height:.32rem;
+			border:none;
+			outline:none;
+			border-radius:.04rem;
+			color:#fff;
+		}
+		.list li button.cancelBtn{
+			background:#cdcdcd;
+			float:left;
+			margin-right:.39rem;
+		}
+		.list li button.submitBtn{
+			background:#f99a29;
+			float:right;
+			
+		}
+		
+		
+		.file {
+		    position: relative;
+		    display: inline-block;
+		    width:1.15rem;
+		    height:1.15rem;
+		    background: url(img/icon--cpsc.png) no-repeat center;
+		    border-radius: 4px;
+		    overflow: hidden;
+		    color: #1E88C7;
+		    text-decoration: none;
+		    text-indent: 0;
+		    line-height: 20px;
+		    
+		}
+		.file input {
+		    position: absolute;
+		    font-size: 100px;
+		    left: 0;
+		    top: 0;
+		    opacity: 0;
+		    width:1.3rem;
+		    height:1.3rem !important;
+		}
+		.file img{
+			width:100%;
+			height:100%;
+		}
+			
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<main id = "container">
+				<div class = "_left">
+					<input type = "text" placeholder="请输入会员名" class = "searchInput" name = "searchInputd">
+					<div class = "memberList">
+						<dl>
+							<dt>
+								A
+							</dt>
+							<dd>
+								<img src = "##" />
+								<h3>刘晓莉</h3>
+							</dd>
+						</dl>
+					</div>
+					
+				</div>
+				<div class = "_right">
+					<ul>
+						<!--<li><span></span><span class = "editBtn"></span></li>
+						<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
+						<li><span>名称</span><input type = "text"/></li>
+						<li><span>姓</span><input type = "text"/></li>
+						<li><span>证件编号</span><input type = "text"/></li>
+						<li style = "height:1.24rem;"><span>地址1</span><input type = "text"/></li>
+						<li><span>地址2</span><input type = "text"/></li>
+						<li><span>邮政编码</span><input type = "text"/></li>
+						<li><span>移动电话</span><input type = "text"/></li>
+						<li><span>住宅电话</span><input type = "text"/></li>
+						<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem #fff;background:rgb(255,255,255)"></li>-->
+					</ul>
+					
+				</div>
+				
+				<!--添加会员-->
+				<div class = "addWrap" id = "addWrap">
+					<div class = "empty"></div>
+					<div class = "content">
+						<ul class = "list">
+							<li><span>新客户详情</span></li>
+							<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo2" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
+							<li class = "nickname"><span>名称</span><input type = "text"/></li>
+							<li class = "surname"><span>姓</span><input type = "text"/></li>
+							<li class = "idCard"><span>证件编号</span><input type = "text"/></li>
+							<li class = "address" style = "height:1.24rem;"><span>地址1</span><input type = "text"/></li>
+							<li class = "address2"><span>地址2</span><input type = "text"/></li>
+							<li class = "postcode"><span>邮政编码</span><input type = "text"/></li>
+							<li class = "mobile"><span>移动电话</span><input type = "text"/></li>
+							<li class = "tel"><span>住宅电话</span><input type = "text"/></li>
+							<li style = "padding:.5rem 1rem 0;border:none;">
+								<button class = "cancelBtn" id = "cancelBtn">取消</button>
+								<button class = "submitBtn" id = "submitBtn">确定</button>
+							</li>
+							<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem #fff;background:rgb(255,255,255);padding:0;">
+								<a href="javascript:;" class="file">
+									<input type = "file"  capture="camera" name="imageUpload" id = "FileUpload"/>
+									<div id="preview" style="width: 1.3rem;height:1.3rem;"></div>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</main>
+		</main>
+		<div class = "menuWrap">
+			<div class = "empty"></div>
+			<div class = "content"></div>
+		</div>
+		
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/select1.js" ></script>
+<script>
+	template()
+	
+	var select1 = new select();
+	
+	var select2 = new select();
+	select2.init({
+		trigger:'#demo2',//input框de包裹div
+		initCon:'先生',
+		contentArr:['先生','女士'],//
+		isInput:false//是否可以输入  默认为true 可以模糊查询
+	})
+	/*获取会员*/
+	$.ajax({
+		url:'http://101.132.109.253:8881/index.php/Index/fan/index',
+		data:{'storeid':1,'weid':4},
+		type:'post',
+		success:function(info){
+			console.log(info);
+			if(info.code==0){
+				console.log(info.data);
+				var str = '';
+				for(var i in info.data){
+					console.log(info.data[i].length);
+					str+='<dl>'+'<dt>'+i+'</dt>'
+						for(var j = 0;j<info.data[i].length;j++){
+							str+='<dd data-id="'+info.data[i][j].id+'">';
+							if(info.data[i][j].headimg){
+								str+='<img src = "http://101.132.109.253:8881/headimg/'+info.data[i][j].headimg+'" />';
+							}else{
+								str+='<img src = "img/icon--tx.png" />';
+							}
+							str+='<h3>'+info.data[i][j].nickname+'</h3>'+
+						'</dd>'
+						}
+					str+='</dl>';
+				}
+				
+				$('._left .memberList').html(str);
+			}
+		}
+	})
+	/*会员详情*/
+	$('.memberList').on('click','dd',function(){
+		$.ajax({
+			url:'http://101.132.109.253:8881/index.php/Index/fan/read',
+			data:{id:$(this).data('id')},
+			type:'post',
+			success:function(info){
+				console.log(info);
+				/*select1.init({
+					trigger:'#demo1',//input框de包裹div
+					initCon:'先生',
+					contentArr:['先生','女士'],//
+					isInput:false//是否可以输入  默认为true 可以模糊查询
+				})*/
+				var str='';
+				if(info.code==0){
+					str = '<li><span>'+info.data.surname+info.data.nickname+'</span><span class = "editBtn" id = "editBtn"></span></li>'
+						if(info.data.sex==0){
+							str+='<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;">先生</h4></li>'
+						}else if(info.data.sex==1){
+							str+='<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;">女士</h4></li>'
+						}
+						str+='<li><span>名称</span><input type = "text" value = "'+info.data.nickname+'"/></li>'+
+						'<li><span>姓</span><input type = "text" value = "'+info.data.surname+'"/></li>'+
+						'<li><span>证件编号</span><input type = "text" value = "'+info.data.idCard+'"/></li>'+
+						'<li style = "height:1.24rem;"><span>地址1</span><input type = "text" value = "'+info.data.address+'"/></li>'+
+						'<li><span>地址2</span><input type = "text" value = "'+info.data.address2+'"/></li>'+
+						'<li><span>邮政编码</span><input type = "text" value = "'+info.data.postcode+'"/></li>'+
+						'<li><span>移动电话</span><input type = "text"/ value = "'+info.data.mobile+'"></li>'+
+						'<li><span>住宅电话</span><input type = "text"/ value = "'+info.data.tel+'"></li>'+
+						'<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem'+ '#fff;background:rgb(255,255,255);padding:0;"><img style = "width:100%;" src = "http://101.132.109.253:8881/headimg/'+info.data.headimg+'"/></li>';
+						
+					$('._right ul').html(str);		
+				}
+			}
+		})
+	})
+	$('._right').on('focus','input',function(){
+		$(this).blur();
+	})
+	$('._right').on('click','#editBtn',function(){
+		console.log('12')
+		$('._right').off('focus','input')
+	})
+	
+	/*添加会员*/
+	$('body').on('click','#headerIcon2',function(){
+		console.log('12')
+		$('#addWrap').addClass('active');
+	})
+	
+	$('#submitBtn').on('click',function(){
+		//$('#addGoodsWrap').removeClass('active');
+		
+		var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
+		console.log(typeof fileObj);
+       	if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+           alert("请选择图片");
+           return;
+       	}
+       	var formFile = new FormData();
+       	formFile.append("action", "UploadVMKImagePath");  
+       	formFile.append("file", fileObj); //加入文件对象
+       	
+       	console.log(formFile)
+ 
+        /*var data = {
+        	'weid':'4',
+        	'storeid':'1',
+        	'headimgurl':fileObj,
+        	'surname':$('.surname').find('input').val(),
+        	'nickname':$('.nickname').find('input').val(),
+        	'mobile':$('.mobile').find('input').val(),
+        	'tel':$('.tel').find('input').val(),
+        	'idCard':$('.idCard').find('input').val(),
+        	'postcode':$('.postcode').find('input').val()
+        };*/
+        var data = {
+        	'weid':'4',
+        	'storeid':'1',
+        	'headimgurl':formFile,
+        	'surname':'李',
+        	'nickname':'一',
+        	'mobile':'1234',
+        	'tel':'1234',
+        	'idCard':'12345',
+        	'postcode':'12345'
+        };
+        /*cache: false,//上传文件无需缓存
+           	processData: false,//用于对data参数进行序列化处理 这里必须false
+           	contentType: false, //必须*/
+       	$.ajax({
+            url: "http://101.132.109.253:8881/index.php/Index/fan/update",
+           	data: formFile,
+           	type: "Post",
+           	dataType: "json",
+           	cache: false,//上传文件无需缓存
+           	processData: false,//用于对data参数进行序列化处理 这里必须false
+           	contentType: false, //必须
+           	success: function (result) {
+           		console.log('result')
+               	//alert("上传完成!");
+           	},
+           	error:function(info){
+           		console.log(info)
+           	}
+       	})
+		
+		
+		
+		
+	})
+	 function preview1(file) {
+            var img = new Image(), url = img.src = URL.createObjectURL(file)
+            var $img = $(img)
+            img.onload = function() {
+                URL.revokeObjectURL(url)
+                $('#preview').empty().append($img)
+            }
+        }
+        function preview2(file) {
+            var reader = new FileReader()
+            reader.onload = function(e) {
+                var $img = $('<img>').attr("src", e.target.result)
+                $('#preview').empty().append($img)
+            }
+            reader.readAsDataURL(file)
+        }
+         
+       
+        $('[type=file]').change(function(e) {
+            var file = e.target.files[0];
+            preview1(file);
+        })
+</script>

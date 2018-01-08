@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>餐桌管理</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+	</head>
+	<style>
+		#container{
+			display:flex;
+			flex-flow:row;
+			background: url(img/BG--01.png) no-repeat center;
+			background-size:cover;
+			color:#fff;
+		}
+		#container ._left{
+			width:2.4rem;
+			background:#333;
+			display:flex;
+			flex-flow:column;
+			color:#979797;
+			
+		}
+		#container ._right{
+			flex:1;
+		}
+		._left h2{
+			height:.4rem;
+			line-height:.4rem;
+			font-size:.16rem;
+			padding-left:.2rem;
+			border-bottom:solid .01rem #979797;
+			display:flex;
+			flex-flow:row;
+		}
+		._left h2 p{
+			flex:1;
+		}
+		._left h2 span{
+			width:.4rem;
+			height:.4rem;
+			display:block;
+			background:url(img/icon--add--00.png) no-repeat center;
+		}
+		._left ul{
+			flex:1;
+		}
+		._left li{
+			height:.6rem;
+			border-bottom:solid .01rem #979797;
+			padding:.1rem .2rem;
+		}
+		._left li span{
+			float:left;
+			width:.4rem;
+			height:.4rem;
+			border-radius:50%;
+			border:solid .01rem #979797;
+			margin-right:.24rem;
+		}
+		._left li h4{
+			font-size:.14rem;
+			line-height:.2rem;
+		}
+		._left li p{
+			font-size:.12rem;
+			line-height:.2rem;
+		}
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<h2><p>餐桌列表</p><span></span></h2>
+					<ul>
+						
+					</ul>
+				</div>
+				<div class = "_right"></div>
+			</div> 
+		</main>
+		<div class = "menuWrap">
+			<h3>
+				<span>餐桌架构</span>
+				<input type = "text"/> 
+			</h3>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
+<script>
+	template()
+	var data = {
+		storeid:window.localStorage.getItem('storeid'),
+		weid:window.localStorage.getItem('weid')
+	}
+	comm.getAjax('/tablezone/index',data,callback)
+	function callback(info){
+		console.log(info)
+		if(info.code!=0){
+			return;
+		}
+		var str = '';
+		for(var i = 0; i < info.data.length;i++){
+			str+='<li data-id = "'+info.data[i].id+'">'+
+					'<span></span>'+
+					'<h4>餐桌名字</h4>'+
+					'<p>'+info.data[i].title+'</p>'+
+				'</li>'
+		}
+		$('._left ul').html(str);
+		
+	}
+</script>

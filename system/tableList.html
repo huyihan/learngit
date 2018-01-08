@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>餐桌排列</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" type="text/css" href="css/select.css"/>
+	</head>
+	<style>
+		header{
+			border-bottom:solid .04rem #403759;
+		}
+		.header h1{
+			font-size:.3rem;
+			color:#3e3751;
+		}
+		#container{
+			width:100%;
+			flex:1;
+			display:flex;
+			flex-flow:row;
+			background: url(img/BG.png) no-repeat center;
+			background-size: cover;
+		}
+		#container ._left{
+			flex:7;
+			height:100%;
+			display:flex;
+			flex-flow:column;
+			padding-bottom:.5rem;
+		}
+		#container ._left .title{
+			/*width:100%;*/
+			margin-left:.28rem;	
+			height:.56rem;
+			display:flex;
+			flex-flow:row;
+			font-size:.20rem;
+			color:#fff;
+			background: #bead20;
+		}
+		#container ._left .title li{
+			flex:1;
+			height:100%;
+			text-align:center;
+			line-height:.56rem;
+			border-right:solid .01rem #fff;
+		}
+		.tableWrap{
+			flex:1;
+			overflow-y:scroll;
+			
+		}
+		.tableWrap ul{
+			width:100%;
+			height:100%;
+			padding:.5rem .3rem .5rem;
+		}
+		.tableWrap ul li{
+			width:33.33%;
+			/*height:25%;*/
+			/*width:2.68rem;*/
+			/*height:1.06rem;*/
+			padding:.15rem .20rem;
+			float:left;
+			background:url(img/icon--cz.png) no-repeat center .2rem;
+		}
+		.tableWrap ul li span{
+			display:block;
+			/*width:1.34rem;*/
+			height:1.06rem;
+			
+			border-radius:.075rem;
+			background: rgba(255,230,20,0.4);
+			position:relative;
+		}
+		.tableWrap li span p{
+			position: absolute;
+			left:0;
+			bottom:.03rem;
+			text-align: center;
+			font-size:.21rem;
+			color:#fff;
+			line-height:1.5;
+			width:100%;
+		}
+		#container ._right{
+			flex:3;
+			height:100%;
+			margin-right:.28rem;
+			display:flex;
+			flex-flow:column;
+			padding-bottom:.5rem;
+		}
+		._right .floorSelect{
+			width:100%;
+			height:.56rem !important;
+			background:#85503b;
+			border-bottom: solid .01rem #ffe614;
+			color:#fff;
+		}
+		._right .tableSelect{
+			background: #b6a314;
+		}
+		._right ._select input{
+			background:transparent;
+			border:none;
+			color:inherit;
+		}
+		._right .table-list{
+			flex:1;
+			width:100%;
+			border:solid .01rem #fff;
+			overflow-y:scroll;
+		}
+		._right .table-list::-webkit-scrollbar{
+			display:none;
+		}
+		._right .table-list li{
+			height:1.07rem;
+			width:100%;
+			padding:.14rem .16rem;
+			background:url(img/icon--cz.png) no-repeat .16rem .14rem;
+			border-bottom:solid .01rem #fff;
+			padding-left:1rem;
+			color:#fff;
+			font-size:.16rem;
+		}
+		._right .table-list p{
+			line-height:.24rem;
+		}
+		
+		
+		/*订单列表*/
+		#orderWrap{
+			width:3.8rem;
+			height:3.2rem;
+			border-radius: .04rem;
+			background:#fff;
+			position:fixed;
+			top:50%;
+			left:50%;
+			transform:translate(-50%,-50%);
+			display:none;
+		}
+		#orderWrap .title{
+			width:100%;
+			height:.53rem;
+			background:#e7d21c;
+			color:#2f2843;
+			line-height:.53rem;
+			text-align: center;
+		}
+		#orderWrap  .title .icon_close{
+			float: left;
+			width:.53rem;
+			height:.53rem;
+			background:url(img/icon--sc--1.png) no-repeat center;
+		}
+		#orderWrap li{
+			width:100%;
+			height:.7rem;
+			border-bottom:solid .01rem #cdcdcd;
+			padding: .15rem .26rem .08rem;
+		}
+		#orderWrap li p{
+			font-size:.17rem;
+			line-height:.24rem;
+		}
+		#orderWrap li p span:last-child{
+			float:right
+		}
+		#orderWrap li p.info{
+			color:#cdcdcd;
+		}
+		
+		/*销售明细*/
+		.status0Wrap{
+			width:3.5rem;
+			height:5rem;
+			background:#fff;
+			display:flex;
+			flex-flow:column;
+			display:none;
+		}
+		.status0Wrap ul{
+			flex:1;
+			padding:.2rem;
+			font-size:.18rem;
+		}
+		.status0Wrap ul p{
+			height:.4rem;
+			line-height:.4rem;
+		}
+		.status0Wrap .tableNum{
+			float:right;
+		}
+		.status0Wrap ul input{
+			width:100%;
+			height:.4rem;
+			border:solid .01rem #cdcdcd;
+			border-radius:.04rem;
+			outline: none;
+			text-align: center;
+			
+		}
+		.status0Wrap ul .searchBtn{
+			float:right;
+			width:.4rem;
+			height:.4rem;
+			background:url(img/icon--yb--ss.png) no-repeat center;
+		}
+		.status0Wrap button{
+			width:80%;
+			height:.4rem;
+			line-height:.4rem;
+			background:#F28F64;
+			border:none;
+			outline:none;
+			display:block;
+			margin:.2rem auto 0;
+			color:#fff;
+		}
+		
+		/*会员*/
+		.memberWrap{
+			width:3.5rem;
+			height:5rem;
+			background:#fff;
+			display:flex;
+			flex-flow:column;
+			z-index:2;
+			color:#2F2843;
+			font-size:.18rem;
+			display:none;
+		}
+		.memberWrap input{
+			width:94%;
+			height:.35rem;
+			line-height:.35rem;
+			margin:.1rem 3%;
+			border:solid .01rem #cdcdcd;
+			padding-left:.1rem;
+		}
+		.memberWrap ul{
+			flex:1;
+			margin-top:.1rem;
+		}
+		.memberWrap li{
+			padding:0 .15rem;
+			border-bottom:solid .01rem #cdcdcd;
+			height:.35rem;
+			line-height:.35rem;
+			
+		}
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<ul class = "title">
+						<li><a href = "sale.html">销售页面</a></li>
+						<li><a href = "##" id = "orderCtrl">订单列表</a></li>
+						<li><a href = "##">今日销售</a></li>
+					</ul>
+					<div class = "tableWrap" id = "tableWrap">
+						<ul>
+							<li><span><p>01桌</p></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+							<li><span></span></li>
+						</ul>
+					</div>
+				</div>
+				<div class = "_right">
+					<div id = "floorSelect" class = "floorSelect"></div>
+					<div id = "tableSelect" class = "floorSelect tableSelect"></div>
+					<ul class = "table-list" id = "table-list">
+						<li>
+							<p>人数</p>
+							<p>餐桌号</p>
+							<p>就餐时间</p>
+						</li>
+						<li>
+							<p>人数</p>
+							<p>餐桌号</p>
+							<p>就餐时间</p>
+						</li>
+						<li>
+							<p>人数</p>
+							<p>餐桌号</p>
+							<p>就餐时间</p>
+						</li>
+						<li>
+							<p>人数</p>
+							<p>餐桌号</p>
+							<p>就餐时间</p>
+						</li>
+						<li>
+							<p>人数</p>
+							<p>餐桌号</p>
+							<p>就餐时间</p>
+						</li>
+						<li>
+							<p>人数</p>
+							<p>餐桌号</p>
+							<p>就餐时间</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</main>
+		<div class = "menuWrap"></div>
+		<!--订单列表-->
+		<div id = "orderWrap">
+			<h4 class = "title"><span class = "icon_close" id = "close"></span><p>订单列表</p></h4>
+			<ul>
+				<li>
+					<a href = "##">
+						<p><span>宾客</span><span>就餐:-95.00</span></p>
+						<p class = "info"><span>未打印</span><span>2017-12-12 07:12:12</span></p>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+		<!--销售明细-->
+		<div class = "addWrap status0Wrap" id = "status0Wrap">
+			<h3 class = "title">
+				<span class = "icon_close"></span>
+				<p>销售明细</p>
+				<span class = "icon"></span>
+			</h3>
+			<ul>
+				<li>
+					<p>餐桌:<span class = "tableNum" id = "tableNum"></span></p>
+				</li>
+				<li>
+					<p>宾客人数</p>
+					<input type = "text" id = "custNum"/>
+				</li>
+				<li>
+					<p>
+						<span>客户姓名</span>
+						<span class= "searchBtn" id = "searchBtn"></span>
+					</p>
+					<input type = "text" id = "memberName"/>
+				</li>
+			</ul>
+			<button id = "submitBtn">确定</button>
+		</div>
+		
+		<!--会员-->
+		<div class= "addWrap memberWrap" id = "memberWrap">
+			<!--<input type = "text" class = "memSearch" placeholder="搜索"/>  -->
+			<ul>
+				<li></li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/select.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
+<script>
+	template();
+	$('.ui-input-text').hide();
+	
+	db.transaction(function(context){
+		context.executeSql('SELECT * FROM tablezoneTable',[],function(tx,result){
+			console.log(result);
+			var floorArr = [];
+			var zoneArr = [];
+			for(var i = 0;i <result.rows.length;i++){
+				floorArr.push(result.rows.item(i).title);
+				zoneArr.push(result.rows.item(i).id);
+			}
+			selectFloor(floorArr,zoneArr)
+		})
+	})
+	
+	
+	
+	function selectFloor(floorArr,zoneArr){
+		var select1 = new select();
+		select1.init({
+			trigger:'#floorSelect',//input框de包裹div
+			initCon:'请选择楼层',
+			values:zoneArr,
+			contentArr:floorArr,//
+			isInput:false,//是否可以输入  默认为true 可以模糊查询
+			success:function(){
+				changeState();
+			}
+		})
+	}
+	
+	
+	/*餐桌状态 0空闲中 1已开台(预约) 2已下单 全选为空*/
+	var select2 = new select();
+	select2.init({
+		trigger:'#tableSelect',//input框de包裹div
+		initCon:'餐桌状态',
+		values:['',0,1,2],
+		contentArr:['所有','空闲中','已开台','已下单'],//
+		isInput:false,//是否可以输入  默认为true 可以模糊查询
+		success:function(){
+			changeState();
+			
+		}
+	})
+	
+	function changeState(){
+		var dataChange={
+			/*zoneid:$('#floorSelect input').attr('data')?$('#floorSelect input').attr('data'):'1',
+			status:$('#tableSelect input').attr('data')?$('#tableSelect input').attr('data'):' '*/
+			zoneid:$('#floorSelect input').attr('data')?$('#floorSelect input').attr('data'):'1',
+			status:$('#tableSelect input').attr('data')?$('#tableSelect input').attr('data'):''
+		}
+		console.log(dataChange.status)
+		comm.getAjax('/table/index',dataChange,callback);
+	}
+	
+	$('#orderCtrl').click(function(){
+		$('#orderWrap').show();
+	})
+	$('#close').click(function(){
+		$(this).parents('#orderWrap').hide();
+	})
+	
+	var data = {
+		zoneid:'1',
+		status:''
+	}
+	comm.getAjax('/table/index',data,callback);
+	function callback(info){
+		console.log(info);
+		$('#tableWrap ul').html(' ');
+		$('#table-list').html(' ');
+		if(info.code!=0){
+			return;
+		}
+		var str = '',str1 = '';
+		for(var i = 0; i < info.data.length;i++){
+			str +='<li data-status="'+info.data[i].status+'" data-table="'+info.data[i].title+'"><span><p>'+info.data[i].title+'</p></span></li>';
+			
+			str1 +='<li data-status="'+info.data[i].status+'"data-table="'+info.data[i].title+'">'+
+						'<p>人数:'+info.data[i].user_count+'</p>'+
+						'<p>餐桌号:'+info.data[i].title+'</p>'+
+						'<p>就餐时间:'+new Date(info.data[i].dateline).getHours()+':'+new Date(info.data[i].dateline).getMinutes()+'</p>'+
+					'</li>'
+		}
+		$('#tableWrap ul').html(str);
+		$('#table-list').html(str1);
+	}
+	
+	/*点餐*/
+	$('#container').on('click','#tableWrap li,#table-list li',function(){
+		console.log($(this).data('status'))
+		if($(this).data('status')==0){
+			$('#status0Wrap').show();
+			$('#tableNum').html($(this).data('table'));
+		}
+	})
+	$('#searchBtn').on('click',function(){
+		$('#memberWrap').show()
+		db.transaction(function(context){
+			context.executeSql('SELECT * FROM fanTable',[],function(tx,result){
+				console.log(result);
+				var str = '';
+				for(var i = 0; i< result.rows.length;i++){
+					str+='<li>'+result.rows.item(i).nickname+'</li>'
+				}
+				$('#memberWrap ul').html(str);
+			})
+		})
+	})
+	$('#status0Wrap').on('click','#submitBtn',function(){
+		var time = String(new Date().valueOf());
+		var tableNum = $('#tableNum').html();
+		var custNum = $('#custNum').val();
+		var custName = $('#memberName').val();
+		db.transaction(function(context){
+			context.executeSql('CREATE TABLE IF NOT EXISTS takeorderTable(id ,tableNum,custNum ,custName,orderNum unique,time,dealwith,status)',[],function(tx,result){},function(tx,result){
+				console.log(result)
+			})
+			context.executeSql('INSERT INTO takeorderTable VALUES(?,?,?,?,?,?,?,?)',[time,tableNum,custNum,custName,time,time,' ',0],function(tx,result){
+				window.location.href = "sale.html?orderNum="+time;
+			});
+		})
+		var tableorderData = {
+			'id':'time',
+			'tableNum':tableNum,
+			'custNum':custNum,
+			'custName':custName,
+			'orderNum':time,
+			'time':time,
+			'dealwith':'',
+			'status':0
+		}
+		console.log(time);
+		
+	})
+	
+	$('#memberWrap').on('click','li',function(){
+		$('#memberWrap').hide();
+		$('#memberName').val($(this).html());
+	})
+</script>

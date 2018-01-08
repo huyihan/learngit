@@ -1,0 +1,21 @@
+#mask{
+	width:100%;height:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,0.3);
+}
+#mask .wrap{
+	width:80%;height:200px;padding:20px;background:#fff;border-radius:10px;position:absolute;top:50%;left:10%;margin-top:-100px;
+}
+#mask .wrap h2{
+	font-weight:normal;text-align:center;font-size:16px;padding-top:20px;height:100px;line-height:20px;
+}
+#mask .wrap .btnWrap{
+	width:100%;height:40px;line-height:40px;padding:0 30px;
+}
+#mask .wrap .btnWrap button{
+	width:70px;height:30px;background:#ccc;border:none;outline:none;color:#fff;border-radius:5px;
+}
+#mask .wrap .btnWrap button:nth-child(1){
+	float:left;
+}
+#mask .wrap .btnWrap button:nth-child(2){
+	float:right;
+}

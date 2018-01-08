@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弹出遮罩层</title>
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mask.css"/>
+	</head>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+		}
+		html,body{
+			width:100%;
+			height:100%;
+			
+		}
+		body{
+		}
+		div{
+			width:100%;
+			height:300px;
+		}
+	</style>
+	<body>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+	</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/mask.js" ></script>
+<script>
+	var mask = new mask();
+	mask.show({
+		noticeMsg:'提示信息',
+		submitCallback:function(){
+			console.log('queding')
+		},
+		cancelCallback:function(){
+			console.log('quxiao')
+		}
+	});
+	//mask.hide()
+</script>

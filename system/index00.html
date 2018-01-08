@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>POSPI餐饮</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+	</head>
+	<style>
+		html{
+			overflow: hidden;
+		}
+		body{
+			background:url(img/BG.png) no-repeat center;
+			background-size:contain;
+		}
+		#container{
+			flex:1;
+			padding:1.40rem .75rem 1.55rem 2.63rem;
+			width:100%;
+			background-image:url(img/icon--logo.png),url(img/icon--bx.png);
+			background-repeat: no-repeat,no-repeat;
+			background-position: .5rem center,2.62rem .3rem;
+			background-size:auto,auto;
+			background-clip: border-box;
+			
+		}
+		#container li{
+			width:33.3%;
+			height:50%;
+			float:left;
+		}
+		#container li a{
+			display:block;
+			width:100%;
+			height:100%;
+			text-align: center;
+		}
+		#container li p{
+			color:#ffe400;
+			font-size:.23rem;
+			font-family: "PingFang SC";
+			margin-top:.35rem;
+		}
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<ul id = "container">
+				<li>
+					<a href = "tableList.html">
+						<img src = "img/icon--xs.png">
+						<p>销售</p>
+					</a>
+				</li>
+				<li>
+					<a href = "##">
+						<img src = "img/icon--cdbj.png">
+						<p>菜单编辑</p>
+					</a>
+				</li>
+				<li>
+					<a href = "##">
+						<img src = "img/icon--hy.png">
+						<p>会员</p>
+					</a>
+				</li>
+				<li>
+					<a href = "##">
+						<img src = "img/icon--czgl.png">
+						<p>餐桌管理</p>
+					</a>
+				</li>
+				
+				<li>
+					<a href = "##">
+						<img src = "img/icon--bb.png">
+						<p>报表</p>
+					</a>
+				</li>
+				<li>
+					<a href = "##">
+						<img src = "img/icon--sz.png">
+						<p>设置</p>
+					</a>
+				</li>
+			</ul>
+		</main>
+		<div class = "menuWrap"></div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script>
+	template()
+</script>

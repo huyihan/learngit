@@ -1,0 +1,264 @@
+@font-face {
+  font-family: 'PingFang SC';
+  src:  url('../font/PingFangRegular.ttf');
+  src:  url('../font/PingFangRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+input,button{
+	outline: none;
+}
+h1,h2,h3,h4,h5,h6{
+	font-weight:normal;
+	font-size:.24rem;
+	line-height:1.3;
+}
+ul,li{
+	list-style: none;
+}
+button a{
+	display:block;
+	width:100%;
+	height:100%;
+	line-height: inherit;
+}
+a{
+	color:inherit;
+	text-decoration: none;
+}
+html,body{
+	width:100%;
+	height:100%;
+}
+i,em{
+	font-style:normal;
+}
+html{
+	font-size:100px;
+}
+body{
+	font-family: "PingFang SC";
+	font-size:.23rem;
+	overflow: hidden;
+}
+.ui-page{
+	width:100%;
+	height:100%;
+}
+.headerWrap{
+	width:100%;
+	height:.56rem;
+}
+main{
+	width:100%;
+	height:100%;
+	display: flex;
+	flex-flow: column;
+	overflow: hidden;
+}
+
+.headerWrap{
+	height:.56rem;
+}
+.header{
+	width:100%;
+	height:100%;
+	background:#fff;
+	display:flex;
+	flex-flow:row;
+	padding:0 .48rem;
+}
+.header .headerIcon{
+	height:100%;
+	width:.6rem;
+}
+.header .menuBtn{
+	line-height:.25rem;
+	display:block;
+	text-align:left;
+	color:#1b1e25;
+	font-size:.20rem;
+	padding:0 .50rem;
+	background:url(../img/icon--xm.png) no-repeat left center;
+}
+.header h1{
+	flex:1;
+	line-height:.56rem;
+	text-align:center;
+	font-size:.36rem;
+	color:#241f32;
+}
+#container{
+	flex:1;
+	position:relative;
+}
+.menuWrap{
+	/*position:absolute;
+	top:0;*/
+	
+}
+#menu{
+	z-index:2;
+}
+#menu.active{
+	transform: translateX(0);
+}
+
+body {
+    -webkit-text-size-adjust: none;
+		overflow: hidden;
+}
+.pages h3 {
+    font-size: .20rem;
+    margin: 0;
+}
+/*侧边栏*/
+#menu {
+    background-color: transparent;
+    float: left;
+    height: 100%;
+    width: 3.20rem;
+    transform: translateX(-4.00rem);
+		position:absolute;
+		top:0;
+		/*box-shadow: .03rem 0 .30rem 0rem #d2a91e;*/
+		display:flex;
+		flex-flow:column;
+		transition: all 400ms;
+		-moz-transition: all 400ms; 
+		-webkit-transition: all 400ms; 
+		-o-transition: all 400ms; 
+}
+#menu .menuHeaderWrap {
+   	width:100%;
+   	height:1.30rem;
+   	padding:.30rem 0 0 .30rem;
+   	position:relative;
+   	background: url(../img/menuheader_1.png) no-repeat center;
+   	border-bottom:solid .10rem #8f70cb;
+}
+#menu .menuHeaderWrap .headImg{
+   	float:left;
+   	margin-right: .15rem;
+   	width:.78rem;
+   	height:.78rem;
+   	border-radius:50%;
+}
+#menu .menuHeaderWrap p{
+	line-height:.40rem;
+	color:#fff;
+	font-size:.18rem;
+}
+#menu .menuHeaderWrap .menuBtn1{
+	position:absolute;
+	right:.18rem;
+	top:.18rem;
+	display:block;
+	width:.25rem;
+	height:.25rem;
+	background:url(../img/icon--D--fh.png) no-repeat center;
+}
+#menu ul {
+    margin: 0;
+    padding: 0;
+    width: inherit;
+    flex:1;
+    background: url(../img/menuul_01.png) no-repeat center;
+    padding:.32rem .24rem;
+}
+#menu li{
+	width:100%;
+	height:.53rem;
+	line-height:.53rem;
+	margin-bottom:.10rem;
+	border-bottom:solid .01rem #fff;
+	text-align:left;
+	font-size:.18rem;
+	color:#fff;
+	background: url(../img/icon_arrow_right.png) no-repeat right center;
+}
+#menu ul li a{
+	display:block;
+	width:100%;
+	height:100%;
+	border-radius:.27rem;
+	padding-left:.48rem;
+}
+/*#menu ul li a:link,
+#menu ul li a:visited {
+    border-bottom: solid #333 .01rem;
+    box-shadow: 0 .01rem 0 #727272;
+    color: #fff;
+    display: block;
+    font-family: arial;
+    font-size: .14rem;
+    padding: .10rem 0 .10rem .10rem;
+    text-decoration: none;
+    text-shadow: 0 .01rem 1rem #000;
+    width: 165rem;
+}*/
+/*#menu ul li a:hover,
+#menu ul li a:active {
+    background-color: #716f6f;
+}*/
+.ui-body-c {
+    background-color: #fff;
+    line-height: .18rem;
+}
+#menu .active {
+    background:#f28f64;
+    color: #fff;
+    border-color:#f28f64;
+}
+button{
+	border:none;
+	outline:none;
+}
+
+.addWrap{
+	position:fixed;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	z-index:1;
+}
+.addWrap .title{
+	width:100%;
+	height:.53rem;
+	background:#e7d21c;
+	color:#2f2843;
+	line-height:.53rem;
+	text-align: center;
+	display:flex;
+	flex-flow:row;
+}
+.addWrap .title p{
+	flex:1;
+}
+.addWrap .title .icon{
+	width:.53rem;
+	height:.53rem;
+}
+.addWrap  .title .icon_close{
+	float: left;
+	width:.53rem;
+	height:.53rem;
+	background:url(../img/icon--sc--1.png) no-repeat center;
+}
+.addWrap  .title .icon_log{
+	float: right;
+	width:.53rem;
+	height:.53rem;
+	background:url(../img/icon--dy.png) no-repeat center;
+}
+.addWrap  .title .icon_complete{
+	float: right;
+	width:.53rem;
+	height:.53rem;
+	background:url(../img/icon--g.png) no-repeat center;
+}

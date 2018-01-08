@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    	<meta http-equiv="refresh">
+		<title>销售页面</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/sale.css" />
+	</head>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<div class = "orderDetail">
+						<p></p>
+					</div>
+					<div class = "title">
+						<span>产品</span>
+						<span>数量</span>
+						<span>单价</span>
+						<span>总额</span>
+					</div>
+					<ul class = "leftList list-ul">
+						
+					</ul>
+					<p class = "dealwith">应付金额:<span></span>元</p>
+					<div class = "btnWrap">
+						<button class = "sendBtn">发送订单</button>
+						<button class = "payBtn" id = "payBtn">支付</button>
+					</div>
+				</div>
+				<div class = "_right">
+					<div class = "title">
+						<span class = "icon"></span>
+						<ul id = "wrap">
+						</ul>
+					</div>
+					<div class = "contentWrap" id = "contentWrap">
+					</div>
+					<div class = "funWrap">
+						<ul>
+							<li id = "productCtrl">临时产品</li>
+							<li>备注</li>
+							<li id = "orderCtrl">总汇</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</main>
+		<div class = "menuWrap"></div>
+		<!--总汇-->
+		<div id = "orderWrap" class = "addWrap">
+			<h4 class = "title">
+				<span class = "icon_close close"></span>
+				<p>点单总汇</p>
+				<span class = "icon_log"></span>
+			</h4>
+			<ul>
+				<li>
+					<a href = "##">
+						<span>名称</span><span>数量</span>
+					</a>
+				</li>
+				<li>
+					<a href = "##">
+						<span>咖喱鸡饭</span><span>2</span>
+					</a>
+				</li>
+			</ul>
+		</div>	
+		<!--临时产品-->
+		<div id = "productWrap" class = "addWrap">
+			<h4 class = "title">
+				<span class = "icon_close close" ></span>
+				<p>临时产品</p>
+				<span class = "icon_complete"></span>
+			</h4>
+			<ul>
+				<li>
+					<span>名称</span><input type = "text"/>
+				</li>
+				<li>
+					<span>价格</span><input type = "text"/>
+				</li>
+				<li>
+					<span>数量</span><input type = "text"/>
+				</li>
+				<li style = "height:auto;">
+					<span style = "float:left">发送到</span>
+					<p class = "sendchoose active">前台</p>
+					<p class = "sendchoose">厨房</p>
+					<p class = "sendchoose">水吧</p>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
+<script type="text/javascript" src="js/sale.js" ></script>
+<script>
+$(function(){
+	
+	
+	
+	
+})
+</script>
+

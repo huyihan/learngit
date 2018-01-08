@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>预约</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="plugin/jQueryCalendar/calendar.css" />
+		<link rel="stylesheet" href="plugin/ICalendar/css/lCalendar.css" />
+	</head>
+	<style>
+		.header .headerIcon{
+			width:.6rem;
+		}
+		.header .headerIcon1{
+			background: url(img/icon--sz--01.png) no-repeat center;
+		}
+		.header .headerIcon2{
+			background: url(img/icon--tj--0.png) no-repeat center;
+		}
+		#container{
+			background:url(img/BG--01.png) no-repeat center;
+			background-size:cover;
+			padding:.05rem .2rem .35rem;
+			display:flex;
+			flex-flow:row;
+			color:#fff;
+		}
+		#container ._left{
+			width:3.9rem;
+			height:100%;
+			border:solid .01rem #f5cd44;
+			border-radius:.04rem;
+			margin-right:.1rem;
+		}
+		#container ._right{
+			flex:1;
+			border:solid .01rem #f5cd44;
+			border-radius:.04rem;
+			display:flex;
+			flex-flow:column;
+		}
+	
+		._right h2{
+			height:.56rem;
+			background: #5a501a;
+			font-size:.21rem;
+		}
+		._right h2 ul{
+			width:100%;
+			height:100%;
+			border-bottom:solid .01rem #fff;
+			display: flex;
+			flex-flow:row;
+			background: #5a501a;
+		}
+		._right h2 ul li{
+			flex:1;
+			line-height:.55rem;
+			text-align: center;
+		}
+		._right .list{
+			flex:1;
+			font-size:.18rem;
+		}
+		._right .list li{
+			width:100%;
+			height:.45rem;
+			border-bottom:solid .01rem #fff;
+			line-height:.45rem;
+			display:flex;
+			flex-flow:row;
+		}
+		._right .list li span{
+			flex:1;
+			text-align: center;
+		}
+		._right p{
+			height:.5rem;
+			line-height:.5rem;
+			border-top:solid .01rem #fff;
+			padding-left:.2rem;
+			display:flex;
+			flex-flow:row;
+		}
+		
+		.wrap{
+			position:fixed;
+			top:50%;
+			left:50%;
+			border-radius:.04rem;
+			background:#fff;
+			z-index:1;
+			display:flex;
+			flex-flow:column;
+			transform: translate(-50%,-50%);
+		}
+		.wrap .title{
+			width:100%;
+			height:.5rem;
+			background:#e7d21c;
+			text-align: center;
+			display:flex;
+			flex-flow:row;
+		}
+		.wrap .title .close{
+			display:block;
+			width:.5rem;
+			height:.5rem;
+			background:url(img/icon--sc--1.png) no-repeat center;
+		}
+		.wrap .title .complete{
+			display:block;
+			width:.5rem;
+			height:.5rem;
+			background:url(img/icon--complete.png) no-repeat center;
+		}
+		.wrap .title p{
+			flex:1;
+			line-height:.5rem;
+			color:#fff;
+		}
+		
+		
+		#setWrap{
+			width:3.64rem;
+			height:2.9rem;
+			
+			display:none;
+		}
+		#setWrap ul{
+			flex:1;
+			padding:.2rem .26rem;
+			font-size:.21rem;
+			color:#2f2843;
+		}
+		#setWrap ul li{
+			display:flex;
+			flex-flow:row;
+			height:.37rem;
+			line-height:.37rem;
+		}
+		#setWrap ul li span{
+			width:1.7rem;
+		}
+		#setWrap ul li input{
+			flex: 1;
+			height:.27rem;
+			line-height:.27rem;
+			outline:none;
+			border:solid .01rem #cdcdcd;
+			text-align:center;
+		}
+		
+		
+		#addWrap{
+			width:3.64rem;
+			height:6.5rem;
+		}
+		#addWrap ul{
+			flex:1;
+			padding-top:.07rem;
+		}
+		#addWrap ul li{
+			width:100%;
+			height:.45rem;
+			line-height:.45rem;
+			padding:0 .3rem;
+			border-bottom:solid .01rem #cdcdcd;
+			display:flex;
+			flex-flow:row;
+		}
+		#addWrap ul li span{
+			width:1rem;
+			display:inline-block;
+		}
+		#addWrap ul li div{
+			flex:1;
+			display:block;
+		}
+		#addWrap ul li input{
+			width:100%;
+			height:100%;
+		}
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<div id = "ca"></div>
+				</div>
+				<div class = "_right">
+					<h2>
+						<ul>
+							<li>日期</li>
+							<li>时间</li>
+							<li>客户</li>
+							<li>餐桌</li>
+						</ul>
+					</h2>
+					
+					<ul class = "list">
+						<li>
+							<span>2017-12-12</span>
+							<span>12:00-12:00</span>
+							<span>你是谁啊</span>
+							<span>88</span>
+						</li>
+					</ul>
+					
+					<p>
+						<span style = "color:rgb(161,29,27);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(161,29,27);margin-right:.1rem;"></span>预约</span>
+						<span style = "color:rgb(255,228,80);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(255,228,80);margin-right:.1rem;"></span>预约</span>
+						<span style = "color:rgb(136,196,98);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(136,196,98);margin-right:.1rem;"></span>预约</span>
+					</p>
+				</div>
+			</div>
+		</main>
+		<div class = "menuWrap"></div>
+		<!--预约设置-->
+		<div class = "wrap" id = "setWrap">
+			<h4 class = "title">
+				<span class = "close" onclick="close()"></span>
+				<p>预约设置</p>
+				<span class = "complete"></span>
+			</h4>
+			<ul>
+				<li><span>默认时间段</span><input type = "text"/></li>
+				<li><span>最长等待时间</span><input type = "text"/></li>
+				<li><span>开始时间</span><input type = "text" id = "demo1"/></li>
+				<li><span>结束时间</span><input type = "text" id = "demo2"/></li>
+			</ul>
+		</div>
+		
+		<!--添加预约-->
+		<div class = "wrap" id = "addWrap">
+			<h4 class = "title">
+				<span class = "close" onclick="close()"></span>
+				<p>预约设置</p>
+				<span></span>
+			</h4>
+			<ul>
+				<li><span>日期</span><input type = "text"/></li>
+				<li><span>开始时间</span><input type = "text"/></li>
+				<li><span>时间段</span><input type = "text"/></li>
+				<li><span>餐桌</span><input type = "text"/></li>
+				<li><span>客人人数</span><input type = "text"/></li>
+				<li><span>成人</span><input type = "text"/></li>
+				<li class = "full"><span>客户姓名</span></li>
+				<li class = "full"><input type = "text"/></li>
+				<li class = "full"><span>电话</span></li>
+				<li class = "full"><input type = "text"/></li>
+				<li class = "full"><span>备注</span></li>
+				<li class = "full"><input type = "text"/></li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="plugin/jQueryCalendar/js/calendar.js" ></script>
+<script type="text/javascript" src="plugin/ICalendar/js/lCalendar.js" ></script>
+<script>
+	template()
+	
+	$('#ca').calendar({
+        data: [
+			{
+			  date: '2015/12/24',
+			  value: 'Christmas Eve'
+			},
+			{
+			  date: '2015/12/25',
+			  value: 'Merry Christmas'
+			},
+			{
+			  date: '2016/01/01',
+			  value: 'Happy New Year'
+			}
+		],
+        onSelected: function (view, date, data) {
+            console.log('view:' + view)
+            alert('date:' + date)
+            console.log('data:' + (data || 'None'));
+        }
+    });
+
+
+	var calendar = new lCalendar();
+	calendar.init({
+		'trigger': '#demo1',
+		'type': 'time'
+	});
+	var calendardatetime = new lCalendar();
+	calendardatetime.init({
+		'trigger': '#demo2',
+		'type': 'time'
+	});
+	
+	function close(obj){
+		alert('12')
+		console.log(obj);
+		var obj = $(obj);
+		obj.parents('.wrap').hide()
+	}
+	
+</script>

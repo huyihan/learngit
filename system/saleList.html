@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>销售列表</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" type="text/css" href="plugin/ICalendar/css/lCalendar.css"/>
+	</head>
+	<style>
+		main{
+			background:url(img/BG.png) no-repeat center;
+			background-size:cover;
+			display:flex;
+			flex-flow:column;
+			padding-bottom:.22rem;
+			color:#fff;
+		}
+		#container{
+			flex:1;
+			display:flex;
+			flex-flow:row;
+			border-bottom:solid 1px #fff;
+		}
+		._left{
+			flex:2;
+			height:100%;
+			border-right:solid 1px #fff;
+		}
+		
+		._left .title{
+			width:100%;
+			height:.55rem;
+			background:rgba(255,230,20,.5);
+			color:#fff;
+			font-size:.21rem;
+			line-height:.55rem;
+			text-align: center;
+		}
+		._left .time{
+			display:block;
+			width:100%;
+			height:.51rem;
+			line-height:.51rem;
+			border-bottom:solid .01rem #fff;
+			font-size:.21rem;
+			padding-left:.2rem;
+		} 
+		._left div{
+			float:right;
+			width:60%;
+		}
+		._left span{
+			float:left;
+			width:40%;
+		}
+		._left input{
+			background: transparent;
+			border:none;
+			outline:none;
+			width:100%;
+			height:.5rem;
+		}
+		
+		
+		._right{
+			flex:5;
+			height:100%;
+			display:flex;
+			flex-flow:column;
+		}
+		._right .inputWrap{
+			width:100%;
+			height:.56rem;
+			border-bottom:solid .01rem #fff;
+		}
+		._right .list-wrap{
+			flex:1;
+			display:flex;
+			flex-flow:column;
+		}
+		._right .list-wrap .title{
+			height:.51rem;
+			line-height:.51rem;
+			display: flex;
+			flex-flow:row;
+			border-bottom:solid .01rem #fff;
+			padding:0 .18rem;
+		}
+		._right .title span{
+			flex:1;	
+			text-align:center;
+		}
+		._right .title span:first-child{
+			text-align: left;
+		}
+		._right .title span:last-child{
+			text-align:right;
+		}
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<h2 class = "title">日期范围</h2>
+					<lable class = "time" ><span>开始时间</span><input type = "text" id = "beginTime" placeholder = "请选择时间" class = "timeInput"/></lable>
+					<lable class = "time" ><span>结束时间</span><input type = "text" id = "endTime" placeholder = "请选择时间" class = "timeInput"/></lable>
+				</div>
+				<div class = "_right">
+					<h3 class = "inputWrap"></h3>
+					<div class = "list-wrap">
+						<p class = "title">
+							<span>发票号码</span>
+							<span>发票日期</span>
+							<span>总计</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</main>
+		<div class = "menuWrap"></div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="plugin/ICalendar/js/lCalendar.js" ></script>
+<script>
+	template()
+	$('.timeInput').on('focus',function(){
+		$(this).blur();
+	})
+	
+	var calendar = new lCalendar();
+	calendar.init({
+		'trigger': '#beginTime',
+		'type': 'date'
+	});
+	var calendardatetime = new lCalendar();
+	calendardatetime.init({
+		'trigger': '#endTime',
+		'type': 'date'
+	});
+	
+</script>

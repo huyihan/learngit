@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>菜单</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/select.css" />
+		<style type="text/css">
+			main{
+				background: url(img/BG--01.png) no-repeat center;
+				background-size:cover;
+				
+			}
+			#container{
+				display:flex;
+				flex-flow:row;
+				padding:.04rem .04rem .4rem .02rem;
+				position:relative;
+			}
+			#container ._left{
+				width:3.9rem;
+				height:100%;
+				margin-right: .15rem;
+				display: flex;
+				flex-flow:column;
+				border-right:solid .01rem #d3c11e;
+				
+			}
+			
+			._left .top{
+				width:100%;
+				height:.61rem;
+				background:#e1e1e1;
+				border-radius:.04rem;
+				display:flex;
+				flex-flow:row;
+			}
+			._left .top li{
+				flex:1;
+				line-height:.6rem;
+				text-align: center;
+			}
+			._left .top li img{
+				vertical-align: middle;
+			}
+			._left .productBtn{
+				width:100%;
+				height:.41rem;
+				margin-top:.05rem;
+				background:#d4c11e;
+				color:#4f495f;
+				font-size:.20rem;
+				line-height:.41rem;
+				text-align: center;
+			}
+			._left .searchInput{
+				width:3.5rem;
+				height:.35rem;
+				border:solid .01rem #fff;
+				color:#fff;
+				font-size:.20rem;
+				margin:.05rem auto;
+				text-align: center;
+			}
+			._left .searchInput::-webkit-input-placeholder{
+				color:#fff;
+			}
+			._left .productList{
+				flex:1;
+				overflow-y: auto;
+				padding-bottom:.1rem;
+			}
+			._left .productList li{
+				border-bottom:solid .01rem #FFFFFF;
+				color:#FFFFFF;	
+				overflow: hidden;
+				padding:.12rem .13rem;
+			}
+			._left .productList li img{
+				width:1.3rem;
+				height:.88rem;
+				float:left;
+				margin-right:.20rem;
+				border-radius:.04rem;
+			}
+			._left .productList li p{
+				font-size:.17rem;
+				line-height:.35rem;
+			}
+			._left .addBtn {
+				width:100%;
+				height:.40rem;
+				border-radius:.04rem;
+				background:#f28f64;
+				color:#fff;
+				font-size:.21rem;
+				border:none;
+				outline:none;
+			}
+			
+			
+			
+			#container ._right{
+				flex:1;
+				display: flex;
+				flex-flow:column;
+				overflow: hidden;
+				margin-right:.05rem;
+			}
+			._right .order{
+				height:.5rem;
+				line-height: .5rem;
+				
+				color:#4F495F;
+				display:flex;
+				flex-flow:row;
+				background: #b3a216;
+				padding:0 .15rem;
+				font-size:.21rem;
+			}
+			._right #demo4{
+				margin:0;
+				float:none !important;
+				background:url(img/icon--yb--ss.png) no-repeat right center;
+				margin:0 .1rem 0 .1rem;
+			}
+			._right #demo4 input{
+				height:100%;
+				line-height:.3rem;
+				background: #eae5ba;
+				border-radius:.04rem;
+				padding-left:.4rem;
+			}
+			._right #demo4 .select_Wrap{
+				z-index:10;
+			}
+			
+			._right .order .ui-input-text {
+				
+				
+				
+				padding:.1rem 0;
+				font-size:.17rem;
+				width:90%;
+				height:100%;
+				display:block;
+			}
+			._right .order .ui-input-text input{
+				height:100%;
+				width:80% !important;
+				line-height:.3rem;
+				background: #eae5ba;
+				border-radius:.04rem;
+				padding-left:.4rem;
+				
+			}
+			._right .order .saveBtn{
+				width:1rem;
+				
+			}
+			._right .order .addOrderBtn{
+				width:.8rem;
+				height:100%;
+				background: url(img/icon--yb--tj.png) no-repeat left center;
+			}
+			
+			
+			._right #items{
+				flex:1;
+			}
+			._right #items li{
+				flex:1;
+				width:1.25rem;
+				height:1.05rem;
+				float:left;
+				color:#fff;
+			}
+			
+			
+			._right .title{
+				padding:.13rem .19rem;
+				color:#f28f64;
+				font-size:.13rem;
+				overflow:hidden;
+				overflow-x:scroll;
+				position: relative;
+				border-bottom:solid .01rem #fff;
+			}
+			._right .title::-webkit-scrollbar{
+				display:none;
+			}
+			._right .title ul{
+				height:.74rem;
+				
+			}
+			._right .title .icon{
+				content:'';
+				position:absolute;
+				bottom:0;
+				left:0;
+				border: solid .09rem transparent;
+				border-bottom-color: #000;
+				transform:translateX(.68rem);
+				transition: all 300ms;
+			}
+			
+			._right .title li.tab-header{
+				width:1.3rem;
+				height:.74rem;
+				text-align:center;
+				float:left;
+			}
+			._right .tab-header img{
+				width:.4rem;
+				height:.4rem;
+			}
+			._right .title li.tab-header.active{
+				color:#fff;
+			}
+			._right .contentWrap{
+				flex:1;
+				overflow-y: scroll;
+				transition:all 300ms;
+			}
+			._right .tab-content{
+				padding:.07rem;
+				overflow: hidden;
+				width:5rem;
+			} 
+			._right .tab-content li{
+				width:1.5rem;
+				height:1.13rem;
+				float:left;
+				margin:.28rem .13rem;
+				color:#fff;
+				border-radius:.04rem;
+				position:relative;
+			}
+			.tab-content{
+				width:100%;
+				height:100%;
+				/*display:none;*/
+				color:#fff;
+			}
+			.tab-content.active{
+				display:block;
+			}
+			._right .tab-content{
+				/*width:100%;*/
+				width:6.05rem;
+				float:left;
+			}
+			._right .tab-content ul{
+				width:100%;
+				/*height:100%;*/
+				height:5.46rem;
+				width:6.05rem;
+				overflow: auto;
+				
+			}
+			._right .tab-content li img{
+				width:100%;
+				height:100%;
+			}
+			._right .tab-content li .icon--add{
+				width:.22rem;
+				height:.22rem;
+				position:absolute;
+				right:0.02rem;
+				bottom:0.02rem;
+				background: url(img/icon--tj--01@2x.png) no-repeat right bottom;
+				background-size:contain;
+			}
+			
+			
+			
+			
+			#addGoodsWrap{
+				background-size:cover;
+				position:absolute;
+				top:0;
+				left:0;
+				width:100%;
+				height:100%;
+				display:flex;
+				flex-flow:row;
+				padding:.04rem .04rem .4rem .02rem;
+				transform:translateX(-100%);
+				transition: all 400ms ease;
+			}
+			#addGoodsWrap.active{
+				transform:translateX(0);
+			}
+			#addGoodsWrap .empty{
+				width:3.9rem;
+				background:rgba(255,255,255,.8);
+			}
+			#addGoodsWrap .content{
+				flex:1;
+				background:url(img/BG--01.png) no-repeat center;
+				border:solid .01rem #ffe243;
+				border-radius:.04rem;
+				margin-left:.1rem;
+				display:flex;
+				flex-flow:column;
+				color:#fff;
+			}
+			.content h3{
+				width:100%;
+				height:.56rem;
+				line-height:.56rem;
+				background:#594e18;
+				border-bottom:solid .01rem #bfbfbf;
+				text-align:center;
+				font-size:.21rem;
+			}
+			
+			.basicInfo{
+				width:100%;
+				height:2.25rem;
+				padding:0 .57rem;
+				border-bottom:solid .01rem #fff;
+			}
+			.basicInfo h4{
+				width:1.92rem;
+				height:.50rem;
+				line-height:.50rem;
+				text-align:center;
+				font-size:.17rem;
+				border-bottom: solid .02rem #f99a29;
+				margin-bottom:.4rem;
+
+			}
+			.basicInfo dt{
+				float:left;
+				margin-right:.3rem;
+			}
+			
+			.file {
+			    position: relative;
+			    display: inline-block;
+			    width:1.15rem;
+			    height:1.15rem;
+			    background: url(img/icon--cpsc.png) no-repeat center;
+			    border-radius: 4px;
+			    overflow: hidden;
+			    color: #1E88C7;
+			    text-decoration: none;
+			    text-indent: 0;
+			    line-height: 20px;
+			    
+			}
+			.file input {
+			    position: absolute;
+			    font-size: 100px;
+			    right: 0;
+			    top: 0;
+			    opacity: 0;
+			    width:1.15rem;
+			    height:1.15rem;
+			}
+			
+			
+			.basicInfo dd{
+				height:.4rem;
+				line-height:.4rem;
+				display:flex;
+				flex-flow:row;
+				font-size:.17rem;
+			}
+			.basicInfo dd span{
+				width:1rem;
+				
+			}
+			.basicInfo dd .ui-input-text{
+				border:none;
+				border-radius:0;
+				border-bottom:solid .01rem #fff;
+				width:1.8rem;
+				height:.35rem;
+			}
+			.basicInfo dd input{
+				width:1.8rem;
+				height:.34rem;
+				
+			}
+			.list li{
+				width:100%;
+				height:.67rem;
+				line-height:.66rem;
+				border-bottom:solid .01rem #fff;
+				display:flex;
+				flex-flow:row;
+				padding:0 .42rem;
+			}
+			.list li lable{
+				flex:1;
+			}
+			.list li .ui-input-text{
+				display:inline-block;
+				width:1.65rem;
+				height:.3rem;
+				border:solid .01rem #fff;
+				border-radius:.04rem;
+				margin-right:.15rem;
+				margin-left:.15rem;
+				padding-left:.1rem;
+			}
+			.list li button{
+				width:1.73rem;
+				height:.32rem;
+				border:none;
+				outline:none;
+				border-radius:.04rem;
+				color:#fff;
+			}
+			.list li button.cancelBtn{
+				background:#cdcdcd;
+				float:left;
+				margin-right:.39rem;
+			}
+			.list li button.submitBtn{
+				background:#f99a29;
+				float:right;
+				
+			}
+			/*.file:hover {
+			    background: #AADFFD;
+			    border-color: #78C3F3;
+			    color: #004974;
+			    text-decoration: none;
+			}*/
+			.select_Wrap{
+				top:73%;
+				width:1.78rem;
+				margin-left:.17rem;
+			}
+			._select::after{
+				top:.23rem;
+				right:10%;
+			}
+			.select_Wrap li{
+				height:.4rem;
+				line-height:.4rem;
+			}
+			#preview img{
+				width:100%;
+				height:100%;
+			}
+			._right ._select::after {
+			    top: .17rem;
+			    right: 17%;
+			}
+			._right .select_Wrap{
+				margin-left:.1rem;
+				width:1.65rem;
+				top:79%;
+			}
+			/*添加菜单*/
+			.addorderWrap{
+				width:3.5rem;
+				height:1.5rem;
+				background:#fff;
+				display:flex;
+				flex-flow:column;
+				display:none;
+			}
+			.addorderWrap .addBox{
+				flex:1;
+				padding:.15rem;
+				font-size:.17rem;
+				display:flex;
+				flex-flow:row;
+			}
+			.addorderWrap .addBox div{
+				flex:1;
+			}
+			.addorderWrap .addBox input{
+				flex:1;
+				height:.3rem;
+				line-height:.3rem;
+				border:solid .01rem #cdcdcd;
+				margin-left:.1rem;
+				padding-left:.1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<!--<ul class = "top">
+						<li><img src = "img/icon-D-cp.png"></li>
+						<li><img src = "img/icon-D-tc.png"></li>
+						<li><img src = "img/icon-D-fj.png"></li>
+						<li><img src = "img/icon-D-zb.png"></li>
+					</ul>-->
+					<div class = "productBtn">产品</div>
+					<input type = "text" name = "searchInput" class = "searchInput" placeholder="搜索"/>
+					<ul class = "productList" id = "productList">
+						<!--<li>
+							<img src = "##">
+							<p><span>咖喱鸡饭</span><span class = "price" style = "float:right">￥28.00</span></p>
+							<p style = "margin-top:.1rem;">JP20171212</p>
+						</li>-->
+					</ul>
+					<button class = "addBtn" id = "addBtn">添加商品</button>
+				</div>
+				<div class="_right">
+					<div class = "order">
+						<span>有效菜单</span>
+						
+							<div id = "demo4"></div>
+						<span class = "addOrderBtn"></span>
+						<span class = "saveBtn">保存菜单</span>
+					</div>
+					<!--<div id = "items">-->
+						<div class = "title">
+						<span class = "icon"></span>
+						<ul id = "wrap">
+							
+						</ul>
+					</div>
+					<div class = "contentWrap" id = "contentWrap">
+					</div>
+					
+					
+					
+					<div id = "addGoodsWrap">
+						<div class = "empty"></div>
+						<div class = "content">
+							<h3>新产品</h3>
+							<div class = "basicInfo">
+								<h4>基本信息</h4>
+								<dl>
+									<dt>
+										<a href="javascript:;" class="file">
+    										<input type = "file"  capture="camera" name="imageUpload" id = "FileUpload"/>
+    										<div id="preview" style="width: 1.15rem;height:1.15rem;"></div>
+										</a>
+									</dt>
+									<dd><span>默认名称</span><input type = "text"/></dd>
+									<dd><span>库存数</span> <input type = "text"/></dd> 
+									<dd><span>编号</span> <input type = "text"/></dd>
+								</dl>
+							</div>
+							<ul  class = "list">
+								<li>
+									<lable>价格<input type = "text"/></lable>
+									<lable>成本<input type = "text"/></lable>
+								</li>
+								<li><lable>产品分类<div id = "list"></div></lable></li>
+								<li style = "border:none;">
+									<lable>打印机<div id = "log"></div></lable>
+									<lable>厨显<div id = "show"></div></lable>
+								</li>
+								<li style = "border:none;"></li>
+								<li style = "padding:0 1rem;border:none;">
+									<button class = "cancelBtn" id = "cancelBtn">取消</button>
+									<button class = "submitBtn" id = "submitBtn">确定</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+			
+			
+		</div>
+		</main>
+		<div class = "menuWrap"></div>
+		<!--添加菜单-->
+		<div class = "addWrap addorderWrap" id = "addorderWrap">
+			<h3 class = "title">
+				<span class = "icon_close"></span>
+				<p>添加菜单</p>
+				<span class = "icon_complete"></span>
+			</h3>
+			<div class = "addBox">
+				<span>菜单名称:</span>
+				<input type = "text" class = "orderName" name = "orderName" id = "orderName"/>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="plugin/sortable/Sortable.js" ></script>
+<script type="text/javascript" src="js/select1.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
+<script>
+template();	
+
+	/*获取商品列表*/
+	db.transaction(function(context){
+		context.executeSql('SELECT * FROM goodTable',[],function(tx,result){
+			console.log(result);
+			var str = '';
+			for(var i = 0;i < result.rows.length;i++){
+				str+='<li data-id = "'+result.rows.item(i).id+'">'+
+						'<img src = "http://101.132.109.253:8881/thumb/'+result.rows.item(i).thumb+'">'+
+						'<p><span>'+result.rows.item(i).title+'</span><span class = "price" style = "float:right">￥'+result.rows.item(i).marketprice+'</span></p>'+
+						'<p style = "margin-top:.1rem;">'+result.rows.item(i).number+'</p>'+
+					'</li>'
+			}
+			
+			//$('#productList').html(str);
+		})
+	})
+	/*商品列表查询*/
+	$('.searchInput').on('input',function(){
+		//var _val = '%'+$(this).val()+'%';
+		var _val = $(this).val();
+		var selectstr="SELECT * FROM goodTable WHERE title LIKE '%"+_val+"%'";
+		db.transaction(function(context){
+			context.executeSql(selectstr,[],function(tx,result){
+				console.log(result);
+				var str='';
+				for(var i = 0;i < result.rows.length;i++){
+					str+='<li data-id = "'+result.rows.item(i).id+'">'+
+							'<img src = "http://101.132.109.253:8881/thumb/'+result.rows.item(i).thumb+'">'+
+							'<p><span>'+result.rows.item(i).title+'</span><span class = "price" style = "float:right">￥'+result.rows.item(i).marketprice+'</span></p>'+
+							'<p style = "margin-top:.1rem;">'+result.rows.item(i).number+'</p>'+
+						'</li>'
+				}
+				console.log(result.rows.length)
+				$('#productList').html(str);
+			},function(tx,result){
+				console.log(result);
+			})
+		})
+	})
+
+	
+
+	/*添加菜单*/
+	$('.addOrderBtn').on('click',function(){
+		$('#addorderWrap').show()
+	})
+	$('#addorderWrap').on('click','.icon_close',function(){
+		$('#addorderWrap').hide();
+	})
+	$('#addorderWrap').on('click','.icon_complete',function(){
+		
+		$('#addorderWrap').hide();
+		db.transaction(function(context){
+			context.executeSql('SELECT * FROM menuindexTable',[],function(tx,result){
+				console.log(result);
+				
+			})
+			context.executeSql('SELECT * FROM menuindexTable',[],function(tx,result){
+				console.log(result);
+				
+			})
+		})
+		
+	})
+	
+	function addmenuindex(id){
+		context.executeSql('INSERT OR REPLACE menuindexTable VALUES(?,?,?,?)',[],function(tx,result){
+			console.log(result);
+		})
+	}
+
+
+	/*添加商品*/
+	$('#addBtn').on('click',function(){
+		$('#addGoodsWrap').addClass('active');
+	})
+
+	/*确定*/
+	$('#cancelBtn').on('click',function(){
+		$('#addGoodsWrap').removeClass('active');
+		/*var goodsaveData = {
+			
+		}
+		comm.getAjax('/good/save',goodsaveData,function(info){
+			console.log(info);
+		})*/
+
+		
+
+/*comm.getAjax('/good/save',{'thumb':'',
+				'pcate':'12',
+				'title':'12',
+				'counts':'12',	
+				'printer_id':'12',	
+				'cookhouse_id':'12',
+				'cost':'12'
+			},function(info){
+			console.log(info);
+		})
+		*/
+		/*$.ajax({
+			url;"http://101.132.109.253:8881/index.php/Index/good/save",
+			data:{'thumb':'',
+				'pcate':'12',
+				'title':'12',
+				'counts':'12',	
+				'printer_id':'12',	
+				'cookhouse_id':'12',
+				'cost':'12'
+			},
+			type:'post',
+			sucess:function(info){
+				console.log(info);
+			}
+		})*/
+	})
+	$('#submitBtn').on('click',function(){
+		$('#addGoodsWrap').removeClass('active');
+		
+		
+       	
+       	
+       	
+       	var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
+       	if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+           /*alert("请选择图片");
+           return;*/
+       	}
+       	var formFile = new FormData();
+       	formFile.append("action", "UploadVMKImagePath");  
+       	formFile.append("file", fileObj); //加入文件对象
+       	
+       	console.log(formFile)
+ 
+        /*var data = {
+        	'weid':'4',
+        	'storeid':'1',
+        	'headimgurl':fileObj,
+        	'surname':$('.surname').find('input').val(),
+        	'nickname':$('.nickname').find('input').val(),
+        	'mobile':$('.mobile').find('input').val(),
+        	'tel':$('.tel').find('input').val(),
+        	'idCard':$('.idCard').find('input').val(),
+        	'postcode':$('.postcode').find('input').val()
+        };*/
+        var addgoodsdata = {
+        	'weid':'4',
+        	'storeid':'1',
+        	'headimgurl':'formFile',
+        	'surname':'李',
+        	'nickname':'一',
+        	'mobile':'1234',
+        	'tel':'1234',
+        	'idCard':'12345',
+        	'postcode':'12345'
+        };
+        /*cache: false,//上传文件无需缓存
+           	processData: false,//用于对data参数进行序列化处理 这里必须false
+           	contentType: false, //必须*/
+       	$.ajax({
+            url: "http://101.132.109.253:8881/index.php/Index/good/save",
+           	data: formFile,
+           	type: "Post",
+           	dataType: "json",
+           	cache: false,//上传文件无需缓存
+           	processData: false,//用于对data参数进行序列化处理 这里必须false
+           	contentType: false, //必须
+           	success: function (result) {
+           		console.log(result)
+               	//alert("上传完成!");
+           	},
+           	error:function(info){
+           		console.log(info)
+           	}
+       	})
+		
+ 
+       // var data = formFile;
+       /*	$.ajax({
+            url: "http://101.132.109.253:8881/index.php/Index/good/save",
+           	data: addgoodsdata,
+           	type: "Post",
+           	dataType: "json",
+           	cache: false,//上传文件无需缓存
+           	processData: false,//用于对data参数进行序列化处理 这里必须false
+           	contentType: false, //必须
+           	success: function (result) {
+           		console.log(result)
+               	//alert("上传完成!");
+           	},
+           	error:function(data){
+           		console.log(data)
+           	}
+       	})
+		*/
+		
+		
+		
+	})
+	
+	
+var abc = document.getElementById('wrap');
+var _TabIndex = 0;//当前显示的tab的下标
+ 
+$('._right').on('click','.tab-header',function(){
+	_TabIndex = $(this).index();
+	console.log(_TabIndex)
+	tabChange(_TabIndex)
+})
+
+$('.contentWrap').on('swipeleft',function(){
+	_TabIndex++;
+	if(_TabIndex>$('.contentWrap .tab-content').length-1){
+		_TabIndex=$('.contentWrap .tab-content').length-1;
+	}
+	tabChange(_TabIndex); 
+})
+
+$('.contentWrap').on('swiperight',function(){
+	console.log(12);
+	_TabIndex--;
+	if(_TabIndex<0){
+		_TabIndex=0;
+	}
+	tabChange(_TabIndex)
+})
+function tabChange(_TabIndex){
+	$('.contentWrap').css({'transform':'translateX('+$("._right .tab-content")[0].offsetWidth*_TabIndex/-100+'rem)'});
+	
+	var transX = _TabIndex*$('._right .tab-header')[0].offsetWidth/100 + $('._right .tab-header')[0].offsetWidth/100/2+0.13;
+	$('.icon').css({'transform':'translateX('+transX+'rem)'});
+	
+	$('._right .tab-header').removeClass('active');
+	$('._right .tab-header').eq(_TabIndex).addClass('active');
+	
+	
+	for(var i = 0; i <$('._right .tab-header').length;i++ ){
+		$('._right .tab-header').eq(i).find('img').prop('src','img/icon--W--'+ i +'.png');
+	}
+	$('._right .tab-header').eq(_TabIndex).find('img').prop('src','img/icon--W--'+ _TabIndex +'--active.png');
+	
+}
+	
+	
+	
+	
+	/*拖拽改变排序*/
+	function drug(){
+		
+	
+	var str = "<li>item 1</li><li>item 2</li><li>item 3</li> <li>item 4</li><li>item 5</li><li>item 6</li> ";
+		//$('#items').html(str);
+		
+		console.log(window.jQuery)
+		var el = document.getElementById('items0');  
+		//new Sortable(el);
+		new Sortable(el, {  
+		    group: "name",  
+		    store: {  
+		        /**  
+		         * Get the order of elements. Called once during initialization.  
+		         * @param   {Sortable}  sortable  
+		         * @retruns {Array}  
+		         */  
+		        get: function (sortable) {  
+		            var order = localStorage.getItem(sortable.options.group);  
+		            console.log(order)
+		            return order ? order.split('|') : [];  
+		        },  
+		   
+		        /**  
+		         * Save the order of elements. Called every time at the drag end.  
+		         * @param {Sortable}  sortable  
+		         */  
+		        set: function (sortable) {  
+		            var order = sortable.toArray();  
+		            localStorage.setItem(sortable.options.group, order.join('|'));  
+		        }  
+		    },
+		    //handle: ".my-handle", // 点击目标元素约束开始  
+		   // draggable: ".item",   // 指定那些选项需要排序  
+		    ghostClass: "sortable-ghost",  
+		   
+		    onStart: function (/**Event*/evt) { // 拖拽  
+		        var itemEl = evt.item;  
+		    },  
+		   
+		    onEnd: function (/**Event*/evt) { // 拖拽  
+		        var itemEl = evt.item;  
+		    },  
+		   
+		    onAdd: function (/**Event*/evt){  
+		        var itemEl = evt.item;  
+		    },  
+		   
+		    onUpdate: function (/**Event*/evt){  
+		        var itemEl = evt.item; // 当前拖拽的html元素  
+		    },  
+		   
+		    onRemove: function (/**Event*/evt){  
+		        var itemEl = evt.item;  
+		    }
+		     
+		    
+		});  
+	
+	}
+	
+	
+        function preview1(file) {
+            var img = new Image(), url = img.src = URL.createObjectURL(file)
+            var $img = $(img)
+            img.onload = function() {
+                URL.revokeObjectURL(url)
+                $('#preview').empty().append($img)
+            }
+        }
+        function preview2(file) {
+            var reader = new FileReader()
+            reader.onload = function(e) {
+                var $img = $('<img>').attr("src", e.target.result)
+                $('#preview').empty().append($img)
+            }
+            reader.readAsDataURL(file)
+        }
+         
+       
+        $('[type=file]').change(function(e) {
+            var file = e.target.files[0];
+            preview1(file);
+        })
+    
+    var data={
+    	'weid':'4',
+    	'storeid':'1'
+    }
+    var menu_id;
+    db.transaction(function(context){
+    	context.executeSql('SELECT * FROM menuidTable',[],function(tx,result){
+    		console.log(result)
+    		menu_id = result.rows.item(0).menu_id;
+    		getCategory(menu_id)
+    	})
+    })
+    
+    function getCategory(menu_id){
+    	console.log(menu_id)
+    	menu_id = Number(menu_id)
+    	db.transaction(function(context){
+		   	context.executeSql('SELECT * FROM categoryTable WHERE menu_id=?',[menu_id],function(tx,result){
+		   		console.log(result);
+		   		callback1(result)
+		   	})
+	   	})
+    }
+    
+    /*菜单列表*/
+   //	comm.getAjax('/menu/index',data,callback);
+   	db.transaction(function(context){
+	   	context.executeSql('SELECT * FROM menuindexTable',[],function(tx,result){
+	   		console.log(result);
+	   		callback(result)
+	   	})
+   	})
+   	function callback(info){
+   		console.log(info)
+   		/*if(info.code!=1){
+   			return;
+   		}*/
+   		var selectArr=[];
+   		var idArr = [];
+   		for(var i = 0;i < info.rows.length;i++){
+   			selectArr.push(info.rows.item(i).title);
+   			idArr.push(info.rows.item(i).id);
+   		}
+   		var select4 = new select();
+		select4.init({
+			trigger:'#demo4',//input框de包裹div
+			contentArr:selectArr,//
+			values:idArr,
+			initCon:selectArr[0],
+			isInput:false,//是否可以输入  默认为true 可以模糊查询
+			success:function(){
+				/*菜单中的商品分类*/
+				comm.getAjax('/menu/menu_category',dataMenu,callback1)
+			}
+		})
+   	};
+	var dataMenu={
+		'menu_id':'1'
+	}
+	/*菜单分类*/
+	//comm.getAjax('/menu/menu_category',dataMenu,callback1)
+	var currMenu_id =1;
+	
+	db.transaction(function(context){
+		var selectStr ='SELECT * FROM menucategoryTable'+currMenu_id; 
+		context.executeSql(selectStr,[],function(tx,result){
+			console.log(result);
+		},function(tx,result){
+			console.log(result);
+		})
+	})
+	function callback1(info){
+		//window.location.reload();
+		console.log(info);
+		var str = "";
+		var str1 = "";
+		for(var i = 0;i < info.rows.length;i++){
+			str+='<li class = "tab-header">'+
+					'<span>'+
+						'<img src = "img/icon--M--0.png"/>'+
+						'<p>'+info.rows.item(i).title+'</p>'+
+					'</span>'+
+				'</li>';
+			str1+= '<div class = "tab-content" data-categoryId = '+info.rows.item(i).id+'>'+
+						'<ul id = "items'+i+'">'+
+						'</ul>'+
+					'</div>';
+			var abc =  getGood(info.rows.item(i).id);
+			console.log(abc)
+		}
+		
+		$('#wrap').html(str);
+		$('#contentWrap').html(str1);
+		
+		
+		$('._right .title ul').css({'width':$(".title ul li").length*$("._right .title ul li").width()/100+'rem'});
+		$('._right .contentWrap').css({'width':$(".title ul li").length*$("._right .tab-content")[0].offsetWidth/100+'rem'});
+	}
+	/*菜单商品*/
+	function getgoodfun(){
+		db.transaction(function(context){
+			context.executeSql('')
+		})
+	}
+	
+	function getGood(classfyId){
+		var goodsStr = '';
+		db.transaction(function(context){
+			context.executeSql('SELECT * FROM menucategoryTable1 WHERE classfyId=?',[classfyId],function(tx,result){
+				console.log(result);
+				
+				for(var i = 0; i <result.rows.length;i++){
+					goodsStr+='<li>'+
+									'<img src = "http://101.132.109.253:8881/thumb/'+result.rows.item(i).thumb+'"/>'+
+									'<span class = "icon--add"></span>'+
+								'</li>'
+				}
+				for(var i = 0; i < $('#contentWrap .tab-content').length;i++){
+					if($('#contentWrap .tab-content').eq(i).data('categoryid')==classfyId){
+						$('#contentWrap .tab-content').eq(i).html(goodsStr);
+					}
+				}
+				return goodsStr;
+			},function(tx,result){
+				console.log(result);
+			})
+		})
+	}
+	
+	   
+	
+</script>

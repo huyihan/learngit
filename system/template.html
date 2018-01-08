@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+	</head>
+		
+	<body>
+		<div class = "header" id = "headerBox">
+			<span class = "headerIcon menuBtn" id = "menuBtn"></span>
+			<h1></h1>
+			<span class = "headerIcon headerIcon1" id = "headerIcon1"></span>
+			<span class = "headerIcon headerIcon2" id = "headerIcon2"></span>
+		</div>
+		
+		<div id="menu">
+		    <div class = "menuHeaderWrap">
+		    	<img src = "img/icon--tx@1x.png" class = "headImg" />
+		    	<p><span>姓名:刘晓莉</span></p>
+		    	<p><span>收银员编号:123456</span></p>
+		    	<i class = "menuBtn1" id = "menuBtn1"></i>
+		    </div>
+		    <ul>
+		        <li><a href="tableList.html" class="contentLink" style = "background: url(img/icon--D-xs.png) no-repeat left center">销售 </a></li>
+		        <li><a href="menu.html" class="contentLink" style = "background: url(img/icon--D-cd.png) no-repeat left center">菜单 </a></li>
+		        <li><a href="member.html" class="contentLink" style = "background: url(img/icon--D-hy.png) no-repeat left center">会员 </a></li>
+		        <li><a href="appointment.html" class="contentLink" style = "background: url(img/icon--D-yy.png) no-repeat left center">预约 </a></li>
+		        <li><a href="#home" class="contentLink" style = "background: url(img/icon--D-kc.png) no-repeat left center">库存 </a></li>
+		        <li><a href="#home" class="contentLink" style = "background: url(img/icon--D-bb.png) no-repeat left center">报表 </a></li>
+		        <li><a href="#home" class="contentLink" style = "background: url(img/icon--D-czsz.png) no-repeat left center">餐桌管理 </a></li>
+		        <li><a href="#home" class="contentLink" style = "background: url(img/icon--D-sz.png) no-repeat left center">设置 </a></li> 
+		    </ul>
+			    
+			    
+		   
+		</div>
+		
+		
+		
+		
+		
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-3.1.1.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script>
+	
+		/*$(document).bind("mobileinit", function () {
+		    $.mobile.pushStateEnabled = true;
+		});
+		$(function () {
+		    var menuStatus;
+		    var show = function() {
+		        if(menuStatus) {
+		            return;
+		        }
+		        $('#menu').show();
+		        $.mobile.activePage.animate({
+		            marginLeft: "165px",
+		        }, 300, function () {
+		            menuStatus = true
+		        });
+		    };
+		    var hide = function() {
+		        if(!menuStatus) {
+		            return;
+		        }
+		        $.mobile.activePage.animate({
+		            marginLeft: "0px",
+		        }, 300, function () {
+		            menuStatus = false
+		            $('#menu').hide();
+		        });
+		    };
+		    var toggle = function() {
+		        if (!menuStatus) {
+		            show();
+		        } else {
+		            hide();
+		        }
+		        return false;
+		    };
+		    // Show/hide the menu
+		    $("a.showMenu").click(toggle);
+		    $('#menu, .pages').on("swipeleft", hide);
+		    $('.pages').on("swiperight", show);
+		    $('div[data-role="page"]').on('pagebeforeshow', function (event, ui) {
+		        menuStatus = false;
+		        $(".pages").css("margin-left", "0");
+		    });
+		    // Menu behaviour
+		    $("#menu li a").click(function () {
+		        var p = $(this).parent();
+		        p.siblings().removeClass('active');
+		        p.addClass('active');
+		    });
+	})*/
+	
+	</script>
+	
+	

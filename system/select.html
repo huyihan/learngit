@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    	<link rel="stylesheet" type="text/css" href="select.css"/>
+		<title></title>
+		<style>
+			
+		</style>
+	</head>
+	<style>
+		
+	</style>
+	<body>
+		<!--<p id = "#demo1">1234454</p>-->
+		<div id = "demo1"></div>
+		<p>+/-</p>
+	</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="select.js" ></script>
+<script type="text/javascript">
+	var select = new select();
+	//$('#demo1').click(function(){
+	select.init({
+		trigger:'#demo1',//input框de包裹div
+		contentArr:['12','12','22','11'],//
+		isInput:false//是否可以输入  默认为true 可以模糊查询
+	})
+	//})
+	
+</script>
+<!--var TempArr=[];//存储option  
+  
+$(function(){  
+    /*先将数据存入数组*/  
+    $("#typenum option").each(function(index, el) {  
+        TempArr[index] = $(this).text();  
+    });  
+    $(document).bind('click', function(e) {    
+        var e = e || window.event; //浏览器兼容性     
+        var elem = e.target || e.srcElement;    
+        while (elem) { //循环判断至跟节点，防止点击的是div子元素     
+            if (elem.id && (elem.id == 'typenum' || elem.id == "makeupCo")) {    
+                return;    
+            }    
+            elem = elem.parentNode;    
+        }    
+        $('#typenum').css('display', 'none'); //点击的不是div或其子元素     
+    });    
+})  
+  
+function changeF(this_) {  
+    $(this_).prev("input").val($(this_).find("option:selected").text());  
+    $("#typenum").css({"display":"none"});  
+}  
+function setfocus(this_){  
+    $("#typenum").css({"display":""});  
+    var select = $("#typenum");  
+    for(i=0;i<TempArr.length;i++){  
+        var option = $("<option></option>").text(TempArr[i]);  
+        select.append(option);  
+    }   
+}  
+  
+function setinput(this_){  
+    var select = $("#typenum");  
+    select.html("");  
+    for(i=0;i<TempArr.length;i++){  
+        //若找到以txt的内容开头的，添option  
+        if(TempArr[i].substring(0,this_.value.length).indexOf(this_.value)==0){  
+            var option = $("<option></option>").text(TempArr[i]);  
+            select.append(option);  
+        }  
+    }  
+}  -->

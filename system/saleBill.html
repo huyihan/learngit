@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>销售票据列表</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" type="text/css" href="plugin/ICalendar/css/lCalendar.css"/>
+	</head>
+	<style>
+		.header .headerIcon1{
+			background:url(img/icon--sc--00.png) no-repeat center;
+		}
+		.header .headerIcon2{
+			background:url(img/icon--dy--00.png) no-repeat center;
+		}
+		main{
+			background:url(img/BG.png) no-repeat center;
+			background-size:cover;
+			display:flex;
+			flex-flow:column;
+			padding-bottom:.22rem;
+			color:#fff;
+		}
+		#container{
+			flex:1;
+			display:flex;
+			flex-flow:row;
+			border-bottom:solid 1px #fff;
+		}
+		._left{
+			width:3.9rem;
+			height:100%;
+			border-right:solid 1px #fff;
+			text-align:center;
+		}
+		._left .searchInput{
+			width:3.5rem;
+			height:.32rem;
+			border:solid .01rem #fff;
+			border-radius:.04rem;
+			display:inline-block;
+			margin:.21rem auto;
+			font-size:.17rem;
+			text-align: center;
+		}
+		._left dl{
+			text-align:left;
+			margin-bottom:.6rem;
+		}
+		._left dt{
+			display:block;
+			width:100%;
+			height:.4rem;
+			line-height:.4rem;
+			border-bottom:solid .01rem #fff;
+			font-size:.21rem;
+			padding-left:.2rem;
+		}
+		._left dd{
+			display:block;
+			width:100%;
+			height:.4rem;
+			line-height:.4rem;
+			border-bottom:solid .01rem #fff;
+			font-size:.21rem;
+			padding-left:.2rem;
+		}
+		._left .time{
+			
+		} 
+		._left dl div{
+			float:right;
+			width:70%;
+		}
+		._left span{
+			float:left;
+			width:30%;
+		}
+		._left input{
+			background: transparent;
+			border:none;
+			outline:none;
+			width:100%;
+			height:.39rem;
+			text-align: right;
+			padding-right:.2rem;
+		}
+		
+		
+		._right{
+			flex:1;
+			height:100%;
+			display:flex;
+			flex-flow:column;
+			margin:0 .1rem 0;
+			border:solid .01rem #ffe243;
+			border-radius:.04rem;
+		}
+		._right .list-wrap{
+			flex:1;
+			display:flex;
+			flex-flow:column;
+		}
+		._right .list-wrap .title{
+			height:.56rem;
+			line-height:.56rem;
+			display: flex;
+			flex-flow:row;
+			border-bottom:solid .01rem #fff;
+			padding:0 .18rem;
+			background: #5a501a;
+		}
+		
+		._right .title span{
+			flex:1;	
+			text-align:center;
+		}
+		._right .title span:first-child{
+			text-align: left;
+		}
+		._right .title span:last-child{
+			text-align:right;
+		}
+		
+		._right .list-wrap ul{
+			flex:1;
+			overflow-y:auto;
+			width:100%;
+		}
+		._right .list-wrap ul li{
+			display:flex;
+			flex-flow:row;
+			width:100%;
+			height:.55rem;
+			line-height:.54rem;
+			border-bottom:solid .01rem #fff;
+		}
+		._right .list-wrap ul li span{
+			flex:1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			text-align: center;
+		}
+		._right .list-wrap ul li span:first-child{
+			text-align: left;
+		}
+		._right .list-wrap ul li span:last-child{
+			text-align: right;
+		}
+		
+		.fileExportWrap{
+			width:3.68rem;
+			height:1.74rem;
+			position:fixed;
+			top:50%;
+			left:50%;
+			transform:translate(-50%,-50%);
+			background:#fff;
+			z-index:1;
+			color:#2f2843;
+			
+			display: none;
+			
+		}
+		.fileExportWrap dl{
+			width:100%;
+			height:100%;
+			text-align: center;
+		}
+		.fileExportWrap dl dt{
+			width:100%;
+			height:.43rem;
+			line-height:.43rem;
+			border-bottom:solid .01rem #cdcdcd;
+		}
+		.fileExportWrap dl dd{
+			width:100%;
+			height:.43rem;
+			line-height:.43rem;
+			border-bottom:solid .01rem #cdcdcd;
+		}
+		
+		.invoiceWrap{
+			width:3.64rem;
+			height:4.5rem;
+			background: #fff;
+			color:#2f2843;
+		}
+		.invoiceWrap ul{
+			padding:.1rem .3rem 0;
+		}
+		.invoiceWrap li{
+			height:.8rem;
+		}
+		.inputWrap ul p{
+			line-height:.25rem;
+			font-size:.17rem;
+		}
+		.invoiceWrap ul input{
+			width:100%;
+			height:.32rem;
+			line-height:.32rem;
+			border:solid .01rem #cdcdcd;
+			border-radius:.04rem;
+		}
+		.invoiceWrap button{
+			width:2.8rem;
+			height:.32rem;
+			background:#f28f64;
+			color:#fff;
+			display:block;
+			margin:0 auto;
+		}
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<input type = "text" class = "searchInput" placeholder="搜索"/>
+					<dl>
+						<dt>日期范围</dt>
+						<dd class = "time" ><span>开始时间</span><input type = "text" id = "beginTime" placeholder = "请选择时间" class = "timeInput"/></dd>
+						<dd class = "time" ><span>结束时间</span><input type = "text" id = "endTime" placeholder = "请选择时间" class = "timeInput"/></dd>
+					</dl>
+					
+					<dl style = "margin-bottom:.58rem;">
+						<dt>门店</dt>
+						<dd><span>门店</span><input type = "text" /></dd>
+						<dd><span>终端</span><input type = "text" /></dd>
+					</dl>
+					
+					<dl style = "margin-bottom:.42rem;">
+						<dt>销售类型</dt>
+						<dd><span>销售类型</span><input type = "text" /></dd>
+					</dl>
+					
+					<dl style = "margin-bottom:0;">
+						<dt>客户</dt>
+						<dd><span>客户</span><input type = "text" /></dd>
+					</dl>
+				</div>
+				<div class = "_right">
+					
+					<div class = "list-wrap">
+						<p class = "title">
+							<span>发票号</span>
+							<span>发票日期</span>
+							<span>不含税</span>
+							<span>税金</span>
+							<span>舍入</span>
+							<span>总计</span>
+						</p>
+						<ul>
+							<li>
+								<span>123344566788</span>
+								<span>12334</span>
+								<span>￥123.12</span>
+								<span>￥123.12</span>
+								<span>￥123.12</span>
+								<span>￥123.12</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</main>
+		<div class = "menuWrap"></div>
+		<!--文档导出-->
+		<div class = "fileExportWrap" id = "fileExportWrap">
+			<dl>
+				<dt>文档导出</dt>
+				<dd>PDF</dd>
+				<dd>csv</dd>
+				<dd>取消</dd>
+			</dl>
+		</div>
+		
+		<!--发票上传-->
+		<div class = "invoiceWrap addWrap" id = "invoiceWrap">
+			<h3 class = "title">
+				<span class= "icon_close close"></span>
+				<p>发票上传</p>
+				<span class = "icon_complete"></span>
+			</h3>
+			<ul>
+				<li>
+					<p>起始日期</p>
+					<input type = "text">
+				</li>
+				<li>
+					<p>起始时间</p>
+					<input type = "text">
+				</li>
+				<li>
+					<p>结束日期</p>
+					<input type = "text">
+				</li>
+				<li>
+					<p>结束时间</p>
+					<input type = "text">
+				</li>
+			</ul>
+			<button>创建</button>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="plugin/ICalendar/js/lCalendar.js" ></script>
+<script>
+	template()
+	$('.timeInput').on('focus',function(){
+		$(this).blur();
+	})
+	
+	var calendar = new lCalendar();
+	calendar.init({
+		'trigger': '#beginTime',
+		'type': 'date'
+	});
+	var calendardatetime = new lCalendar();
+	calendardatetime.init({
+		'trigger': '#endTime',
+		'type': 'date'
+	});
+	
+</script>

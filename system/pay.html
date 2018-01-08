@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>支付列表</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+	</head>
+	<style>
+		main{
+			background:url(img/BG-2.png) no-repeat center;
+			background-size:cover;
+			color:#fff;
+		}
+		#container{
+			padding:.06rem .06rem .45rem;
+			display:flex;
+			flex-flow:row;
+		}
+		#container ._left{
+			flex:4;
+			border:solid .01rem #fff;
+			border-radius:.04rem;
+		}
+		._left{
+			padding:.14rem 0;
+			display:flex;
+			flex-flow:column;
+		}
+		._left .card-list{
+			flex:9;
+		}
+		._left .card-list li{
+			width:50%;
+			float:left;
+			padding:.29rem .15rem;
+			
+		}
+		._left .card-list li img{
+			width:100%;
+			height:auto;
+		}
+		._left .chooseWrap{
+			flex:2;
+			padding:0 .19rem;
+		}
+		._left .chooseWrap button{
+			width:50%;
+			height:.4rem;
+			border:solid .01rem #f28f64;
+			font-size:.17rem;
+			color:#f28f64;
+			float:left;
+			background:transparent;
+			border-radius:0;
+		}
+		._left .chooseWrap button.active{
+			background:#f28f64;
+			color:#fff;
+		}
+		
+		#container ._center{
+			flex:5;
+			border:solid .01rem #f7de14;
+			border-radius:.04rem;
+			margin:0 .08rem;
+			padding:.45rem .2rem 0;
+		}
+		._center .cal_title{
+			width:100%;
+			height:.42rem;
+			border:solid .01rem #fff;
+			border-radius:.05rem;
+			margin-bottom:.21rem;
+		}
+		._center .cal_title input{
+			width:100%;
+			height:.42rem;
+			background: transparent;
+			border:none;
+			text-align: right;
+			padding-right:.1rem;
+		}
+		._center .cal_con ol{
+			overflow: hidden;
+			height:100%;
+		}
+		
+		.cal_con ul{
+			overflow: hidden;
+			width:100%;
+			height:100%;
+			padding-left:.39rem;
+			margin-top:.17rem;
+		}
+		.cal_con ul li{
+			width:.63rem;
+			height:.45rem;
+			line-height:.45rem;
+			text-align: center;
+			background:#1b120f;
+			float:left;
+			margin-right:.18rem;
+			margin-bottom:.15rem;
+			background: url(img/icon--cal-s.png) no-repeat center;
+		}
+		.cal_con ul li.clearScreen{
+			width:1.44rem;
+			background: url(img/icon--cal-m.png) no-repeat center;
+		}
+		
+		._center .cal_con  ol li{
+			width:.97rem;
+			height:.42rem;
+			background: #c1bfbe;
+			color:#2f2843;
+			float:left;
+			margin:0 .08rem .11rem 0;
+			line-height:.42rem;
+			text-align:center;
+			border-radius:.04rem;
+		}
+		._center .cal_con  ol li.double{
+			width:2.02rem;
+			
+		}
+		._center .submitBtn{
+			width:90%;
+			display:block;
+			height:.42rem;
+			background:#f28f64;
+			font-size:.21rem;
+			color:#fff;
+			line-height:.42rem;
+			text-align:center;
+			margin-top:.49rem;
+			border: none;
+			outline: none;
+		}
+		#container ._right{
+			flex:6;
+			border:solid .01rem #fff;
+			border-radius:.04rem;
+			display:flex;
+			flex-flow:column;
+		}
+		._right .title{
+			width:100%;
+			height:.69rem;
+			line-height:.69rem;
+			text-align: center;
+			font-size:.21rem;
+			background:rgba(183,166,26,.6);
+		}
+		._right ul{
+			flex:1;
+		}
+		._right ul li{
+			height:.42rem;
+			border-bottom:solid .01rem #fff;
+			font-size:.21rem;
+			line-height:.42rem;
+			display:flex;
+			flex-flow:row;
+			padding:0 .2rem;
+		}
+		._right ul li span{
+			width:1rem;
+		}
+		._right ul li div{
+			flex:1;
+			display:block;
+		}
+		
+		._right ul li input{
+			flex:1;
+			height:.4rem;
+			line-height:.4rem;
+			text-align:right;
+		}
+		
+	</style>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<ul class = "card-list">
+						<li>
+							<img src = "img/183836527368980243.png" />
+						</li>
+						<li>
+							<img src = "img/183836527368980243.png" />
+						</li>
+					</ul>
+					<div class = "chooseWrap">
+						<button class = "active">单选择</button>
+						<button>多选择</button>
+					</div>
+				</div>
+				<div class = "_center">
+					<div class = "calculate">
+						<!--<div class = "cal_title">
+							<input type = "text" onfocus="this.blur()" value = "0.00" id = "prefer"/>
+						</div>
+						<div class = "cal_con">
+							<ol>
+								<li data-value = "10">￥10</li>
+								<li data-value = "20">￥20</li>
+								<li data-value = "50">￥50</li>
+								<li class = "double" data-value = "100">￥100</li>
+								<li data-value = "1">正好</li>
+							</ol>
+							<ul>
+								<li class = "_number">7</li>
+								<li class = "_number">8</li>
+								<li class = "_number">9</li>
+								
+								<li class = "_number">4</li>							
+								<li class = "_number">5</li>
+								<li class = "_number">6</li>
+								
+								<li class = "_number">1</li>
+								<li class = "_number">2</li>
+								<li class = "_number">3</li>
+								
+								<li class = "_number">0</li>
+								<li class = "_number">00</li>
+								<li class = "_dort">.</li>
+								
+								<li class = "clearScreen">清除</li>
+								<li class = ""><</li>
+							</ul>
+						</div>-->
+						
+					</div>
+					<button class= "submitBtn" id = "submitBtn">确定</button>
+				</div>
+				<div class = "_right">
+					<div class = "title">支付详情</div>
+					<ul>
+						<li>
+							<span>产品折扣</span>
+							<input type = "text"/>
+						</li>
+						<li style = "margin-bottom:.6rem;">
+							<span>特别折扣</span>
+							<input type = "text"/>
+						</li>
+						<li>
+							<span>总额</span>
+							<input type = "text"/>
+						</li>
+						<li style = "margin-bottom:2rem;">
+							<span>服务费</span>
+							<input type = "text"/>
+						</li>
+						<li class = "dealwith">
+							<span>应付金额</span>
+							<input type = "text"/>
+						</li>
+						<li class = "payTotal" id= "payTotal">
+							<span>实收金额</span>
+							<input type = "text"/>
+						</li>
+						<li id = "lcount" style = "border-bottom:none;">
+							<span>找零</span>
+							<input type = "text"/>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</main>
+		<div class = "menuWrap"></div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/calculate.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
+<script>
+	template();
+	
+	
+	var orderNum=comm.getQueryString('orderNum');
+	
+	db.transaction(function(context){
+		context.executeSql('SELECT * FROM takeorderTable WHERE orderNum=?',[orderNum],function(tx,result){
+			console.log(result);
+			if(result.rows.length==0){return;}
+			$('#prefer').attr('placeholder',result.rows.item(0).dealwith);
+			$('.dealwith input').val(result.rows.item(0).dealwith);
+			$('#just').data('value',result.rows.item(0).dealwith);
+		})
+	})
+	
+	var calculate1 = new calculate();
+	calculate1.init({
+		trigger:'.calculate'
+	})
+	
+	$('._center').on('click',' ol li',function(){
+		
+		$('#prefer').val($(this).data('value'))
+	})
+	 var preferStr = $('#prefer').val();
+	 
+	 $('._center').on('click','._number',function(){
+	 	preferStr+=$(this).html();
+	 	$('#prefer').val(preferStr);
+	 	$('#payTotal input').val(preferStr);
+	 	$('#lcount input').val(comm.sub(preferStr,'60'))
+	 })
+	 $('.clearScreen').click(function(){
+		$('#prefer').val(' ');
+		preferStr = '';
+	})
+	 $('.tab').on('click',function(){
+		console.log(String(preferVal).length);
+		preferVal = preferVal.splice(0,String(preferVal).length-1)[0];
+		console.log(preferVal);
+	})
+	 
+	 
+	 /*支付完成  上传订单 改变订单状态*/
+	$('#submitBtn').on('click',function(){
+		//db.transaction('SELECT FROM ')
+		
+		
+		
+		
+		var payData = {
+				"weid": "4",        //品牌标识
+				"storeid": "1",       //门店标识
+				"table_id": "1",       //餐桌id
+				"person": "4",          //就餐人数
+				"name":"李",            //客户姓名
+				"create_time":"2018-01-04 13:20:20",        //创建时间
+				"order_id":"4120180104132020",                //订单编号
+				"remark":"666",                                        //备注
+				"goods": [                                                //商品数组
+				    {
+				        "name": "111",                                //商品名称
+				        "good_id": "1",                                //商品id
+				        "num":"1",                                       //商品数量
+				        "price":"30",                                   //商品单价
+				        "total":"30"                                     //商品总价
+				    },
+				    {
+				        "name": "222",
+				        "good_id": "2",
+				        "num":"1",
+				        "price":"20",
+				        "total":"20"
+				    }
+				  ]
+				
+			}
+		
+		comm.getAjax('/order/save',payData,function(info){
+			console.log(info)
+		})
+	})
+</script>
