@@ -71,3 +71,15 @@ comm.div = function(a, b) {
     } catch (g) {}
     return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), mul(c / d, Math.pow(10, f - e));
 }
+/*日期不满两位补0*/
+comm.Appendzero = function(obj){  
+    if(obj<10) return "0" +""+ obj;  
+    else return obj;  
+}  
+/*时分秒加减转换   10:20:30+00:10:00*/
+comm.secondsChange = function(a,b){
+	var startTime = Number(a.split(':')[0]*3600)+Number(a.split(':')[1]*60-0)+Number(a.split(':')[2]);
+	var times = Number(b.split(':')[0]*3600)+Number(b.split(':')[1]*60-0)+Number(b.split(':')[2]);
+	var result = Number(startTime)+Number(times);
+	return comm.Appendzero(parseInt(result/3600))+":"+comm.Appendzero(parseInt(result%3600/60))+":" +comm.Appendzero(parseInt(result%3600%60));
+}

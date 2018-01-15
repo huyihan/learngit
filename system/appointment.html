@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="css/comm.css" />
 		<link rel="stylesheet" href="plugin/jQueryCalendar/calendar.css" />
 		<link rel="stylesheet" href="plugin/ICalendar/css/lCalendar.css" />
+		<link rel="stylesheet" href="plugin/ICalendar1/css/lCalendar.css" />
 	</head>
 	<style>
 		.header .headerIcon{
@@ -33,6 +34,7 @@
 			border:solid .01rem #f5cd44;
 			border-radius:.04rem;
 			margin-right:.1rem;
+			overflow-y: auto;
 		}
 		#container ._right{
 			flex:1;
@@ -72,6 +74,18 @@
 			display:flex;
 			flex-flow:row;
 		}
+		._right .list li.waiting{
+			background:rgb(255,228,80);
+		}
+		._right .list li.arrive{
+			background:rgb(136,196,98);
+		}
+		._right .list li.past{
+			background:rgb(161,29,27);
+		}
+		
+		
+		
 		._right .list li span{
 			flex:1;
 			text-align: center;
@@ -126,7 +140,6 @@
 		#setWrap{
 			width:3.64rem;
 			height:2.9rem;
-			
 			display:none;
 		}
 		#setWrap ul{
@@ -154,9 +167,11 @@
 		}
 		
 		
-		#addWrap{
+		.addWrap{
 			width:3.64rem;
 			height:6.5rem;
+			background: #fff;
+			display:none;	
 		}
 		#addWrap ul{
 			flex:1;
@@ -170,6 +185,8 @@
 			border-bottom:solid .01rem #cdcdcd;
 			display:flex;
 			flex-flow:row;
+			font-size:.21rem;
+			color:#2F2843;
 		}
 		#addWrap ul li span{
 			width:1rem;
@@ -182,6 +199,38 @@
 		#addWrap ul li input{
 			width:100%;
 			height:100%;
+		}
+		#addWrap button{
+			width:2.8rem;
+			height:.32rem;
+			font-size:.17rem;
+			background:#F28F64;
+			color:#fff;
+			display:block;
+			margin: .1rem auto .3rem;
+		}
+		#addWrap .full{
+			border-bottom:none;
+		}
+		#addWrap .full input{
+			border:solid .01rem #cdcdcd;
+			border-radius:.04rem;
+			padding-left:.1rem;
+		}
+		#tableListWrap{
+			display:none;
+		}
+		#tableListWrap ul{
+			flex:1;
+			overflow-y:auto;
+		}
+		#tableListWrap ul li{
+			padding:0 .2rem;
+			height:.4rem;
+			line-height:.4rem;
+			font-size:.17rem;
+			color:#2F2843;
+			border-bottom:solid .01rem #cdcdcd;
 		}
 	</style>
 	<body>
@@ -201,19 +250,16 @@
 						</ul>
 					</h2>
 					
-					<ul class = "list">
-						<li>
-							<span>2017-12-12</span>
-							<span>12:00-12:00</span>
-							<span>你是谁啊</span>
-							<span>88</span>
-						</li>
+					<ul class = "list" id = "list">
+						
 					</ul>
 					
 					<p>
-						<span style = "color:rgb(161,29,27);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(161,29,27);margin-right:.1rem;"></span>预约</span>
-						<span style = "color:rgb(255,228,80);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(255,228,80);margin-right:.1rem;"></span>预约</span>
-						<span style = "color:rgb(136,196,98);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(136,196,98);margin-right:.1rem;"></span>预约</span>
+						<span style = "color:rgb(136,196,98);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(136,196,98);margin-right:.1rem;"></span>客人已到达</span>
+						
+						<span style = "color:rgb(255,228,80);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(255,228,80);margin-right:.1rem;"></span>等待客人中</span>
+						<span style = "color:rgb(161,29,27);flex:1;"><span style = "display:inline-block;width:.2rem;height:.2rem;border-radius:.04rem;background:rgb(161,29,27);margin-right:.1rem;"></span>预约已过期</span>
+						
 					</p>
 				</div>
 			</div>
@@ -222,49 +268,61 @@
 		<!--预约设置-->
 		<div class = "wrap" id = "setWrap">
 			<h4 class = "title">
-				<span class = "close" onclick="close()"></span>
+				<span class = "close"></span>
 				<p>预约设置</p>
 				<span class = "complete"></span>
 			</h4>
 			<ul>
-				<li><span>默认时间段</span><input type = "text"/></li>
-				<li><span>最长等待时间</span><input type = "text"/></li>
+				<li><span>默认时间段</span><input type = "text"/ id = "demo3"></li>
+				<li><span>最长等待时间</span><input type = "text"/ id = "demo4"></li>
 				<li><span>开始时间</span><input type = "text" id = "demo1"/></li>
 				<li><span>结束时间</span><input type = "text" id = "demo2"/></li>
 			</ul>
 		</div>
 		
 		<!--添加预约-->
-		<div class = "wrap" id = "addWrap">
+		<div class = "wrap addWrap appointwrap" id = "addWrap">
 			<h4 class = "title">
 				<span class = "close" onclick="close()"></span>
-				<p>预约设置</p>
+				<p>新预约</p>
 				<span></span>
 			</h4>
 			<ul>
-				<li><span>日期</span><input type = "text"/></li>
-				<li><span>开始时间</span><input type = "text"/></li>
-				<li><span>时间段</span><input type = "text"/></li>
-				<li><span>餐桌</span><input type = "text"/></li>
-				<li><span>客人人数</span><input type = "text"/></li>
-				<li><span>成人</span><input type = "text"/></li>
+				<li><span>日期</span><input type = "text" id = "create_date"/></li>
+				<li><span>开始时间</span><input type = "text" id = "beginTime"/></li>
+				<li><span>时间段</span><input type = "text" id = "times"/></li>
+				<li><span>餐桌</span><input type = "text"/ id = "table_id" onfocus="$(this).blur()"></li>
+				<li><span>客人人数</span><input type = "text" id = "person"/></li>
 				<li class = "full"><span>客户姓名</span></li>
-				<li class = "full"><input type = "text"/></li>
+				<li class = "full"><input type = "text" id = "name"/></li>
 				<li class = "full"><span>电话</span></li>
-				<li class = "full"><input type = "text"/></li>
+				<li class = "full"><input type = "text" id = "mobile"/></li>
 				<li class = "full"><span>备注</span></li>
-				<li class = "full"><input type = "text"/></li>
+				<li class = "full"><input type = "text" id = "remark"/></li>
 			</ul>
+			<button class = "btn_complete" id = "btn_complete">创建</button>
+		</div>
+		
+		<!--选择餐桌-->
+		<div class = "addWrap tableListWrap" id = "tableListWrap">
+			<h3 class = "title">
+				<span class = "icon_close"></span>
+				<p>请选择一个餐桌</p>
+				<span class = "icon_complete"></span>
+			</h3>
+			<ul></ul>
 		</div>
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
 <script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
 <script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
 <script type="text/javascript" src="plugin/jQueryCalendar/js/calendar.js" ></script>
 <script type="text/javascript" src="plugin/ICalendar/js/lCalendar.js" ></script>
+<script type="text/javascript" src="plugin/ICalendar1/js/lCalendar.js" ></script>
 <script>
-	template()
+	template();
 	
 	$('#ca').calendar({
         data: [
@@ -283,8 +341,10 @@
 		],
         onSelected: function (view, date, data) {
             console.log('view:' + view)
-            alert('date:' + date)
+            console.log('date:' + date)
             console.log('data:' + (data || 'None'));
+            console.log(date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate())
+            getappointList(date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate());
         }
     });
 
@@ -300,11 +360,204 @@
 		'type': 'time'
 	});
 	
+	
+	var calendar11 = new lCalendar1();
+	calendar11.init({
+		'trigger': '#demo3',
+		'type': 'time',
+	});
+	
+	var calendar12 = new lCalendar1();
+	calendar12.init({
+		'trigger': '#demo4',
+		'type': 'time'
+	});
+	//window.localStorage
+	/*获取预约列表*/
+	function getappointList(times){
+		$('._right #list').html(' ')
+		comm.getAjax('/subscribe/index',{
+			"weid":window.localStorage.getItem('weid'),
+			"storeid":window.localStorage.getItem('storeid'),
+			"create_date":times
+		},function(info){
+			console.log(info);
+			if(info.code==0){
+				if(info.data.length){
+					var str = '';
+					for(var i = 0;i<info.data.length;i++){
+						switch(info.data[i].status)
+						{
+						case 0:
+						 str+='<li class = "arrive" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-status = "'+info.data[i].status+'">';
+						  break;
+						case 1:
+						  str+='<li class = "waiting" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-status = "'+info.data[i].status+'">';
+						  break;
+						case 2:
+						  str+='<li class = "past" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-status = "'+info.data[i].status+'">';
+						  break;
+						}
+						str+='<span>'+info.data[i].create_date+'</span>'+
+							'<span>'+info.data[i].start_time.split(':')[0]+':'+info.data[i].start_time.split(':')[1]+'-'+comm.secondsChange(info.data[i].start_time,info.data[i].times).split(':')[0]+':'+comm.secondsChange(info.data[i].start_time,info.data[i].times).split(':')[1]+'</span>'+
+							'<span>'+info.data[i].name+'</span>'+
+							'<span>'+info.data[i].table_id+'</span>'+
+						'</li>'
+							
+							console.log(info.data[i].start_time.split(':')[0])
+					}
+					$('._right #list').html(str);
+				}
+			}
+		})
+	}
+	var currTime = new Date().getFullYear()+'/'+comm.Appendzero(new Date().getMonth()+1)+'/'+comm.Appendzero(new Date().getDate());
+	console.log(currTime)
+	getappointList('2018/1/9');
+	var times = setInterval(function(){
+		//console.log($('._right #list').length)
+		for(var i = 0; i < $('._right #list').length; i++){
+			var _this = $('._right #list li').eq(i);
+			var oldstatus = _this.data('status');
+			var status =  changeAppointstatus(_this.data('starttime'),_this.data('endtime'))
+			if(status&&status!=oldstatus){
+				if(status==1){
+					_this.addClass('waiting');
+				}else if(status==2){
+					_this.addClass('past');
+				}
+				
+				_this.data('status',status);
+				postAppointstatus(_this.data('id'),_this.data('table_id'),status);
+			}
+			
+		}
+		
+	},1000*60)
+	/*判断预约状态   0已到达  1等待中  2已过期*/
+	function changeAppointstatus(startTime,endTime){
+		var _now = new Date().getTime();
+		if(_now>startTime&&_now<endTime){
+			return 1;
+		}else if(_now>endTime){
+			return 2;
+		}
+	}
+	
+	function postAppointstatus(id,table_id,status){
+		comm.getAjax('/subscribe/statusChange',{'id':id,'table_id':table_id,'status':status},function(info){
+			console.log(info);
+		})
+	}
+	
+	
 	function close(obj){
 		alert('12')
 		console.log(obj);
 		var obj = $(obj);
 		obj.parents('.wrap').hide()
 	}
+	/*预约详情及修改*/
+	$('._right #list').on('click',function(){
+		$('#addWrap').show();
+		console.log($(this))
+	})
 	
+	
+	/*预约设置*/
+	$('body').on('click','#headerIcon1',function(){
+		$('#setWrap').show();
+		comm.getAjax('/subscribesetting/index',
+		{	"weid":window.localStorage.getItem('weid'),
+			"storeid":window.localStorage.getItem('storeid')
+		},function(info){
+			//console.log(info);
+			if(info.code==0){
+				$('#setWrap #demo3').val(info.data.default_time);
+				$('#setWrap #demo4').val(info.data.longest_time);
+				$('#setWrap #demo1').val(info.data.start_time);
+				$('#setWrap #demo2').val(info.data.end_time);
+			}
+		})
+	})
+	
+	$('.close').on('click',function(){
+		$(this).parents('.wrap').hide();
+	})
+	$('#setWrap .complete').on('click',function(){
+		var settingData = {
+			"weid":window.localStorage.getItem('weid'),
+			"storeid":window.localStorage.getItem('storeid'),
+			"start_time":$('#setWrap #demo1').val(),
+			"end_time":$('#setWrap #demo2').val(),
+			"default_time":$('#setWrap #demo3').val(),
+			"longest_time":$('#setWrap #demo4').val(),
+		}
+		comm.getAjax('/subscribesetting/update',settingData,function(info){
+			console.log(info);
+		})
+	})
+	var lCalendarcreate_data  = new lCalendar();
+	lCalendarcreate_data.init({
+		'trigger': '#create_date',
+		'type': 'date',
+	})
+	
+	var lCalendarbeginTime  = new lCalendar();
+	lCalendarbeginTime.init({
+		'trigger': '#beginTime',
+		'type': 'time',
+	})
+	
+	var lCalendar1times  = new lCalendar1();
+	lCalendar1times.init({
+		'trigger': '#times',
+		'type': 'time',
+	})
+	
+	/*添加预约*/
+	$('body').on('click','#headerIcon2',function(){
+		$('#addWrap').show();
+		
+	})
+	/*选择餐桌*/
+	$('#table_id').on('click',function(){
+		$('#tableListWrap').show();
+		comm.getAjax('/table/index',{"zoneid":'14',"status":''},function(info){
+			console.log(info);
+			var str = '';
+			for(var i = 0;i < info.data.length;i++){
+				str+='<li data-id = "'+info.data[i].id+'">'+info.data[i].title+'</li>'
+			}
+			$('#tableListWrap ul').html(str);
+		})
+	})
+	$('#tableListWrap').on('click','li',function(){
+		$('#tableListWrap').hide();
+		$('#table_id').val($(this).html());
+		$('#table_id').attr('data',$(this).data('id'));
+	})
+	
+	$('#addWrap #btn_complete').on('click',function(){
+		//alert('12')
+		comm.getAjax(
+			'/subscribe/save',
+			{
+				"weid":window.localStorage.getItem('weid'),
+				"storeid":window.localStorage.getItem('storeid'),
+				"create_date":$('#create_date').val(),
+				"times":$('#times').val(),
+				"table_id":$('#table_id').val(),
+				"person":$('#person').val(),
+				"adult":'1',
+				"children":'1',
+				"name":$('#name').val(),
+				"mobile":$('#mobile').val(),
+				"remark":$('#remark').val()
+			},function(info){
+				console.log(info)
+			})
+	})
+	
+	//window.localStorage
 </script>

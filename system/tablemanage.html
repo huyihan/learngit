@@ -6,6 +6,7 @@
 		<title>餐桌管理</title>
 		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" type="text/css" href="css/select.css"/>
 	</head>
 	<style>
 		#container{
@@ -68,25 +69,322 @@
 			font-size:.12rem;
 			line-height:.2rem;
 		}
+		
+		._right h3{
+			height:.6rem;
+			line-height:.6rem;
+			background:#AA9E56;
+			padding:0 .2rem;
+			font-size:.18rem;
+		}
+		._right h3 .ui-input-text{
+			/*display:inline-block;
+			width:100%;
+			height:100%;*/
+			display:block;
+		}
+		._right h3 input{
+			width:2.64rem;
+			height:.3rem;
+			border-radius:.15rem;
+			background:#fff;
+			width:100% !important;
+			color:#2F2843;
+		}
+		._right h3 #demo1{
+			display: inline-block;
+			width:2.64rem;
+			height:.3rem;
+			float:none !important;
+			vertical-align: middle;
+		}
+		._right h3 .icon-add{
+			float:right;
+			background:url(img/icon--add--00.png) no-repeat center;
+			width:.6rem;
+			height:.6rem;
+		} 
+		._right h3 .icon-save{
+			float:right;
+			background:url(img/icon--save.png) no-repeat center;
+			width:.6rem;
+			height:.6rem;
+		}
+		._right .tableList{
+			flex:1;
+			padding:.2rem;
+		}
+		
+		._right .tableList li{
+			width:1.4rem;
+			height:1.4rem;
+			float:left;
+			padding:.2rem;
+			
+		}
+		._right .tableList li span{
+			width:100%;
+			height:100%;
+			border-radius:.04rem;
+			background:rgba(255,230,20,0.4);
+			display: block;
+			text-align: center;
+			line-height:1rem;
+			font-size:.2rem;
+		}
+		
+		
+		.tablezoneWrap{
+			width:4rem;
+			height:1.5rem;
+			background:#fff;
+			font-size: .17rem;
+			display:none;
+		}
+		.tablezoneWrap .content{
+			padding:.1rem .2rem;
+		}
+		.tablezoneWrap .content p{
+			height:.35rem;
+			line-height:.35rem;
+			font-size:.18rem;
+		}
+		.tablezoneWrap input{
+			width:100%;
+			height:.35rem;
+			line-height:.35rem;
+			border:solid .01rem #cdcdcd;
+			border-radius:.04rem;
+			padding-left: .2rem;
+		}
+		
+		.tablezoneWrap1{
+			width:4rem;
+			height:2rem;
+			background:#fff;
+			font-size: .17rem;
+			display:none;
+		}
+		.tablezoneWrap1 .content{
+			padding:.1rem .2rem;
+		}
+		.tablezoneWrap1 .content p{
+			height:.35rem;
+			line-height:.35rem;
+			font-size:.18rem;
+		}
+		.tablezoneWrap1 input{
+			width:100%;
+			height:.35rem;
+			line-height:.35rem;
+			border:solid .01rem #cdcdcd;
+			border-radius:.04rem;
+			padding-left: .2rem;
+		}
+		.tablezoneWrap1 .content button{
+			display:block;
+			width:80%;
+			height:.35rem;
+			line-height:.35rem;
+			border:none;
+			outline:none;
+			background: #f28f64;
+			color:#fff;
+			margin:.2rem auto 0;
+		}
+		
+		.tableWrap{
+			width:4rem;
+			height:2rem;
+			background:#fff;
+			font-size: .17rem;
+			display:none;
+		}
+		.tableWrap .content{
+			padding:.1rem .2rem;
+		}
+		.tableWrap .content p{
+			height:.35rem;
+			line-height:.35rem;
+			font-size:.18rem;
+		}
+		.tableWrap input{
+			width:100%;
+			height:.35rem;
+			line-height:.35rem;
+			border:solid .01rem #cdcdcd;
+			border-radius:.04rem;
+			padding-left: .2rem;
+		}
+		.tableWrap .content button{
+			display:block;
+			width:80%;
+			height:.35rem;
+			line-height:.35rem;
+			border:none;
+			outline:none;
+			background: #f28f64;
+			color:#fff;
+			margin:.2rem auto 0;
+		}
+		
+		.tableWrap1{
+			width:4rem;
+			height:3rem;
+			background:#fff;
+			font-size: .17rem;
+			display:none;
+		}
+		.tableWrap1 .content{
+			padding:.1rem .2rem;
+		}
+		.tableWrap1 .content p{
+			height:.35rem;
+			line-height:.35rem;
+			font-size:.18rem;
+		}
+		.tableWrap1 input{
+			width:100%;
+			height:.35rem;
+			line-height:.35rem;
+			border:solid .01rem #cdcdcd;
+			border-radius:.04rem;
+			padding-left: .2rem;
+		}
+		.tableWrap1 .content button{
+			display:block;
+			width:80%;
+			height:.35rem;
+			line-height:.35rem;
+			border:none;
+			outline:none;
+			background: #f28f64;
+			color:#fff;
+			margin:.2rem auto 0;
+		}
+		
+		.groupWrap{
+			width:4rem;
+			height:3rem;
+			background:#fff;
+			font-size: .17rem;
+			display:none;
+			flex-flow:column;
+			z-index:2;
+		}
+		.groupWrap .content{
+			
+			flex:1;
+			overflow-y:auto;
+		}
+		.groupWrap li{
+			height:.4rem;
+			line-height:.4rem;
+			border-bottom:solid .01rem #cdcdcd;
+			text-align:center;
+		}
+		.groupWrap .content button{
+			display:block;
+			width:80%;
+			height:.35rem;
+			line-height:.35rem;
+			border:none;
+			outline:none;
+			background: #f28f64;
+			color:#fff;
+			margin:.2rem auto 0;
+		}
 	</style>
 	<body>
 		<main data-role = "content">
 			<header class = "headerWrap"></header>
 			<div id = "container">
 				<div class = "_left">
-					<h2><p>餐桌列表</p><span></span></h2>
+					<h2><p>餐桌列表</p><span class = "addTable" id = "addTable"></span></h2>
 					<ul>
 						
 					</ul>
 				</div>
-				<div class = "_right"></div>
+				<div class = "_right">
+					<h3>
+						<span>餐桌架构</span>
+						<!--<input type="text">-->
+							<div id = "demo1"></div>
+						<span class = "icon-edit">编辑</span>
+						<!--<span class = "icon-save"></span>-->
+						<span class = "icon-add addFloor"></span>
+					</h3>
+					<div class = "tableList">
+						<ul>
+							
+						</ul>
+					</div>
+				</div>
 			</div> 
 		</main>
-		<div class = "menuWrap">
-			<h3>
-				<span>餐桌架构</span>
-				<input type = "text"/> 
-			</h3>
+		<div class = "menuWrap"></div>
+		<div class = "addWrap tablezoneWrap" id = "tablezoneWrap">
+			<h2 class = "title">
+				<span class = "icon_close"></span>
+				<p>添加楼层架构</p>
+				<span class = "icon_complete"></span>
+			</h2>
+			<div class = "content">
+				<p>结构名称:</p>
+				<input type = "text" class = "tablezoneTitle" id = "tablezoneTitle"/>
+			</div>
+		</div> 
+		
+		<div class = "addWrap tablezoneWrap1" id = "tablezoneWrap1">
+			<h2 class = "title">
+				<span class = "icon_close"></span>
+				<p>添加楼层架构</p>
+				<span class = "icon_complete"></span>
+			</h2>
+			<div class = "content">
+				<p>结构名称:</p>
+				<input type = "text" class = "tablezoneTitle" id = "tablezoneTitle"/>
+				<button class = "icon-remove" id = "icon-remove">删除</button>
+			</div>
+		</div> 
+		
+		<div class = "addWrap tableWrap" id = "tableWrap">
+			<h2 class = "title">
+				<span class = "icon_close"></span>
+				<p>添加楼层架构</p>
+				<span class = "icon_complete"></span>
+			</h2>
+			<div class = "content">
+				<p>结构名称:</p>
+				<input type = "text" class = "tablezoneTitle" id = "tablezoneTitle"/>
+			</div>
+		</div> 
+		
+		<!--餐桌修改 删除-->
+		<div class = "addWrap tableWrap1" id = "tableWrap1">
+			<h2 class = "title">
+				<span class = "icon_close"></span>
+				<p>餐桌修改</p>
+				<span class = "icon_complete"></span>
+			</h2>
+			<div class = "content">
+				<p>餐桌名称:</p>
+				<input type = "text" class = "tablezoneTitle" id = "tablezoneTitle"/>
+				<p>选择餐桌所属区域：</p>
+				<input type = "text" class = "zoneselectTitle" id = "zoneselectTitle" onfocus="$(this).blur()"/>
+				<button class = "icon-remove" id = "icon-remove">删除</button>
+			</div>
+		</div> 
+		
+		<!--选择餐桌所属区域-->
+		<div class = "addWrap groupWrap" id = "groupWrap">
+			<h2 class = "title">
+				<span class = "icon_close"></span>
+				<p>选择餐桌所属区域</p>
+			</h2>
+			<ul class = "content">
+			
+			</ul>
 		</div>
 	</body>
 </html>
@@ -94,27 +392,236 @@
 <script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
 <script type="text/javascript" src="js/template.js" ></script>
 <script type="text/javascript" src="js/comm.js" ></script>
+<script type="text/javascript" src="js/select1.js" ></script>
 <script>
 	template()
 	var data = {
 		storeid:window.localStorage.getItem('storeid'),
 		weid:window.localStorage.getItem('weid')
 	}
+	/*获取区域列表*/
 	comm.getAjax('/tablezone/index',data,callback)
 	function callback(info){
 		console.log(info)
 		if(info.code!=0){
 			return;
 		}
+		var tablezoneArr = [],values = [];
 		var str = '';
 		for(var i = 0; i < info.data.length;i++){
-			str+='<li data-id = "'+info.data[i].id+'">'+
-					'<span></span>'+
-					'<h4>餐桌名字</h4>'+
-					'<p>'+info.data[i].title+'</p>'+
-				'</li>'
+			tablezoneArr.push(info.data[i].title);
+			values.push(info.data[i].id);
+			str+='<li data-id = "'+info.data[i].id+'">'+info.data[i].title+'</li>';
+			
 		}
-		$('._left ul').html(str);
+		$('#groupWrap ul').html(str);
+		var select1 = new select();
+		select1.init({
+			trigger:'#demo1',
+			contentArr:tablezoneArr,
+			isInput:false,
+			initCon:tablezoneArr[0],
+			values:values,
+			success:function(){
+				getTableList();
+			}
+		})
 		
 	}
+	/*区域新增*/
+	$('.addFloor').on('click',function(){
+		$('#tablezoneWrap').show()
+	})
+	$('#tablezoneWrap .icon_close').on('click',function(){
+		$('#tablezoneWrap').hide()
+	})
+	$('#tablezoneWrap .icon_complete').on('click',function(){
+		var tablezonesaveData = {
+			storeid:window.localStorage.getItem('storeid'),
+			weid:window.localStorage.getItem('weid'),
+			title:$('#tablezoneTitle').val()
+		}
+		comm.getAjax('/tablezone/save',tablezonesaveData,function(info){
+			console.log(info);
+			if(info.code==0){
+				$('#tablezoneWrap').hide();
+				window.location.reload()
+			}else if(info.code==1){
+				alert(info.message);
+			}
+		})
+	})
+	
+	/*区域修改  删除*/
+	$('.icon-edit').on('click',function(){
+		$('#tablezoneWrap1').show();
+		$('#tablezoneWrap1 .tablezoneTitle').val($('#demo1 input').val())
+		$('#tablezoneWrap1 .tablezoneTitle').attr('data',$('#demo1 input').attr('data'));
+		console.log($('#demo1 input').val());
+	})
+	$('#tablezoneWrap1 .icon_close').on('click',function(){
+		$('#tablezoneWrap1').hide()
+	})
+	$('#tablezoneWrap1 .icon_complete').on('click',function(){
+		var tablezonesaveData = {
+			storeid:window.localStorage.getItem('storeid'),
+			weid:window.localStorage.getItem('weid'),
+			title:$('#tablezoneWrap1 .tablezoneTitle').val(),
+			id:$('#tablezoneWrap1 .tablezoneTitle').attr('data')
+		}
+		comm.getAjax('/tablezone/update',tablezonesaveData,function(info){
+			console.log(info);
+			if(info.code==0){
+				$('#tablezoneWrap1').hide();
+				window.location.reload()
+			}else if(info.code==1){
+				alert(info.message);
+			}
+		})
+	})
+	$('#tablezoneWrap1 #icon-remove').on('click',function(){
+		console.log('12')
+		var tablezonesaveData = {
+			storeid:window.localStorage.getItem('storeid'),
+			weid:window.localStorage.getItem('weid'),
+			id:$('#tablezoneWrap1 .tablezoneTitle').attr('data')
+		}
+		comm.getAjax('/tablezone/delete',tablezonesaveData,function(info){
+			console.log(info);
+			if(info.code==0){
+				$('#tablezoneWrap1').hide();
+				window.location.reload()
+			}else if(info.code==1){
+				alert(info.message);
+			}
+		})
+	})
+	
+	/*餐桌列表*/
+	function getTableList(){
+		console.log($('#demo1 input').attr('data'))
+		var tableindexData = {
+			storeid:window.localStorage.getItem('storeid'),
+			weid:window.localStorage.getItem('weid'),
+			zoneid:$('#demo1 input').attr('data'),
+			status:''
+		}
+		var strLeft = '',strRight='';
+		comm.getAjax('/table/index',tableindexData,function(info){
+			console.log(info);
+			if(info.code==0){
+				for(var i = 0; i < info.data.length;i++){
+					strLeft+='<li data-id = "'+info.data[i].id+'" data-name = "'+info.data[i].title+'">'+
+							'<span></span>'+
+							'<h4>餐桌名字</h4>'+
+							'<p>'+info.data[i].title+'</p>'+
+						'</li>';
+					strRight+= '<li data-id = "'+info.data[i].id+'" data-name = "'+info.data[i].title+'" class = "list-li">'+
+							'<span>'+info.data[i].title+'</span>'+
+						'</li>';
+				}
+				$('._left ul').html(strLeft);
+				$('._right .tableList ul').html(strRight);
+				
+			}
+		})
+	}
+	getTableList();
+	
+	
+	/*餐桌添加*/
+	$('#addTable').on('click',function(){
+		$('#tableWrap').show()
+	})
+	$('#tableWrap .icon_close').on('click',function(){
+		$('#tablezoneWrap').hide()
+	})
+	$('#tableWrap .icon_complete').on('click',function(){
+		var tablezonesaveData = {
+			storeid:window.localStorage.getItem('storeid'),
+			weid:window.localStorage.getItem('weid'),
+			title:$('#tableWrap .tablezoneTitle').val(),
+			zoneid:$('#demo1 input').attr('data')
+		}
+		comm.getAjax('/table/save',tablezonesaveData,function(info){
+			console.log(info);
+			if(info.code==0){
+				$('#tableWrap').hide();
+				//window.location.reload()
+			}else if(info.code==1){
+				alert(info.message);
+			}
+		})
+	})
+	
+	/*餐桌编辑  删除*/
+	var _tableName,_tableId;
+	$('#container').on('click','.list-li',function(){
+		$('#tableWrap1').show();
+		_tableName = $(this).data('name');
+		console.log($(this).data('id'))
+		_tableId = $(this).data('id');
+		$('#tableWrap1 .tablezoneTitle').val(_tableName)
+		$('#tableWrap1 .tablezoneTitle').attr('data',_tableId);
+		$('#tableWrap1 #zoneselectTitle').val($('#demo1 input').val());
+		$('#tableWrap1 #zoneselectTitle').attr('data',$('#demo1 input').attr('data'))
+	})
+	$('#tableWrap1 #zoneselectTitle').on('click',function(){
+		$('#groupWrap').show();
+	})
+	$('#groupWrap li').on('click',function(){
+		$('#tableWrap1 #zoneselectTitle').val($(this).html());
+		$('#tableWrap1 #zoneselectTitle').attr('data',$(this).data('id'));
+		$('#groupWrap').hide();
+	});
+	$('#groupWrap .icon_close').on('click',function(){
+		$('#groupWrap').hide();
+	})
+	
+	
+	$('#tableWrap1 .icon_close').on('click',function(){
+		$('#tableWrap1').hide()
+	})
+	$('#tableWrap1 .icon_complete').on('click',function(){
+		var tableupdateData = {
+			title:$('#tableWrap1 .tablezoneTitle').val(),
+			id:$('#tableWrap1 .tablezoneTitle').attr('data'),
+			tablezonesid:$('#tableWrap1 .zoneselectTitle').attr('data')
+		}
+		/*var tableupdateData = {
+		 	storeid:window.localStorage.getItem('storeid'),
+			weid:window.localStorage.getItem('weid'),
+			title:'asdf',
+			id:17,
+			tablezonesid:14
+		}*/
+		comm.getAjax('/table/update',tableupdateData,function(info){
+			console.log(info);
+			if(info.code==0){
+				$('#tablezoneWrap1').hide();
+				window.location.reload()
+			}else if(info.code==1){
+				alert(info.message);
+			}
+		})
+	})
+	$('#tablezoneWrap1 #icon-remove').on('click',function(){
+		console.log('12')
+		var tablezonesaveData = {
+			storeid:window.localStorage.getItem('storeid'),
+			weid:window.localStorage.getItem('weid'),
+			id:$('#tablezoneWrap1 .tablezoneTitle').attr('data')
+		}
+		comm.getAjax('/tablezone/delete',tablezonesaveData,function(info){
+			console.log(info);
+			if(info.code==0){
+				$('#tablezoneWrap1').hide();
+				window.location.reload()
+			}else if(info.code==1){
+				alert(info.message);
+			}
+		})
+	})
+	
+	
 </script>

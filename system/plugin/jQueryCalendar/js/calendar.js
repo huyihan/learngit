@@ -121,7 +121,7 @@
             '<div class="view view-date">',
             '<div class="calendar-hd">',
             '<a href="javascript:;" data-calendar-display-date class="calendar-display">',
-            '{yyyy}/<span class="m">{mm}</span>',
+            '<span class="m">{mm}</span>{yyyy}/',
             '</a>',
             '<div class="calendar-arrow">',
             '<span class="prev" title="上一月" data-calendar-arrow-date>{prev}</span>',

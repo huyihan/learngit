@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>system</name>
+	<name>ICalendar</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1510712590373</id>
+			<id>1511746706002</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -31,25 +31,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1510824216113</id>
-			<name></name>
-			<type>26</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-node_modules</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1513661899049</id>
-			<name></name>
-			<type>26</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-node_modules</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1515461346898</id>
+			<id>1512118282041</id>
 			<name></name>
 			<type>26</type>
 			<matcher>

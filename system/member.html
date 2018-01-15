@@ -28,6 +28,7 @@
 			margin-right:.10rem;
 			display:flex;
 			flex-flow:column;
+			position:relative;
 		}
 		._left .searchInput{
 			width:3.5rem;
@@ -125,6 +126,27 @@
 			margin-right:30%;
 			line-height:.3rem;
 		}
+		._right li button{
+			width:1.73rem;
+			height:.32rem;
+			border:none;
+			outline:none;
+			border-radius:.04rem;
+			color:#fff;
+		}
+		._right .btnWrap{
+			display:none;
+		}
+		._right li button.cancelBtn{
+			background:#cdcdcd;
+			float:left;
+			margin-right:.39rem;
+		}
+		._right li button.submitBtn{
+			background:#f99a29;
+			float:right;
+			
+		}
 		
 		/*新增会员*/
 		.addWrap{
@@ -138,7 +160,7 @@
 			display:flex;
 			flex-flow:row;
 			transform: translateX(-100%);
-			transition: all 300ms;
+			transition: all 0ms;
 		}
 		.addWrap.active{
 			transform:translateX(0);
@@ -178,10 +200,11 @@
 			color:#fff;
 		}
 		.content ul li .editBtn{
-			background:url(img/icon--bj.png) no-repeat right center;
+			background:url(img/icon--bj.png) no-repeat 2rem center;
 			flex:1;
 			margin-right:.1rem;
 		}
+		
 		
 		.list li button{
 			width:1.73rem;
@@ -203,11 +226,12 @@
 		}
 		
 		
+		
 		.file {
 		    position: relative;
 		    display: inline-block;
-		    width:1.15rem;
-		    height:1.15rem;
+		    /*width:1.15rem;
+		    height:1.15rem;*/
 		    background: url(img/icon--cpsc.png) no-repeat center;
 		    border-radius: 4px;
 		    overflow: hidden;
@@ -230,7 +254,15 @@
 			width:100%;
 			height:100%;
 		}
-			
+		
+		.mask{
+			width:100%;
+			height:100%;
+			background:rgba(255,255,255,.7);
+			position: absolute;
+			z-index:2;
+			display:none;
+		}
 	</style>
 	<body>
 		<main data-role = "content">
@@ -249,23 +281,34 @@
 							</dd>
 						</dl>
 					</div>
-					
+					<div class = "mask"></div>
 				</div>
-				<div class = "_right">
-					<ul>
-						<!--<li><span></span><span class = "editBtn"></span></li>
-						<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
-						<li><span>名称</span><input type = "text"/></li>
-						<li><span>姓</span><input type = "text"/></li>
-						<li><span>证件编号</span><input type = "text"/></li>
-						<li style = "height:1.24rem;"><span>地址1</span><input type = "text"/></li>
-						<li><span>地址2</span><input type = "text"/></li>
-						<li><span>邮政编码</span><input type = "text"/></li>
-						<li><span>移动电话</span><input type = "text"/></li>
-						<li><span>住宅电话</span><input type = "text"/></li>
-						<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem #fff;background:rgb(255,255,255)"></li>-->
-					</ul>
+				<div class = "_right" id = "">
 					
+					<div class = "content">
+						<ul class = "list">
+							<li class="fullname"><span class = "_full">新客户详情</span></li>
+							<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
+							<li class = "nickname"><span>名称</span><input type = "text"/></li>
+							<li class = "surname"><span>姓</span><input type = "text"/></li>
+							<li class = "idCard"><span>证件编号</span><input type = "text"/></li>
+							<li class = "address" style = "height:1.24rem;"><span>地址1</span><input type = "text"/></li>
+							<li class = "address2"><span>地址2</span><input type = "text"/></li>
+							<li class = "postcode"><span>邮政编码</span><input type = "text"/></li>
+							<li class = "mobile"><span>移动电话</span><input type = "text"/></li>
+							<li class = "tel"><span>住宅电话</span><input type = "text"/></li>
+							<li class = "btnWrap" style = "padding:.5rem 1rem 0;border:none;">
+								<button class = "cancelBtn" id = "cancelBtn1">取消</button>
+								<button class = "submitBtn" id = "submitBtn1">确定</button>
+							</li>
+							<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem #fff;background:rgb(255,255,255);padding:0;">
+								<a href="javascript:;" class="file">
+									<input type = "file"  capture="camera" name="imageUpload" id = "FileUpload1"/>
+									<div id="preview" style="width: 1.3rem;height:1.3rem;"></div>
+								</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 				
 				<!--添加会员-->
@@ -273,7 +316,7 @@
 					<div class = "empty"></div>
 					<div class = "content">
 						<ul class = "list">
-							<li><span>新客户详情</span></li>
+							<li class="fullname"><span class = "_full">新客户详情</span></li>
 							<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo2" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
 							<li class = "nickname"><span>名称</span><input type = "text"/></li>
 							<li class = "surname"><span>姓</span><input type = "text"/></li>
@@ -283,7 +326,7 @@
 							<li class = "postcode"><span>邮政编码</span><input type = "text"/></li>
 							<li class = "mobile"><span>移动电话</span><input type = "text"/></li>
 							<li class = "tel"><span>住宅电话</span><input type = "text"/></li>
-							<li style = "padding:.5rem 1rem 0;border:none;">
+							<li class = "btnWrap" style = "padding:.5rem 1rem 0;border:none;">
 								<button class = "cancelBtn" id = "cancelBtn">取消</button>
 								<button class = "submitBtn" id = "submitBtn">确定</button>
 							</li>
@@ -313,14 +356,17 @@
 	template()
 	
 	var select1 = new select();
-	
-	var select2 = new select();
-	select2.init({
-		trigger:'#demo2',//input框de包裹div
+	select1.init({
+		trigger:'#demo1',//input框de包裹div
 		initCon:'先生',
+		values:[0,1],
 		contentArr:['先生','女士'],//
-		isInput:false//是否可以输入  默认为true 可以模糊查询
+		isInput:false,//是否可以输入  默认为true 可以模糊查询
+		success:function(){
+			
+		}
 	})
+	var member_id;
 	/*获取会员*/
 	$.ajax({
 		url:'http://101.132.109.253:8881/index.php/Index/fan/index',
@@ -353,136 +399,179 @@
 	})
 	/*会员详情*/
 	$('.memberList').on('click','dd',function(){
+		member_id = $(this).data('id');
 		$.ajax({
 			url:'http://101.132.109.253:8881/index.php/Index/fan/read',
 			data:{id:$(this).data('id')},
 			type:'post',
 			success:function(info){
 				console.log(info);
-				/*select1.init({
-					trigger:'#demo1',//input框de包裹div
-					initCon:'先生',
-					contentArr:['先生','女士'],//
-					isInput:false//是否可以输入  默认为true 可以模糊查询
-				})*/
+				
 				var str='';
 				if(info.code==0){
-					str = '<li><span>'+info.data.surname+info.data.nickname+'</span><span class = "editBtn" id = "editBtn"></span></li>'
-						if(info.data.sex==0){
-							str+='<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;">先生</h4></li>'
-						}else if(info.data.sex==1){
-							str+='<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;">女士</h4></li>'
-						}
-						str+='<li><span>名称</span><input type = "text" value = "'+info.data.nickname+'"/></li>'+
-						'<li><span>姓</span><input type = "text" value = "'+info.data.surname+'"/></li>'+
-						'<li><span>证件编号</span><input type = "text" value = "'+info.data.idCard+'"/></li>'+
-						'<li style = "height:1.24rem;"><span>地址1</span><input type = "text" value = "'+info.data.address+'"/></li>'+
-						'<li><span>地址2</span><input type = "text" value = "'+info.data.address2+'"/></li>'+
-						'<li><span>邮政编码</span><input type = "text" value = "'+info.data.postcode+'"/></li>'+
-						'<li><span>移动电话</span><input type = "text"/ value = "'+info.data.mobile+'"></li>'+
-						'<li><span>住宅电话</span><input type = "text"/ value = "'+info.data.tel+'"></li>'+
-						'<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem'+ '#fff;background:rgb(255,255,255);padding:0;"><img style = "width:100%;" src = "http://101.132.109.253:8881/headimg/'+info.data.headimg+'"/></li>';
-						
-					$('._right ul').html(str);		
+					//$('#addWrap').addClass('active');
+					if(info.data.sex==0){
+						$('#demo2').html('先生');
+					}else if(info.data.sex==1){
+						$('#demo2').html('女士');
+					}
+					var $img = $('<img>').attr("src",'http://101.132.109.253:8881/headimg/'+info.data.headimg);
+            		$('._right #preview').empty().append($img);
+            		$('._right .fullname').html('<span class = "_full">'+info.data.surname+info.data.nickname+'</span><span class = "editBtn" id = "editBtn"></span>');
+            		$('._right .nickname input').val(info.data.nickname);
+            		$('._right .surname input').val(info.data.surname);
+            		$('._right .idCard input').val(info.data.idCard);
+            		$('._right .address input').val(info.data.address);
+            		$('._right .address2 input').val(info.data.address2);
+            		$('._right .postcode input').val(info.data.postcode);
+            		$('._right .mobile input').val(info.data.mobile);
+            		$('._right .tel input').val(info.data.tel);
 				}
 			}
 		})
 	})
-	$('._right').on('focus','input',function(){
-		$(this).blur();
-	})
-	$('._right').on('click','#editBtn',function(){
-		console.log('12')
-		$('._right').off('focus','input')
-	})
 	
-	/*添加会员*/
+	
+	
+	
+	
+    
+    
+    /*会员修改*/
+   $('._right').on('click','#editBtn',function(){
+		$('.btnWrap').show();
+		$('#addWrap').off('focus','input');
+		$('.mask').show();
+		
+	})
+   $('._right').on('click','.submitBtn1',function(){
+   		$('.mask').show();
+   		var fileObj = document.getElementById("FileUpload1").files[0]; // js 获取文件对象
+		console.log(typeof fileObj);
+       	if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+           alert("请选择图片");
+           return;
+       	}
+       	var formdata = new FormData();
+       	//formdata.append("action", "UploadVMKImagePath");  
+       	//formdata.append("file", fileObj); //加入文件对象
+       	formdata.append('weid',window.localStorage.getItem('weid'));
+       	formdata.append('storeid',window.localStorage.getItem('storeid'));
+       	formdata.append('headimgurl',fileObj);
+       	formdata.append('surname',$('.surname').find('input').val());
+       	formdata.append('nickname',$('.nickname').find('input').val());
+       	formdata.append('mobile',$('.mobile').find('input').val());
+       	formdata.append('tel',$('.tel').find('input').val());
+       	formdata.append('idCard',$('.idCard').find('input').val());
+       	formdata.append('postcode',$('.postcode').find('input').val());
+		formdata.append('id',member_id);
+       	
+       	console.log(formdata)
+       	$.ajax({
+            url: "http://101.132.109.253:8881/index.php/Index/fan/update",
+           	data: formdata,
+           	type: "Post",
+           	dataType: "json",
+           	cache: false,//上传文件无需缓存
+           	processData: false,//用于对data参数进行序列化处理 这里必须false
+           	contentType: false, //必须
+           	success: function (info) {
+           		console.log(info);
+           	},
+           	error:function(error){
+           		console.log('error'+error);
+           	}
+       	})
+   	
+   })
+   $('._right').on('click','#cancelBtn1',function(){
+		$('.mask').hide();
+	})
+   
+   
+   
+   /*添加会员*/
 	$('body').on('click','#headerIcon2',function(){
 		console.log('12')
 		$('#addWrap').addClass('active');
 	})
 	
 	$('#submitBtn').on('click',function(){
-		//$('#addGoodsWrap').removeClass('active');
-		
+		$('#addGoodsWrap').removeClass('active');
 		var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
 		console.log(typeof fileObj);
        	if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
            alert("请选择图片");
            return;
        	}
-       	var formFile = new FormData();
-       	formFile.append("action", "UploadVMKImagePath");  
-       	formFile.append("file", fileObj); //加入文件对象
+       	var formdata = new FormData();
+       	//formdata.append("action", "UploadVMKImagePath");  
+       	//formdata.append("file", fileObj); //加入文件对象
+       	formdata.append('weid',window.localStorage.getItem('weid'));
+       	formdata.append('storeid',window.localStorage.getItem('storeid'));
+       	formdata.append('headimgurl',fileObj);
+       	formdata.append('surname',$('.surname').find('input').val());
+       	formdata.append('nickname',$('.nickname').find('input').val());
+       	formdata.append('mobile',$('.mobile').find('input').val());
+       	formdata.append('tel',$('.tel').find('input').val());
+       	formdata.append('idCard',$('.idCard').find('input').val());
+       	formdata.append('postcode',$('.postcode').find('input').val());
        	
-       	console.log(formFile)
- 
-        /*var data = {
-        	'weid':'4',
-        	'storeid':'1',
-        	'headimgurl':fileObj,
-        	'surname':$('.surname').find('input').val(),
-        	'nickname':$('.nickname').find('input').val(),
-        	'mobile':$('.mobile').find('input').val(),
-        	'tel':$('.tel').find('input').val(),
-        	'idCard':$('.idCard').find('input').val(),
-        	'postcode':$('.postcode').find('input').val()
-        };*/
-        var data = {
-        	'weid':'4',
-        	'storeid':'1',
-        	'headimgurl':formFile,
-        	'surname':'李',
-        	'nickname':'一',
-        	'mobile':'1234',
-        	'tel':'1234',
-        	'idCard':'12345',
-        	'postcode':'12345'
-        };
-        /*cache: false,//上传文件无需缓存
-           	processData: false,//用于对data参数进行序列化处理 这里必须false
-           	contentType: false, //必须*/
+       	console.log(formdata)
        	$.ajax({
-            url: "http://101.132.109.253:8881/index.php/Index/fan/update",
-           	data: formFile,
+            url: "http://101.132.109.253:8881/index.php/Index/fan/save",
+           	data: formdata,
            	type: "Post",
            	dataType: "json",
            	cache: false,//上传文件无需缓存
            	processData: false,//用于对data参数进行序列化处理 这里必须false
            	contentType: false, //必须
            	success: function (result) {
-           		console.log('result')
+           		console.log(result);
                	//alert("上传完成!");
            	},
            	error:function(info){
-           		console.log(info)
+           		console.log(info);
            	}
        	})
-		
-		
-		
-		
 	})
-	 function preview1(file) {
-            var img = new Image(), url = img.src = URL.createObjectURL(file)
-            var $img = $(img)
-            img.onload = function() {
-                URL.revokeObjectURL(url)
-                $('#preview').empty().append($img)
+	$('#addWrap').on('focus','input',function(){
+		$(this).blur();
+	})
+	
+	$('#addWrap').on('click','.cancelBtn',function(){
+		$('#addWrap').on('focus','input',function(){$(this).blur()});
+		$('#addWrap').removeClass('active');
+		$('.btnWrap').hide();
+	})
+	$('#addWrap').on('click','.submitBtn',function(){
+		$('#addWrap').on('focus','input',function(){$(this).blur()});
+		$('.btnWrap').hide();
+	})
+
+    $('[type=file]').change(function(e) {
+        var file = e.target.files[0];
+        preview1(file,$(this).attr('id'));
+    })
+    function preview1(file,isRight) {
+        var img = new Image(), url = img.src = URL.createObjectURL(file)
+        var $img = $(img)
+        img.onload = function() {
+            URL.revokeObjectURL(url);
+            if(isRight == "FileUpload1"){
+            	$('._right #preview').empty().append($img);
+            }else{
+            	$('#addWrap #preview').empty().append($img);
             }
+            
         }
-        function preview2(file) {
-            var reader = new FileReader()
-            reader.onload = function(e) {
-                var $img = $('<img>').attr("src", e.target.result)
-                $('#preview').empty().append($img)
-            }
-            reader.readAsDataURL(file)
+    }
+    function preview2(file) {
+        var reader = new FileReader()
+        reader.onload = function(e) {
+            var $img = $('<img>').attr("src", e.target.result)
+            $('#preview').empty().append($img)
         }
-         
-       
-        $('[type=file]').change(function(e) {
-            var file = e.target.files[0];
-            preview1(file);
-        })
+        reader.readAsDataURL(file)
+    }
 </script>
