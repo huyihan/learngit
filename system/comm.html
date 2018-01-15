@@ -6,10 +6,321 @@
 		<title></title>
 		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 		<link rel="stylesheet" href="css/comm.css" />
+		<style type="text/css">
+			#container {
+				display: flex;
+			}
+			.main {
+				width: 100%;
+				height: 6.96rem;
+				padding: .04rem;
+				background: url(img/背景.png) no-repeat;
+				background-size: 100% 100%;
+				color: white;
+				display: flex;
+				flex-flow: row;
+				font-size: .17rem;
+			}	
+
+			.main_left_head {
+				height: .56rem;
+				line-height: .56rem;
+				background: rgba(255,255,255, 0.29);
+			}
+
+			.main_left {
+				width: 3.9rem;
+				height: 100%;
+				border: 1px solid #F5CD44;
+				border-radius: .045rem;
+			}
+			.main_left>div, .main_right_head, .right_list_item {
+				display: flex;
+			}
+			.main_left>div>span, .main_right_head>span, .right_list_item>span {
+				flex: 1;
+				text-align: center;
+				overflow: hidden;
+			}			
+
+			.main_right {
+				width: 6.15rem;
+				height: 100%;
+				border: 1px solid #F5CD44;
+				border-radius: .045rem;
+				margin-left: .14rem;
+				box-sizing: border-box;
+			}
+			.main_right_head span:first-child, .right_list_item span:first-child {
+				text-align: left;
+			}
+			.main_right_head span:last-child,.right_list_item span:last-child {
+				text-align: right;
+			}
+
+			.main_right_head {
+				height: .49rem;
+				line-height: .49rem;
+				background: #666467;
+				border-bottom: 1px solid white;
+			}
+			.right_list_item{
+				height: .45rem;
+				line-height: .45rem;
+				border-bottom: 1px solid white;
+
+			}
+			.main_right_head, .right_list_item{
+				padding: 0 .18rem;
+
+			}
+			.stock_message {
+				height: 1.35rem;
+				padding: 0 .18rem;
+				background: rgba(255,226,67, 0.34);
+				display: flex;
+				flex-flow: column;
+				justify-content: space-around;
+				border-bottom: 1px solid white;
+
+			}	
+			.stock_message>p {
+				display: flex;
+			}
+			.stock_message>p span {
+				flex: 1;
+			}
+
+			.mask {
+				width: 9.05rem;
+				height: 6.645rem;
+				border-radius:.04rem;
+				overflow: hidden;
+				font-size: .16rem;
+				position: absolute;
+				top: 80px;
+				left: 50%;
+				transform: translateX(-50%);
+
+			}
+			.mask_head {
+				width: 100%;
+				height: 0.53rem;
+				line-height: 0.53rem;
+				text-align: center;
+				background: #E7D21C;
+			}
+			.mask_body {
+				width: 100%;
+				height: 6.115rem;
+				background: white;
+				overflow: hidden;
+				display: flex;
+			}
+			.body_left {
+				width: 3.67rem;
+				height: 100%;
+				overflow: auto;
+				border-right: 1px solid #CDCDCD;
+				box-sizing: border-box;
+			}
+			.left_title {
+				margin: .11rem 0 .1rem .08rem;
+
+			}
+			.mask .left_search{
+				width: 3.43rem;
+				height: .32rem;
+				border: .005rem solid #CDCDCD;
+				border-radius: .05rem;
+				margin: 0 .1rem;
+				
+				
+			}
+			.list_item {
+				padding: .06rem .1rem;
+				border-bottom: 1px solid #CDCDCD;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.item_check {
+				width: .2rem;
+				height: .2rem;
+				background: url(img/icon--xz@2x.png) no-repeat center;
+				margin-right: .1rem;
+			}
+			.body_right {
+			}
+			.right_title {
+				width: 5.38rem;
+				height: 1.09rem;
+				background: #f1f1f1;
+				border-bottom: 1px solid #CDCDCD;
+				display: flex;
+				flex-flow: column;
+				justify-content: space-around;
+
+			}
+			.right_title span:first-child {
+				margin: 0 .21rem 0 .24rem;
+
+			}
+			.search {
+				display: flex;
+			}
+			.search input {
+				width: 1.64rem;
+				height: .32rem;
+				border: 1px solid #CDCDCD;
+				border-radius: .04rem;
+				padding: 0;
+				background: white;
+				font-size: .17rem;
+				color: #CDCDCD;
+			}
+			.search_logo {
+				width: .28rem;
+				height: .28rem;
+				background: url(img/icon--ss.png) no-repeat center;
+				margin-left: .1rem;
+			}
+			.remark {
+				display: flex;	
+			}
+			.remark input {
+				background: white;
+				flex: 1;
+				border: 1px solid #CDCDCD;
+				width: 4.31rem;
+				height: .32rem;
+				border: 1px solid #CDCDCD;
+				border-radius: .04rem;
+				font-size: .17rem;
+				color: #CDCDCD;
+			}
+			.right_list_title {
+				display: flex;
+				padding: .16rem .25rem;
+				justify-content: space-between;
+
+			}
+			.right_list_title>span {
+				flex: 1;
+				text-align: center;
+			}
+			.right_list .list_item {
+				display: flex;
+				justify-content: space-between;
+				border-bottom: 1px solid #CDCDCD;
+				padding: .06rem .25rem;
+
+			}
+			.right_list .list_item>div {
+				flex: 1;
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
 		<main data-role = "content">
 			<header class = "headerWrap"></header>
+			<div id= “container>
+				<div class="main">
+					<div class="main_left">
+						<div class="main_left_head">
+							<span>移动</span>			
+							<span>日期</span>			
+							<span>产品</span>			
+							<span>数量</span>			
+						</div>
+						<div class="main_left_list">
+							<span>11112342424242</span>
+							<span>1111</span>
+							<span>1111</span>
+							<span>1111</span>
+						</div>
+					</div>
+					<div class="main_right">
+						<div class="stock_message">
+							<p>
+								<span>变动</span>
+								<span>类型</span>
+								<span>发起日期</span>
+								<span>日期</span>
+							</p>
+							<p>
+								<span>由....发起</span>
+								<span style="flex: 3;">用户</span>
+							</p>
+							<p>
+								<span>备注</span>
+								<span style="flex: 3;">备注</span>
+							</p>
+						</div>
+						<div class="main_right_head">
+							<span>产品</span>
+							<span>数量</span>
+							<span>基本数额</span>
+						</div>
+						<ul class="main_right_list">
+							<li class="right_list_item">
+								<span>1111</span>
+								<span>1111</span>
+								<span>1111</span>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="mask" style="display: none; z-index: 2;">
+					<div class="mask_head">新库存变动</div>
+					<div class="mask_body">
+						<div class="body_left">
+							<p class="left_title">请选择商品</p>
+							<input class="left_search" type="text" name="" style="">
+							<ul class="left_list">
+								<li class="list_item">
+									<div class="item_name">
+										<p>扬州炒饭</p>
+										<p>PD01123</p>
+									</div>
+									<div class="item_check"></div>
+								</li>
+							</ul>
+						</div>
+						<div class="body_right">
+							<div class="right_title">
+								<p class="search">
+									<span>变动</span>
+									<input type="text" name="" placeholder="变动">
+									<span class="search_logo"></span>
+								</p>
+								<p class="remark">
+									<span>备注</span>
+									<input type="text" name="" placeholder="最多可输入30字">
+								</p>
+							</div>
+							<div class="right_list_title">
+								<span style="text-align: left">产品</span>
+								<span>数量</span>
+								<span style="text-align: right">基本数额</span>
+							</div>
+							<ul class="right_list">
+								<li class="list_item">
+									<div class="item_name" style="text-align: left">
+										<p>扬州炒饭</p>
+										<p>PD01123</p>
+									</div>
+									<div>1</div>
+									<div style="text-align: right">无</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			</div>
 		</main>
 		<div class = "menuWrap"></div>
 	</body>
