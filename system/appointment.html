@@ -201,14 +201,34 @@
 			height:100%;
 		}
 		#addWrap button{
+			font-size:.17rem;
+			color:#fff;
+			border:none;
+			margin-top:.3rem;
+			display:none;
+		}
+		#addWrap .btn_complete{
 			width:2.8rem;
 			height:.32rem;
-			font-size:.17rem;
 			background:#F28F64;
-			color:#fff;
-			display:block;
-			margin: .1rem auto .3rem;
+			margin-left:.42rem;
+			
 		}
+		#addWrap .btn_delete{
+			width:1.3rem;
+			height:.32rem;
+			background:rgb(161,29,27);
+			margin-left:.3rem;
+			
+		}
+		#addWrap .btn_arrive{
+			width:1.3rem;
+			height:.32rem;
+			background:rgb(136,196,98);
+			float:right;
+			margin-right:.3rem;
+		}
+		
 		#addWrap .full{
 			border-bottom:none;
 		}
@@ -291,7 +311,7 @@
 				<li><span>日期</span><input type = "text" id = "create_date"/></li>
 				<li><span>开始时间</span><input type = "text" id = "beginTime"/></li>
 				<li><span>时间段</span><input type = "text" id = "times"/></li>
-				<li><span>餐桌</span><input type = "text"/ id = "table_id" onfocus="$(this).blur()"></li>
+				<li><span>餐桌</span><input type = "text"/ id = "table_title" onfocus="$(this).blur()"></li>
 				<li><span>客人人数</span><input type = "text" id = "person"/></li>
 				<li class = "full"><span>客户姓名</span></li>
 				<li class = "full"><input type = "text" id = "name"/></li>
@@ -301,6 +321,8 @@
 				<li class = "full"><input type = "text" id = "remark"/></li>
 			</ul>
 			<button class = "btn_complete" id = "btn_complete">创建</button>
+			<button class = "btn_delete" id = "btn_delete">删除</button>
+			<button class = "btn_arrive" id = "btn_arrive">到达</button>
 		</div>
 		
 		<!--选择餐桌-->
@@ -389,19 +411,19 @@
 						switch(info.data[i].status)
 						{
 						case 0:
-						 str+='<li class = "arrive" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-status = "'+info.data[i].status+'">';
+						 str+='<li class = "arrive" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-tabletitle = "'+info.data[i].table.title+'" data-status = "'+info.data[i].status+'" data-create_date = "'+info.data[i].create_date+'" data-start_time = "'+info.data[i].start_time+'" data-times = "'+info.data[i].times+'" data-person = "'+info.data[i].person+'" data-name = "'+info.data[i].name+'" data-mobile = "'+info.data[i].mobile+'" data-remark = "'+info.data[i].remark+'">';
 						  break;
 						case 1:
-						  str+='<li class = "waiting" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-status = "'+info.data[i].status+'">';
+						  str+='<li class = "waiting" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-tabletitle = "'+info.data[i].table.title+'" data-status = "'+info.data[i].status+'" data-create_date = "'+info.data[i].create_date+'" data-start_time = "'+info.data[i].start_time+'" data-times = "'+info.data[i].times+'" data-person = "'+info.data[i].person+'" data-name = "'+info.data[i].name+'" data-mobile = "'+info.data[i].mobile+'" data-remark = "'+info.data[i].remark+'">';
 						  break;
 						case 2:
-						  str+='<li class = "past" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table_id+'" data-status = "'+info.data[i].status+'">';
+						  str+='<li class = "past" data-starttime = "'+(new Date(info.data[i].create_date+' '+ info.data[i].start_time)).getTime()+'" data-endtime = "'+(new Date(info.data[i].create_date+' '+ comm.secondsChange(info.data[i].start_time,info.data[i].times))).getTime()+'" data-id = "'+info.data[i].id+'" data-tableid = "'+info.data[i].table.id+'" data-tabletitle = "'+info.data[i].table.title+'" data-status = "'+info.data[i].status+'" data-create_date = "'+info.data[i].create_date+'" data-start_time = "'+info.data[i].start_time+'" data-times = "'+info.data[i].times+'" data-person = "'+info.data[i].person+'" data-name = "'+info.data[i].name+'" data-mobile = "'+info.data[i].mobile+'" data-remark = "'+info.data[i].remark+'">';
 						  break;
 						}
-						str+='<span>'+info.data[i].create_date+'</span>'+
+						str+='<span class = "create_date">'+info.data[i].create_date+'</span>'+
 							'<span>'+info.data[i].start_time.split(':')[0]+':'+info.data[i].start_time.split(':')[1]+'-'+comm.secondsChange(info.data[i].start_time,info.data[i].times).split(':')[0]+':'+comm.secondsChange(info.data[i].start_time,info.data[i].times).split(':')[1]+'</span>'+
-							'<span>'+info.data[i].name+'</span>'+
-							'<span>'+info.data[i].table_id+'</span>'+
+							'<span class = "name">'+info.data[i].name+'</span>'+
+							'<span class = "table_title">'+info.data[i].table.title+'</span>'+
 						'</li>'
 							
 							console.log(info.data[i].start_time.split(':')[0])
@@ -420,7 +442,7 @@
 			var _this = $('._right #list li').eq(i);
 			var oldstatus = _this.data('status');
 			var status =  changeAppointstatus(_this.data('starttime'),_this.data('endtime'))
-			if(status&&status!=oldstatus){
+			if(status&&oldstatus!=0&&status!=oldstatus){
 				if(status==1){
 					_this.addClass('waiting');
 				}else if(status==2){
@@ -457,11 +479,38 @@
 		var obj = $(obj);
 		obj.parents('.wrap').hide()
 	}
-	/*预约详情及修改*/
-	$('._right #list').on('click',function(){
+	/*预约详情及修改状态*/
+	var thisLi;
+	$('._right #list').on('click','li',function(){
+		thisLi = $(this);
 		$('#addWrap').show();
-		console.log($(this))
+		$('#addWrap button').hide();
+		$('#addWrap #btn_delete,#addWrap #btn_arrive').show();
+		$('#addWrap input').on('focus',function(){$(this).blur()});
+		$('#addWrap #create_date').val(thisLi.data('create_date'));
+		$('#addWrap #beginTime').val(thisLi.data('start_time'));
+		$('#addWrap #times').val(thisLi.data('times'));
+		console.log(thisLi.data('tabletitle'))
+		$('#addWrap #table_title').val(thisLi.data('tabletitle'));
+		$('#addWrap #person').val(thisLi.data('person'));
+		$('#addWrap #name').val(thisLi.data('name'));
+		$('#addWrap #mobile').val(thisLi.data('mobile'));
+		$('#addWrap #remark').val(thisLi.data('remark'));
 	})
+	/*删除*/
+	$('#addWrap #btn_delete').on('click',function(){
+		comm.getAjax('/subscribe/delete',{"id":thisLi.data('id')},function(info){
+			console.log(info);
+		})
+	})
+	/*到达*/
+	$('#addWrap #btn_arrive').on('click',function(){
+		comm.getAjax('/subscribe/statusChange',{"id":thisLi.data('id'),"table_id":thisLi.data('tableid'),"status":0},function(info){
+			console.log(info);
+			window.location.reload();
+		})
+	})
+	
 	
 	
 	/*预约设置*/
@@ -518,7 +567,8 @@
 	/*添加预约*/
 	$('body').on('click','#headerIcon2',function(){
 		$('#addWrap').show();
-		
+		$('#addWrap button').hide();
+		$('#addWrap #btn_complete').show();
 	})
 	/*选择餐桌*/
 	$('#table_id').on('click',function(){

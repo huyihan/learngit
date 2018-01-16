@@ -186,12 +186,19 @@ window.lCalendar1 = (function() {
 			//初始化年月日时分插件默认值
 			function dateTimeCtrlInit() {
 				var date = new Date();
-				var dateArr = {
+				/*var dateArr = {
 					yy: date.getYear(),
 					mm: date.getMonth(),
 					dd: date.getDate() - 1,
 					hh: date.getHours(),
 					mi: date.getMinutes()
+				};*/
+				var dateArr = {
+					yy: date.getYear(),
+					mm: date.getMonth(),
+					dd: date.getDate() - 1,
+					hh: 0,
+					mi: 0
 				};
 				if (/^\d{4}-\d{1,2}-\d{1,2}\s\d{2}:\d{2}$/.test(_self.trigger.value)) {
 					rs = _self.trigger.value.match(/(^|-|\s|:)\d{1,4}/g);
@@ -269,10 +276,15 @@ window.lCalendar1 = (function() {
 			//初始化时分插件默认值
 			function timeCtrlInit() {
 				var d = new Date();
-				var e = {
+				/*var e = {
 					hh: d.getHours(),
 					mm: d.getMinutes(),
 					ss: d.getSeconds()
+				};*/
+				var e = {
+					hh: 0,
+					mm: 10,
+					ss: 0
 				};
 				if (/^\d{2}:\d{2}:\d{2}$/.test(_self.trigger.value)) {
 					rs = _self.trigger.value.match(/(^|:)\d{2}/g);
@@ -712,7 +724,7 @@ window.lCalendar1 = (function() {
 				//time_ss = time_ss > 9 ? time_ss : '0' + time_ss;
 				
 				
-				_self.trigger.value = (time_hh.length < 2 ? "0" : "") + time_hh + (time_mm.length < 2 ? "0" : "小时") + time_mm +"分钟";
+				_self.trigger.value = (time_hh.length < 2 ? "0" : "") + time_hh + (time_mm.length < 2 ? "0" : ":") + time_mm;
 				closeMobileCalendar(e);
 			}
 			_self.trigger.addEventListener('click', {

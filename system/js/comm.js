@@ -1,4 +1,4 @@
- var db = openDatabase('XXorder', '1.0', 'order DB', 2 * 1024 * 1024);
+var db = openDatabase('XXorder', '1.0', 'order DB', 2 * 1024 * 1024);
 var comm={};
 var prefix = 'http://101.132.109.253:8881/index.php/Index';
 comm.getAjax = function(url,data,callback){
