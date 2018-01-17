@@ -399,6 +399,24 @@
 		storeid:window.localStorage.getItem('storeid'),
 		weid:window.localStorage.getItem('weid')
 	}
+	/*获取所有区域的所有餐桌*/
+	comm.getAjax('/table/tableList',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),status:''
+	},function(info){
+		console.log(info);
+		if(info.code==0){
+			var  strLeft = '';
+			for(var i = 0; i < info.data.length;i++){
+				strLeft+='<li data-id = "'+info.data[i].id+'" data-name = "'+info.data[i].title+'">'+
+						'<span></span>'+
+						'<h4>餐桌名字</h4>'+
+						'<p>'+info.data[i].title+'</p>'+
+					'</li>';
+			}
+			$('._left ul').html(strLeft);
+			
+		}
+	})
+	
 	/*获取区域列表*/
 	comm.getAjax('/tablezone/index',data,callback)
 	function callback(info){
@@ -506,27 +524,21 @@
 			zoneid:$('#demo1 input').attr('data'),
 			status:''
 		}
-		var strLeft = '',strRight='';
+		var strRight='';
 		comm.getAjax('/table/index',tableindexData,function(info){
 			console.log(info);
 			if(info.code==0){
 				for(var i = 0; i < info.data.length;i++){
-					strLeft+='<li data-id = "'+info.data[i].id+'" data-name = "'+info.data[i].title+'">'+
-							'<span></span>'+
-							'<h4>餐桌名字</h4>'+
-							'<p>'+info.data[i].title+'</p>'+
-						'</li>';
 					strRight+= '<li data-id = "'+info.data[i].id+'" data-name = "'+info.data[i].title+'" class = "list-li">'+
 							'<span>'+info.data[i].title+'</span>'+
 						'</li>';
 				}
-				$('._left ul').html(strLeft);
 				$('._right .tableList ul').html(strRight);
 				
 			}
 		})
 	}
-	getTableList();
+	
 	
 	
 	/*餐桌添加*/

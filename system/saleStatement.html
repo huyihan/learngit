@@ -17,7 +17,6 @@
 			background-size:cover;
 			display:flex;
 			flex-flow:column;
-			
 			color:#fff;
 		}
 		#container{
@@ -84,10 +83,11 @@
 			display:flex;
 			flex-flow:column;
 			font-size:.18rem;
+			flex:1;
 		}
 		._right .list-wrap .tab-header{
 			height:.46rem;
-			line-height:.46rem;
+			line-height:.45rem;
 			display: flex;
 			flex-flow:row;
 			border-bottom:solid .01rem #fff;
@@ -98,12 +98,12 @@
 		}
 		
 		._right .title span{
+			height:.5rem;
+			line-height:.5rem;
 			flex:1;	
 			text-align:center;
 			display:block;
 			float:left;
-			height:.45rem;
-			line-height:.45rem;
 		}
 		._right .title span:first-child{
 			text-align: left;
@@ -111,7 +111,9 @@
 		._right .title span:last-child{
 			text-align:right;
 		}
-		
+		._right .title span.active{
+			background:#AA9E56;
+		}
 		._right .list-wrap ul{
 			flex:1;
 			overflow-y:auto;
@@ -177,8 +179,11 @@
 		._right .tab-content .tab-li{
 			display:none;
 		}
-		#payment_information{
+		._right .tab-content .tab-li.active{
 			display:block;
+		}
+		#products_sale{
+			
 		}
 	</style>
 	<body>
@@ -209,22 +214,22 @@
 							<span>付款信息</span>
 							<span>产品销售</span>
 							<span>时段销售报表</span>
-							<span>所有</span>
+							<span id = "all">所有</span>
 						</p>
 						<div class = "tab-content">
-							<div class = "tab-li" id = "sales_message">
+							<div class = "tab-li active" id = "sales_message">
 								
 							</div>
 							<div class = "tab-li" id = "payment_information">
 								
 							</div>
-							<div class = "tab-li">
+							<div class = "tab-li" id = "products_sale">
 								
 							</div>
-							<div class = "tab-li">
+							<div class = "tab-li" id = "timeFrame_sales">
 								
 							</div>
-							<div class = "tab-li">
+							<div class = "tab-li" >
 								
 							</div>
 						</div>
@@ -260,6 +265,13 @@
 		'type': 'date'
 	});
 	
+	/*报表tab切换*/
+	$('._right .tab-header span').on('click',function(){
+		$('._right .tab-header span').remove
+		$('.tab-content .tab-li').removeClass('active');
+		$('.tab-content .tab-li').eq($(this).index()).addClass('active');
+	})
+	
 	/*销售信息*/
 	comm.getAjax('/slclearbillmaster/sales_message',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),"start_date":"2017-11-11","end_date":"2018-1-15","pos_id":""},function(info){
 		console.log(info);
@@ -270,8 +282,12 @@
 				'<span>交易</span>'+
 				'<span>描述</span>'+
 				'<span>总汇</span>'+
-			'</h5>'+
-			'<li><span>(a)</span><span>'+info.data.totalprice_count+'</span><span>折扣前销售总额</span><span>'+info.data.totalprice+'</span></li>'+
+			'</h5>'
+		if(info.data){
+			
+		
+		
+			str+='<li><span>(a)</span><span>'+info.data.totalprice_count+'</span><span>折扣前销售总额</span><span>'+info.data.totalprice+'</span></li>'+
 			'<li><span>(b1)</span><span>'+info.data.discount_count+'</span><span>项目折扣总额</span><span>'+info.data.discount+'</span></li>'+
 			'<li><span>(b2)</span><span>'+""+'</span><span>收入折扣总计</span><span>'+""+'</span></li>'+
 			'<li><span>(c)</span><span>'+info.data.price_count+'</span><span>销售总额</span><span>'+info.data.price+'</span></li>'+
@@ -287,6 +303,8 @@
 			'<li><span>当日起始现金</span><span></span>'+
 			'<li><span>现金支付总额</span><span></span>'+
 			'<li><span>结算现金余额</span><span></span>'
+			
+		}
 		$('#sales_message').html(str);
 	})
 	
@@ -295,16 +313,54 @@
 		console.log(info);
 		var str = "";
 		str+='<h4>付款信息</h4>'+
-			'<li><span>交易</span><span>付款模式</span><span>总计</span><span>小费总计</span></li>'+
-			'<li><span>'+info.data.cash.count+'</span><span>现金</span><span>'+info.data.cash.ATM+'</span><span></span></li>'+
+			'<li><span>交易</span><span>付款模式</span><span>总计</span><span>小费总计</span></li>';
+			if(info.data){
+				str+='<li><span>'+info.data.cash.count+'</span><span>现金</span><span>'+info.data.cash.ATM+'</span><span></span></li>'+
 			'<li><span>'+info.data.alipay.count+'</span><span>支付宝</span><span>'+info.data.alipay.ATM+'</span><span></span></li>'+
 			'<li><span>'+info.data.wechat.count+'</span><span>微信</span><span>'+info.data.wechat.ATM+'</span><span></span></li>'+
 			'<li><span>'+info.data.unionpay.count+'</span><span>银行卡</span><span>'+info.data.unionpay.ATM+'</span><span></span></li>';
+			}
+			
 		$('#payment_information').html(str);
 	})
 	
 	/*产品销售*/
 	comm.getAjax('/slclearbillmaster/products_sale',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),"start_date":"2017-11-11","end_date":"2018-1-15","pos_id":""},function(info){
-		console.log(info)
+		console.log(info);
+		var str = "";
+		
+		str +='<h4>产品销售</h4>'+
+			'<li><span>数量</span><span>描述</span><span>净营业额</span></li>';
+			if(info.data){
+				for(var i = 0;i < info.data.length;i++){
+					str+='<li><span>'+info.data[i].totalnum+'</span><span>'+info.data[i].good+'</span><span>'+info.data[i].totalprice+'</span></li>'
+				}
+			}
+		$('#products_sale').html(str);
+		
+		
 	})
+	/*时段销售报表*/
+	comm.getAjax('/slclearbillmaster/timeFrame_sales',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),"start_date":"2017-11-11","end_date":"2018-1-15","pos_id":"","type":'1'},function(info){
+		console.log(info);
+		if(info.code==0){
+			if(info.data){
+				var str = '';
+				str +='<h4>时段销售报表</h4>'+
+				'<li><span>交易</span><span>时间间隔</span><span>总计</span></li>';
+				if(info.data.length){
+					for(var i = 0;i < info.data.length;i++){
+						str+='<li><span>'+info.data[i].count+'</span><span>'+info.data[i].times+'</span><span>'+info.data[i].ATM+'</span></li>'
+					}
+				}
+				$('#timeFrame_sales').html(str);
+				
+			}
+		}
+				
+	})
+	$('#all').on('click',function(){
+		$('.tab-li').addClass('active');
+	})
+	
 </script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+	var cartsaveData = {
+		  "weid": "4",       
+		  "storeid": "1",       
+		  "table_id": "2",       
+		  "person": "4",         
+		  "name":"李",            
+		  "create_time":"2018-01-04 13:20:20",        
+		  "order_id":"4120180104132020",                
+		  "remark":"666",                                        
+		  "goods": [                                               
+		      {
+		          "name": "111",                              
+		          "good_id": "1",                                
+		          "num":"1",                                      
+		          "price":"30",                                   
+		          "total":"30"                                     
+		      },
+		      {
+		          "name": "222",
+		          "good_id": "2",
+		          "num":"1",
+		          "price":"20",
+		          "total":"20"
+		      }
+		  ]
+	}
+	cartsaveData = JSON.stringify(cartsaveData)
+	console.log(cartsaveData)
+	$.ajax({
+		url:'http://101.132.109.253:8881/index.php/Index/cart/save',
+		type:'post',
+		data:cartsaveData,
+		success:function(info){
+			console.log(info);
+		},
+		error:function(error){
+			console.log(error)
+		}
+	})
+</script>

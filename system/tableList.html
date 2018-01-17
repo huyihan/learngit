@@ -380,18 +380,27 @@
 	template();
 	$('.ui-input-text').hide();
 	
-	db.transaction(function(context){
-		context.executeSql('SELECT * FROM tablezoneTable',[],function(tx,result){
-			console.log(result);
+	/*获取所有区域所有状态下的餐桌  默认状态下*/
+	comm.getAjax('/table/tableList',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),status:''
+	},tablelistCallback)
+	
+	
+	/*区域列表*/
+	comm.getAjax('/tablezone/index',{"weid":window.localStorage.getItem('weid'),
+"storeid":window.localStorage.getItem('storeid')},function(info){
+	console.log(info);
+	if(info.code==0){
+		if(info.data){
 			var floorArr = [];
 			var zoneArr = [];
-			for(var i = 0;i <result.rows.length;i++){
-				floorArr.push(result.rows.item(i).title);
-				zoneArr.push(result.rows.item(i).id);
+			for(var i = 0;i <info.data.length;i++){
+				floorArr.push(info.data[i].title);
+				zoneArr.push(info.data[i].id);
 			}
 			selectFloor(floorArr,zoneArr)
-		})
-	})
+		}
+	}
+})
 	
 	
 	
@@ -424,17 +433,19 @@
 		}
 	})
 	
+	/*不同楼层  不同状态下的餐桌列表*/
 	function changeState(){
 		var dataChange={
 			/*zoneid:$('#floorSelect input').attr('data')?$('#floorSelect input').attr('data'):'1',
 			status:$('#tableSelect input').attr('data')?$('#tableSelect input').attr('data'):' '*/
-			zoneid:$('#floorSelect input').attr('data')?$('#floorSelect input').attr('data'):'1',
+			zoneid:$('#floorSelect input').attr('data'),
 			status:$('#tableSelect input').attr('data')?$('#tableSelect input').attr('data'):''
 		}
-		console.log(dataChange.status)
-		comm.getAjax('/table/index',dataChange,callback);
+		console.log(dataChange.zoneid);
+		comm.getAjax('/table/index',dataChange,tablelistCallback);
 	}
 	
+	/*订单列表*/	
 	$('#orderCtrl').click(function(){
 		$('#orderWrap').show();
 	})
@@ -442,12 +453,7 @@
 		$(this).parents('#orderWrap').hide();
 	})
 	
-	var data = {
-		zoneid:'1',
-		status:''
-	}
-	comm.getAjax('/table/index',data,callback);
-	function callback(info){
+	function tablelistCallback(info){
 		console.log(info);
 		$('#tableWrap ul').html(' ');
 		$('#table-list').html(' ');
@@ -494,16 +500,8 @@
 		var tableNum = $('#tableNum').html();
 		var custNum = $('#custNum').val();
 		var custName = $('#memberName').val();
-		db.transaction(function(context){
-			context.executeSql('CREATE TABLE IF NOT EXISTS takeorderTable(id ,tableNum,custNum ,custName,orderNum unique,time,dealwith,status)',[],function(tx,result){},function(tx,result){
-				console.log(result)
-			})
-			context.executeSql('INSERT INTO takeorderTable VALUES(?,?,?,?,?,?,?,?)',[time,tableNum,custNum,custName,time,time,' ',0],function(tx,result){
-				window.location.href = "sale.html?orderNum="+time;
-			});
-		})
-		var tableorderData = {
-			'id':'time',
+		var _value = {
+			'id':time,
 			'tableNum':tableNum,
 			'custNum':custNum,
 			'custName':custName,
@@ -512,12 +510,18 @@
 			'dealwith':'',
 			'status':0
 		}
-		console.log(time);
+		_value = JSON.stringify(_value)
+		window.localStorage.setItem(time,_value);
+		window.location.href = "sale.html?orderNum="+time;
 		
 	})
 	
 	$('#memberWrap').on('click','li',function(){
 		$('#memberWrap').hide();
 		$('#memberName').val($(this).html());
+	})
+	
+	$('.addWrap .icon_close').on('click',function(){
+		$(this).parents('.addWrap').hide();
 	})
 </script>

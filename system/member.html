@@ -518,6 +518,7 @@
        	formdata.append('postcode',$('.postcode').find('input').val());
        	
        	console.log(formdata)
+       	//formdata = JSON.stringify(formdata);
        	$.ajax({
             url: "http://101.132.109.253:8881/index.php/Index/fan/save",
            	data: formdata,
@@ -535,9 +536,9 @@
            	}
        	})
 	})
-	$('#addWrap').on('focus','input',function(){
+	/*$('#addWrap').on('focus','input',function(){
 		$(this).blur();
-	})
+	})*/
 	
 	$('#addWrap').on('click','.cancelBtn',function(){
 		$('#addWrap').on('focus','input',function(){$(this).blur()});

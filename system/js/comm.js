@@ -83,3 +83,6 @@ comm.secondsChange = function(a,b){
 	var result = Number(startTime)+Number(times);
 	return comm.Appendzero(parseInt(result/3600))+":"+comm.Appendzero(parseInt(result%3600/60))+":" +comm.Appendzero(parseInt(result%3600%60));
 }
+comm.getTime = function(result){
+	return new Date(Number(result)).getFullYear()+'/'+ (Number(new Date(Number(result)).getMonth())+Number(1))+'/'+new Date(Number(result)).getDate()+' '+new Date(Number(result)).getHours()+':'+new Date(Number(result)).getMinutes();
+}

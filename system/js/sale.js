@@ -1,6 +1,20 @@
-template()
+template();
+var menu_id,
+_TabIndex = 0;//当前显示的tab的下标;
+
+var orderNum = String(comm.getQueryString('orderNum'));//获取订单号
+var _result = JSON.parse(localStorage.getItem(orderNum))//通过订单号获取订单信息
+var orderDetailstr = '<p><span class = "currTable" data-currTable = "'+_result.tableNum+'">餐桌: '+_result.tableNum+'</span><span>订单号: '+_result.orderNum+'</span></p><p><span>人数: <span class = "person" id = "person">'+_result.custNum+'</span></span><span>时间: '+comm.getTime(orderNum)+'</span></p>';
+
+$('._left .orderDetail').html(orderDetailstr);
+
+
+
+
+
 	
-	var menu_id;
+	
+	
     db.transaction(function(context){
     	context.executeSql('SELECT * FROM menuidTable',[],function(tx,result){
     		//console.log(result)
@@ -13,7 +27,7 @@ template()
     	menu_id = Number(menu_id)
     	db.transaction(function(context){
 		   	context.executeSql('SELECT * FROM categoryTable WHERE menu_id=?',[menu_id],function(tx,result){
-		   		//console.log(result);
+		   		console.log(result);
 		   		callback1(result)
 		   	})
 	   	})
@@ -28,7 +42,7 @@ template()
 	   	})
    	})
    	function callback(info){
-   		console.log(info)
+   		console.log(info.rows.length)
    		/*if(info.code!=1){
    			return;
    		}*/
@@ -38,7 +52,7 @@ template()
    			selectArr.push(info.rows.item(i).title);
    			idArr.push(info.rows.item(i).id);
    		}
-   		var select4 = new select();
+   		/*var select4 = new select();
 		select4.init({
 			trigger:'#demo4',//input框de包裹div
 			contentArr:selectArr,//
@@ -46,10 +60,11 @@ template()
 			initCon:selectArr[0],
 			isInput:false,//是否可以输入  默认为true 可以模糊查询
 			success:function(){
-				/*菜单中的商品分类*/
-				comm.getAjax('/menu/menu_category',dataMenu,callback1)
+				
 			}
-		})
+		})*/
+		/*菜单中的商品分类*/
+		comm.getAjax('/menu/menu_category',dataMenu,callback1)
    	};
 	var dataMenu={
 		'menu_id':'1'
@@ -68,7 +83,7 @@ template()
 	})
 	function callback1(info){
 		//window.location.reload();
-		console.log(info);
+		console.log(info.rows.length);
 		var str = "";
 		var str1 = "";
 		for(var i = 0;i < info.rows.length;i++){
@@ -134,9 +149,10 @@ template()
 
 var abc = document.getElementById('wrap')
  //console.log(window.getComputedStyle(abc,':before'))
-var _TabIndex = 0;//当前显示的tab的下标
- 
-$('._right  .tab-header').on('click',function(){
+
+
+/*tab切换*/
+$('._right').on('click','.tab-header',function(){
 	_TabIndex = $(this).index();
 	tabChange(_TabIndex)
 })
@@ -158,6 +174,7 @@ $('.contentWrap').on('swiperight',function(){
 	tabChange(_TabIndex)
 })
 function tabChange(_TabIndex){
+	console.log(_TabIndex)
 	$('.contentWrap').css({'transform':'translateX('+$("._right .tab-content")[0].offsetWidth*_TabIndex/-100+'rem)'});
 	
 	var transX = _TabIndex*$('._right .tab-header')[0].offsetWidth/100 + $('._right .tab-header')[0].offsetWidth/100/2+0.13;
@@ -171,7 +188,6 @@ function tabChange(_TabIndex){
 		$('._right .tab-header').eq(i).find('img').prop('src','img/icon--W--'+ i +'.png');
 	}
 	$('._right .tab-header').eq(_TabIndex).find('img').prop('src','img/icon--W--'+ _TabIndex +'--active.png');
-	
 }
 
 
@@ -246,7 +262,9 @@ window.addEventListener('load', function() {
       }
     })
 })
-
+$('.list-ul').on('click','.list-li i',function(){
+	$(this).parents('.list-li').remove();
+})
 /*总汇*/
 $('#orderCtrl').click(function(){
 	$('#orderWrap').show();
@@ -261,22 +279,7 @@ $('#productCtrl').click(function(){
 	$('#productWrap').show();
 })
 
-var orderNum = String(comm.getQueryString('orderNum'));
-var str = '';
-db.transaction(function(context){
-	context.executeSql('SELECT * FROM takeorderTable WHERE orderNum=?',[orderNum],function(tx,result){
-		console.log(result);
-		
-		var result = result.rows.item(0);
-		var _time = new Date(Number(result.time)).getFullYear()+'/'+ (Number(new Date(Number(result.time)).getMonth())+Number(1))+'/'+new Date(Number(result.time)).getDate()+' '+new Date(Number(result.time)).getHours()+':'+new Date(Number(result.time)).getMinutes();
-		console.log(new Date(Number(result.time)));
-		str+='<p><span class = "currTable" data-currTable = "'+result.tableNum+'">餐桌: '+result.tableNum+'</span><span>订单号: '+result.orderNum+'</span></p><p><span>人数: '+result.custNum+'</span><span>时间: '+_time+'</span></p>';
-		
-		$('._left .orderDetail').html(str);
-		
-		//cartsave(result.custNum,result.custName,result.orderNum,_time)
-	})
-})
+
 
 $('#contentWrap').on('click','.tab-content li',function(){
 		var Osale = $('<li class = "list-li" data-goodsID = "'+$(this).data('id')+'" data-marketprice = "'+$(this).data('marketprice')+'">'+
@@ -290,23 +293,9 @@ $('#contentWrap').on('click','.tab-content li',function(){
 		dealwith();
 	})
 	
-		//var currTable = $('.currTable').data('currtable');
-		var currTable ='C004';
+	//var currTable = $('.currTable').data('currtable');
+	var currTable ='C004';
 		
-	/*"weid": "4",        //品牌标识
-  "storeid": "1",       //门店标识
-  "table_id": "1",       //餐桌id
-  "person": "4",          //就餐人数
-  "name":"李",            //客户姓名
-  "create_time":"2018-01-04 13:20:20",        //创建时间
-  "order_id":"4120180104132020",                //订单编号
-  "remark":"666","name": "111",                                //商品名称
-          "good_id": "1",                                //商品id
-          "num":"1",                                       //商品数量
-          "price":"30",                                   //商品单价
-          "total":"30"        */
-	
-	
 	$('#payBtn').on('click',function(){
 		var dealwith = $('.dealwith span').html();
 		db.transaction(function(context){
@@ -328,13 +317,13 @@ $('#contentWrap').on('click','.tab-content li',function(){
 			context.executeSql('UPDATE takeorderTable SET dealwith = ? WHERE tableNum= ?',[dealwith,'C004'],function(tx,result){console.log(result)},function(tx,result){console.log(result)});
 		})
 	})
-	cartsave();
+	//cartsave();
 	
-	function cartsave(){
+	/*function cartsave(){
 			var cartsaveData = {
 				"weid": window.localStorage.getItem('weid'),
 				"storeid":window.localStorage.getItem('storeid')    
-				/*"table_id": currTable,       
+				"table_id": currTable,       
 				"person": custNum,         
 				"name":custName,        
 				"create_time":_time,        //创建时间
@@ -355,7 +344,7 @@ $('#contentWrap').on('click','.tab-content li',function(){
 				        "price":"20",
 				        "total":"20"
 				    }
-				]*/
+				]
 			}
 			db.transaction(function(context){
 				context.executeSql('SELECT * FROM takeorderTable WHERE orderNum=?',[orderNum],function(tx,result){
@@ -388,7 +377,7 @@ $('#contentWrap').on('click','.tab-content li',function(){
 				},function(tx,result){
 					console.log(result);
 				})
-			})
+			})*/
 			/*
 			
 			window.localStorage.setItem(cartsave,JSON.stringify(cartsaveData))
@@ -398,8 +387,8 @@ $('#contentWrap').on('click','.tab-content li',function(){
 			
 			function cartsaveCallback(info){
 				console.log(save);
-			}*/
-		}
+			}
+		}*/
 		
 		function cartsaveCallback(info){
 			console.log(info)
@@ -415,32 +404,50 @@ $('#contentWrap').on('click','.tab-content li',function(){
 		$('.dealwith span').html(_dealwith);
 	}
 	
-	var cartsaveData = {
-				"weid": window.localStorage.getItem('weid'),
-				"storeid":window.localStorage.getItem('storeid'),      
-				"table_id": currTable,       
-				"person": "4",         
-				"name":"李",        
-				"create_time":"2018-01-04 13:20:20",        //创建时间
-				"order_id":"4120180104132020",                //订单编号
-				"remark":"666",                                        //备注
-				"goods": [                                                //商品数组
-					   	{
-					        "name": "111",                                //商品名称
-					        "good_id": "1",                                //商品id
-					        "num":"1",                                       //商品数量
-					        "price":"30",                                   //商品单价
-					        "total":"30"                                     //商品总价
-					    },
-					    {
-					        "name": "222",
-					        "good_id": "2",
-					        "num":"1",
-					        "price":"20",
-					        "total":"20"
-					    }
-				  	]
+	/*保存并退出*/
+	$('body').on('click','#headerIcon1',function(){
+		cartsave();
+	})
+	
+	
+	
+	/*购物车新增*/
+	function cartsave(){
+		var goodsArr=[];
+		for(var i = 0; i < $('._left .list-ul .list-li').length;i++){
+			goodsArr.push({ "name":$('.list-ul .list-li').eq(i).find('.name').html(),                          
+				        "good_id":$('.list-ul .list-li').eq(i).data('goodsid'),                               
+				        "num":$('.list-ul .list-li').eq(i).find('.num').html(),                                      
+				        "price":$('.list-ul .list-li').eq(i).data('marketprice'),                                   
+				        "total":$('.list-ul .list-li').eq(i).data('marketprice')})
+		}
+		var cartsaveData = {
+			"weid": window.localStorage.getItem('weid'),
+			"storeid":window.localStorage.getItem('storeid'),      
+			"table_id": currTable,       
+			"person": $('#person').html(),         
+			"name":"李",        
+			"create_time":"2018-01-04 13:20:20",        //创建时间
+			"order_id":"4120180104132020",                //订单编号
+			"remark":"666",                                        //备注
+			"goods": goodsArr
+		}
+		cartsaveData = JSON.stringify(cartsaveData);
+		console.log(cartsaveData)
+		$.ajax({
+			url:'http://101.132.109.253:8881/index.php/Index/cart/save',
+			type:'post',
+			data:cartsaveData,
+			success:function(info){
+				console.log(info);
 			}
+		})
+		/*comm.getAjax('/cart/save',cartsaveData,function(info){
+			console.log(info);
+		})*/
+	}
+	
+	
 			
-			window.localStorage.setItem('cartsave',JSON.stringify(cartsaveData))
+		//	window.localStorage.setItem('cartsave',JSON.stringify(cartsaveData))
 			

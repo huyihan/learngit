@@ -14,7 +14,7 @@
 			
 			this.trigger.addClass('_select');
 			this.trigger.css({'position':'relative','width':'100%','height':'.55rem','text-align':'center'});
-			this.trigger.append('<input value = '+this.initCon+'>')
+			this.trigger.append('<input value ='+this.initCon+' data = "'+this.values[0]+'">')
 			this.trigger.children('input').css({'width':'90%','height':'.55rem','margin':'0 auto','text-align':'center'})
 			
 			
