@@ -45,7 +45,7 @@ main{
 	flex:3;
 }
 ._left .orderDetail p span:nth-child(2){
-	flex:4;
+	flex:8;
 }
 ._left .title{
 	background: #cebb17;
@@ -102,6 +102,21 @@ main{
 	position: absolute;
 	right:-0.81rem;
 	top:0;
+}
+.leftList li b{
+	text-align:center;
+	display:block;
+	background:red;
+	border-bottom:solid .01rem #fff;
+	width:.02rem;
+	height:.41rem;
+	z-index:2;
+	position: absolute;
+	left:0rem;
+	top:0;
+}
+.leftList li b.active{
+	background:deepskyblue;
 }
 ._left .btnWrap{
 	width:100%;
@@ -383,4 +398,19 @@ main{
 	color:#fff;
 	background:#e7d21c;
 	border-color:#e7d21c;
+}
+/*添加备注*/
+#remarkWrap{
+	height:2rem;
+}
+#remarkWrap textarea{
+	flex:1;
+	height:1.4rem !important;
+	display:block;
+	resize:none;
+	padding:.02rem .1rem;
+	font-size:.17rem;
+	line-height:.2rem;
+	width:96%;
+	margin:.02rem auto;
 }

@@ -271,7 +271,7 @@
 				<div class = "_left">
 					<input type = "text" placeholder="请输入会员名" class = "searchInput" name = "searchInputd">
 					<div class = "memberList">
-						<dl>
+						<!--<dl>
 							<dt>
 								A
 							</dt>
@@ -279,64 +279,95 @@
 								<img src = "##" />
 								<h3>刘晓莉</h3>
 							</dd>
-						</dl>
+						</dl>-->
 					</div>
 					<div class = "mask"></div>
 				</div>
 				<div class = "_right" id = "">
 					
 					<div class = "content">
+						<!--<form id = "myform" action="http://101.132.109.253:8881/index.php/Index/fan/save" method="post" enctype="multipart/form-data" target="rfFrame">
+			<input type = "text" name = "weid" value = "4" />
+			<input type = "text" name = "storeid" value = "1" />
+			
+			<input type = "file" name = "headimgurl" placeholder="头像"/>
+			
+			<input type = "text" name = "surname" value = "4" />
+			
+			<input type = "text" name = "nickname" value = "4" />
+			
+			<input type = "text" name = "mobile" value = "4" />
+			<input type = "text" name = "tel" value = "4" />
+			<input type = "text" name = "address" value = "4" />
+			<input type = "text" name = "address2" value = "4" />
+			<input type = "text" name = "sex" value = "4" />
+			<input type = "text" name = "postcode" value = "4" />
+			
+			<button id = "submit">提交</button>
+		</form>
+		<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>  --><form id = "myform" action="http://101.132.109.253:8881/index.php/Index/fan/save" method="post" enctype="multipart/form-data" target="rfFrame">
 						<ul class = "list">
+							
+							<input type = "hidden" name = "weid"/>
+							<input type = "hidden" name = "storeid"/>
 							<li class="fullname"><span class = "_full">新客户详情</span></li>
-							<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
-							<li class = "nickname"><span>名称</span><input type = "text"/></li>
-							<li class = "surname"><span>姓</span><input type = "text"/></li>
-							<li class = "idCard"><span>证件编号</span><input type = "text"/></li>
-							<li class = "address" style = "height:1.24rem;"><span>地址1</span><input type = "text"/></li>
-							<li class = "address2"><span>地址2</span><input type = "text"/></li>
+							<li style = "display: inherit;"><span>称谓</span><input type = "hidden" name = "sex"/> <h4 id = "demo1" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
+							<li class = "nickname"><span>名称</span><input type = "text" name = "nickname"/></li>
+							<li class = "surname"><span>姓</span><input type = "text" name = "surname"/></li>
+							<li class = "idCard"><span>证件编号</span><input type = "text" name = "postcode"/></li>
+							<li class = "address" style = "height:1.24rem;"><span>地址1</span><input type = "text" name = "address"/></li>
+							<li class = "address2"><span>地址2</span><input type = "text" name = "address2"/></li>
 							<li class = "postcode"><span>邮政编码</span><input type = "text"/></li>
-							<li class = "mobile"><span>移动电话</span><input type = "text"/></li>
-							<li class = "tel"><span>住宅电话</span><input type = "text"/></li>
+							<li class = "mobile"><span>移动电话</span><input type = "text" name = "mobile"/></li>
+							<li class = "tel"><span>住宅电话</span><input type = "text" name = "tel"/></li>
 							<li class = "btnWrap" style = "padding:.5rem 1rem 0;border:none;">
 								<button class = "cancelBtn" id = "cancelBtn1">取消</button>
 								<button class = "submitBtn" id = "submitBtn1">确定</button>
 							</li>
 							<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem #fff;background:rgb(255,255,255);padding:0;">
 								<a href="javascript:;" class="file">
-									<input type = "file"  capture="camera" name="imageUpload" id = "FileUpload1"/>
+									<input type = "file"  capture="camera" name="headimgurl" id = "FileUpload1"/>
 									<div id="preview" style="width: 1.3rem;height:1.3rem;"></div>
 								</a>
 							</li>
-						</ul>
+							
+						</ul></form>
+		<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
 					</div>
 				</div>
 				
 				<!--添加会员-->
 				<div class = "addWrap" id = "addWrap">
 					<div class = "empty"></div>
+					
 					<div class = "content">
+						<form id = "myform" action="http://101.132.109.253:8881/index.php/Index/fan/save" method="post" enctype="multipart/form-data" target="rfFrame">
 						<ul class = "list">
+							<input type = "hidden" name = "weid" value = "4"/>
+							<input type = "hidden" name = "storeid" value = "1"/>
 							<li class="fullname"><span class = "_full">新客户详情</span></li>
-							<li style = "display: inherit;"><span>称谓</span> <h4 id = "demo2" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
-							<li class = "nickname"><span>名称</span><input type = "text"/></li>
-							<li class = "surname"><span>姓</span><input type = "text"/></li>
-							<li class = "idCard"><span>证件编号</span><input type = "text"/></li>
-							<li class = "address" style = "height:1.24rem;"><span>地址1</span><input type = "text"/></li>
-							<li class = "address2"><span>地址2</span><input type = "text"/></li>
-							<li class = "postcode"><span>邮政编码</span><input type = "text"/></li>
-							<li class = "mobile"><span>移动电话</span><input type = "text"/></li>
-							<li class = "tel"><span>住宅电话</span><input type = "text"/></li>
+							<li style = "display: inherit;"><span>称谓</span><input type = "hidden" name = "sex"/> <h4 id = "demo2" style = "width:1.09rem;height:.30rem;border:solid .01rem #fff;border-radius:.04rem;float:right;margin-top:.07rem;font-size:.18rem;"></h4></li>
+							<li class = "nickname"><span>名称</span><input type = "text" name = "nickname"/></li>
+							<li class = "surname"><span>姓</span><input type = "text" name = "surname"/></li>
+							<li class = "idCard"><span>证件编号</span><input type = "text" name = "postcode"/></li>
+							<li class = "address" style = "height:1.24rem;"><span>地址1</span><input type = "text"/ name = "address"></li>
+							<li class = "address2"><span>地址2</span><input type = "text" name = "address2"/></li>
+							<!--<li class = "postcode"><span>邮政编码</span><input type = "text"/></li>-->
+							<li class = "mobile"><span>移动电话</span><input type = "text"name = "mobile"/></li>
+							<li class = "tel"><span>住宅电话</span><input type = "text" name = "tel"/></li>
 							<li class = "btnWrap" style = "padding:.5rem 1rem 0;border:none;">
 								<button class = "cancelBtn" id = "cancelBtn">取消</button>
-								<button class = "submitBtn" id = "submitBtn">确定</button>
+								<button class = "submitBtn" id = "submitBtn" id = "submit">确定</button>
 							</li>
 							<li style = "position:absolute;width:1.3rem;height:1.3rem;top:.3rem;right:.3rem;border:solid .01rem #fff;background:rgb(255,255,255);padding:0;">
 								<a href="javascript:;" class="file">
-									<input type = "file"  capture="camera" name="imageUpload" id = "FileUpload"/>
+									<input type = "file"  capture="camera" name="headimgurl" id = "FileUpload"/>
 									<div id="preview" style="width: 1.3rem;height:1.3rem;"></div>
 								</a>
 							</li>
 						</ul>
+						</form>
+		<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
 					</div>
 				</div>
 			</main>
@@ -378,7 +409,6 @@
 				console.log(info.data);
 				var str = '';
 				for(var i in info.data){
-					console.log(info.data[i].length);
 					str+='<dl>'+'<dt>'+i+'</dt>'
 						for(var j = 0;j<info.data[i].length;j++){
 							str+='<dd data-id="'+info.data[i][j].id+'">';
@@ -496,7 +526,7 @@
 		$('#addWrap').addClass('active');
 	})
 	
-	$('#submitBtn').on('click',function(){
+	/*$('#submitBtn').on('click',function(){
 		$('#addGoodsWrap').removeClass('active');
 		var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
 		console.log(typeof fileObj);
@@ -535,20 +565,42 @@
            		console.log(info);
            	}
        	})
-	})
-	/*$('#addWrap').on('focus','input',function(){
-		$(this).blur();
 	})*/
+	$("#submit").click(function(){
+        var options  = {    
+            url:'http://101.132.109.253:8881/index.php/Index/fan/save',
+            type:'post',
+            beforeSend:function(xhr){//请求之前
+                  
+            },    
+            success:function(data){   
+　　　　　　			console.log(data);
+				alert('会员添加成功')
+            },
+　　 			complete:function(xhr,status,data){//请求完成
+               	console.log(xhr);
+               	console.log(data);
+               	alert('会员添加成功')
+           	},
+            error: function(xhr,status,msg){
+                alert("状态码"+status+"; "+msg)
+                    // layer.msg('玩命加载中..');
+
+                }    
+        };    
+       	$("#myform").ajaxSubmit(options);
+    });    
+		
 	
 	$('#addWrap').on('click','.cancelBtn',function(){
 		$('#addWrap').on('focus','input',function(){$(this).blur()});
 		$('#addWrap').removeClass('active');
 		$('.btnWrap').hide();
 	})
-	$('#addWrap').on('click','.submitBtn',function(){
+	/*$('#addWrap').on('click','.submitBtn',function(){
 		$('#addWrap').on('focus','input',function(){$(this).blur()});
 		$('.btnWrap').hide();
-	})
+	})*/
 
     $('[type=file]').change(function(e) {
         var file = e.target.files[0];

@@ -1,6 +1,10 @@
 var db = openDatabase('XXorder', '1.0', 'order DB', 2 * 1024 * 1024);
 var comm={};
 var prefix = 'http://101.132.109.253:8881/index.php/Index';
+comm.data = {
+	"weid":window.localStorage.getItem('weid'),
+	"storeid":window.localStorage.getItem('storeid')
+}
 comm.getAjax = function(url,data,callback){
 	$.ajax({
 		type:"post",
@@ -83,6 +87,14 @@ comm.secondsChange = function(a,b){
 	var result = Number(startTime)+Number(times);
 	return comm.Appendzero(parseInt(result/3600))+":"+comm.Appendzero(parseInt(result%3600/60))+":" +comm.Appendzero(parseInt(result%3600%60));
 }
+/*年-月-日   时:分:秒*/
 comm.getTime = function(result){
 	return new Date(Number(result)).getFullYear()+'/'+ (Number(new Date(Number(result)).getMonth())+Number(1))+'/'+new Date(Number(result)).getDate()+' '+new Date(Number(result)).getHours()+':'+new Date(Number(result)).getMinutes();
+}
+/*指定时间与现在的时间差*/
+comm.gettimeSub = function(oldtime){
+	var newtime = new Date().valueOf();
+	subtime = newtime-oldtime;//毫秒
+	console.log(parseInt(subtime/1000/60));//分钟
+	
 }

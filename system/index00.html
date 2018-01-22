@@ -24,7 +24,6 @@
 			background-position: .5rem center,2.62rem .3rem;
 			background-size:auto,auto;
 			background-clip: border-box;
-			
 		}
 		#container li{
 			width:33.3%;
@@ -42,6 +41,33 @@
 			font-size:.23rem;
 			font-family: "PingFang SC";
 			margin-top:.35rem;
+		}
+		.salebeginWrap{
+			width:3.5rem;
+			height:2rem;
+		}
+		/*开启日常销售*/
+		.salebeginWrap input{
+			width:80%;
+			display:block;
+			margin:.2rem auto .2rem;
+			border:solid .01rem #cdcdcd;
+			text-align:center;
+		}
+		.figurebox{
+			width:100%;
+			height:.4rem;
+			line-height:.4rem;
+			display:flex;
+			flex-flow:row;
+			padding:0 9%;
+		}
+		.figurebox span{
+			flex:1;
+			margin:0 .1rem;
+			display:block;
+			text-align:center;
+			background:#eee;
 		}
 	</style>
 	<body>
@@ -88,11 +114,57 @@
 			</ul>
 		</main>
 		<div class = "menuWrap"></div>
+		<div class = "addWrap salebeginWrap" id = "salebeginWrap">
+			<h3 class = "title">
+				<span class = "icon_close"></span>
+				<p>开启日常销售</p>
+				<span class = "icon_complete"></span>
+			</h3>
+			<div>
+				<input type="number" pattern="[0-9]*" />
+				<p class = "figurebox" id = "figurebox">
+					<span data-value = "100">100</span>
+					<span data-value = "200">200</span>
+					<span data-value = "300">300</span>
+				</p>
+				
+			</div>
+		</div>
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<!--<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>-->
 <script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/comm.js" ></script>
 <script>
-	template()
+	template();
+	if(window.localStorage.getItem('start_cash')){
+		$('#salebeginWrap').hide();
+	}else{
+		$('body').on('click',function(){
+			return false;
+		})
+	}
+	$('#figurebox span').on('click',function(){
+		$('#salebeginWrap input').val($(this).data('value'));
+	})
+	$('.icon_complete').on('click',function(){
+		var turnoverstartData = {
+			"weid":window.localStorage.getItem('weid'),
+			"storeid":window.localStorage.getItem('storeid'),
+			"create_date":comm.getTime(new Date().valueOf()).split(' ')[0],
+			"start_time":comm.getTime(new Date().valueOf()).split(' ')[1],
+			"start_cash":$('#salebeginWrap input').val(),
+			"pos_id":'1',
+			"start_username":window.localStorage.getItem('username')
+		}
+		comm.getAjax('/turnover/start',turnoverstartData,function(info){
+			console.log(info);
+			$('#salebeginWrap').hide();
+			window.localStorage.setItem('start_cash',turnoverstartData.start_cash);
+		})
+	})
+	$('.icon_close').on('click',function(){
+		$('#salebeginWrap').hide();
+	})
 </script>

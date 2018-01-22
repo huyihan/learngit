@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    	<link rel="stylesheet" type="text/css" href="css/selectalert.css"/>
+		<title></title>
+		<style>
+			#demo1{
+				width:100%;
+				height:40px;
+				line-height:40px;
+			}
+			#demo1 input{
+				height:40px;
+			}
+		</style>
+	</head>
+	<style>
+		
+	</style>
+	<body>
+		<div id = "demo1"></div>
+		
+	</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/selectalert.js" ></script>
+<script type="text/javascript">
+	var select = new select();
+	select.init({
+		trigger:'#demo1',//input框的包裹div
+		contentArr:['12','12','22','11'],//
+		isInput:false,//是否可以输入  默认为true 可以模糊查询
+		initCon:'a',
+		values:['a','b','c','d'],
+		success:function(){
+			
+		}
+	})
+	
+	
+</script>

@@ -298,11 +298,11 @@
 			'<li><span>(f)</span><span>'+""+'</span><span>税前经净销售</span><span>'+""+'</span></li>'+
 			'<li><span>(f)</span><span>'+info.data.totalperson+'</span><span>总用餐</span><span></span></li>'+
 			'<li><span>(f)</span><span>'+info.data.totalcount+'</span><span>宾客总数</span><span></span></li>'+
-			'<h4>起始现金金额(2017-12-12)</h4>'+
+			'<h4>起始现金金额</h4>'+
 			'<h5><span>描述<span><span>总计</span></h5>'+
-			'<li><span>当日起始现金</span><span></span>'+
-			'<li><span>现金支付总额</span><span></span>'+
-			'<li><span>结算现金余额</span><span></span>'
+			'<li><span>当日起始现金</span><span>'+info.obj.start_cash+'</span>'+
+			'<li><span>现金支付总额</span><span>'+info.obj.order_cash+'</span>'+
+			'<li><span>结算现金余额</span><span>'+info.obj.end_cash+'</span>'
 			
 		}
 		$('#sales_message').html(str);
@@ -330,7 +330,7 @@
 		var str = "";
 		
 		str +='<h4>产品销售</h4>'+
-			'<li><span>数量</span><span>描述</span><span>净营业额</span></li>';
+			'<h5><span>数量</span><span>描述</span><span>净营业额</span></h5>';
 			if(info.data){
 				for(var i = 0;i < info.data.length;i++){
 					str+='<li><span>'+info.data[i].totalnum+'</span><span>'+info.data[i].good+'</span><span>'+info.data[i].totalprice+'</span></li>'

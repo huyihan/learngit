@@ -571,9 +571,10 @@
 		$('#addWrap #btn_complete').show();
 	})
 	/*选择餐桌*/
-	$('#table_id').on('click',function(){
+	$('#table_title').on('click',function(){
 		$('#tableListWrap').show();
-		comm.getAjax('/table/index',{"zoneid":'14',"status":''},function(info){
+		comm.getAjax('/table/tableList',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),
+"status":"0"},function(info){
 			console.log(info);
 			var str = '';
 			for(var i = 0;i < info.data.length;i++){
@@ -584,29 +585,29 @@
 	})
 	$('#tableListWrap').on('click','li',function(){
 		$('#tableListWrap').hide();
-		$('#table_id').val($(this).html());
-		$('#table_id').attr('data',$(this).data('id'));
+		$('#table_title').val($(this).html());
+		$('#table_title').attr('data',$(this).data('id'));
 	})
 	
 	$('#addWrap #btn_complete').on('click',function(){
 		//alert('12')
-		comm.getAjax(
-			'/subscribe/save',
-			{
-				"weid":window.localStorage.getItem('weid'),
-				"storeid":window.localStorage.getItem('storeid'),
-				"create_date":$('#create_date').val(),
-				"times":$('#times').val(),
-				"table_id":$('#table_id').val(),
-				"person":$('#person').val(),
-				"adult":'1',
-				"children":'1',
-				"name":$('#name').val(),
-				"mobile":$('#mobile').val(),
-				"remark":$('#remark').val()
-			},function(info){
-				console.log(info)
-			})
+		var subscribeData = {
+			"weid":window.localStorage.getItem('weid'),
+			"storeid":window.localStorage.getItem('storeid'),
+			"create_date":$('#create_date').val(),
+			"times":$('#times').val(),
+			"table_id":$('#table_id').val(),
+			"person":$('#person').val(),
+			"adult":'1',
+			"children":'1',
+			"name":$('#name').val(),
+			"mobile":$('#mobile').val(),
+			"remark":$('#remark').val()
+		}
+		subscribeData = JSON.stringify(subscribeData);
+		comm.getAjax('/subscribe/save',subscribeData,function(info){
+			console.log(info);
+		})
 	})
 	
 	//window.localStorage

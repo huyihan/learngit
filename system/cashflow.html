@@ -83,6 +83,7 @@
 			display:flex;
 			flex-flow:column;
 			font-size:.18rem;
+			flex:1;
 		}
 		._right .list-wrap .tab-header{
 			height:.46rem;
@@ -91,7 +92,7 @@
 			flex-flow:row;
 			border-bottom:solid .01rem #fff;
 			padding:0 .18rem;
-			background: #000;
+			background: #AA9E56;
 			overflow:hidden;
 			
 		}
@@ -120,9 +121,10 @@
 			display:flex;
 			flex-flow:row;
 			width:100%;
-			height:.55rem;
-			line-height:.54rem;
+			height:.41rem;
+			line-height:.4rem;
 			border-bottom:solid .01rem #fff;
+			padding:0 .12rem;
 		}
 		._right .list-wrap ul li span{
 			flex:1;
@@ -137,27 +139,8 @@
 		._right .list-wrap ul li span:last-child{
 			text-align: right;
 		}
-		._right .list-wrap .tab-li h4{
-			height:.5rem;
-			line-height:.5rem;
-			font-size:.16rem;
-			padding-left:.18rem;
-			background:#4E4F51;
-		}
-		._right .tab-li h5{
-			height:.3rem;
-			line-height:.3rem;
-			font-size:.16rem;
-			display:flex;
-			flex-flow:row;
-			background:#AA9E56;
-			
-		}
-		._right .tab-li h5 span{
-			flex:1;
-			text-align:center;
-		}
-		._right .tab-li li{
+		
+		/*._right .tab-li li{
 			height:.41rem;
 			line-height:.4rem;
 			font-size:.16rem;
@@ -179,7 +162,7 @@
 		#payment_information{
 			display:block;
 		}
-	</style>
+*/	</style>
 	<body>
 		<main data-role = "content">
 			<header class = "headerWrap"></header>
@@ -187,9 +170,9 @@
 				<div class = "_left">
 					
 					<dl>
-						<dt>日期范围</dt>
+						<dt>日期</dt>
 						<dd class = "time" ><span>开始时间</span><input type = "text" id = "beginTime" placeholder = "请选择时间" class = "timeInput"/></dd>
-						<dd class = "time" ><span>结束时间</span><input type = "text" id = "endTime" placeholder = "请选择时间" class = "timeInput"/></dd>
+						
 					</dl>
 					
 					<dl style = "margin-bottom:.58rem;">
@@ -204,28 +187,12 @@
 					
 					<div class = "list-wrap">
 						<p class = "title tab-header">
-							<span>销售信息</span>
-							<span>付款信息</span>
-							<span>产品销售</span>
-							<span>时段销售报表</span>
-							<span>所有</span>
+							<span>时间</span>
+							<span>描述</span>
+							<span>价值</span>
+							<span>用户</span>
 						</p>
-						<div class = "tab-content">
-							<div class = "tab-li" id = "sales_message">
-								
-							</div>
-							<div class = "tab-li" id = "payment_information">
-								
-							</div>
-							<div class = "tab-li">
-								
-							</div>
-							<div class = "tab-li">
-								
-							</div>
-							<div class = "tab-li">
-								
-							</div>
+						<div class = "tab-content" id = "cash_turnover">
 						</div>
 					</div>
 				</div>
@@ -250,13 +217,17 @@
 		'trigger': '#beginTime',
 		'type': 'date'
 	});
-	var calendardatetime = new lCalendar();
-	calendardatetime.init({
-		'trigger': '#endTime',
-		'type': 'date'
-	});
-	/*comm.getAjax('/turnover/start',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),"create_date":"2017-11-11","start_time":"2018-1-15","start_time":"","start_cash":"","pos_id":"","username":""},function(info){
-		console.log(info)
-	})*/
+	
+	comm.getAjax('/turnover/cash_turnover',{"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),"create_date":"2018-01-15","pos_id":"1"},function(info){
+		console.log(info);
+		var str = "";
+		str+='<ul>'+
+				'<li><span>'+info.data.start_time+'</span><span>开启日常销售</span><span>'+info.data.start_cash+'</span><span>'+info.data.start_username+'</span></li>'+
+				'<li><span></span><span>现金支付总额</span><span>'+info.data.start_cash+'</span><span></span></li>'+
+				'<li><span></span><span>结算现金余额</span><span>'+info.data.end_cash+'</span><span>'+info.data.end_username+'</span></li>'+
+				'<li><span></span><span>差异</span><span></span><span>数量</span></li>'+
+			'</ul>';
+		$('#cash_turnover').html(str);
+	})
 	
 </script>

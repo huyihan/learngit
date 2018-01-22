@@ -267,58 +267,13 @@
 						<li><a href = "##">今日销售</a></li>
 					</ul>
 					<div class = "tableWrap" id = "tableWrap">
-						<ul>
-							<li><span><p>01桌</p></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-							<li><span></span></li>
-						</ul>
+						<ul></ul>
 					</div>
 				</div>
 				<div class = "_right">
 					<div id = "floorSelect" class = "floorSelect"></div>
 					<div id = "tableSelect" class = "floorSelect tableSelect"></div>
-					<ul class = "table-list" id = "table-list">
-						<li>
-							<p>人数</p>
-							<p>餐桌号</p>
-							<p>就餐时间</p>
-						</li>
-						<li>
-							<p>人数</p>
-							<p>餐桌号</p>
-							<p>就餐时间</p>
-						</li>
-						<li>
-							<p>人数</p>
-							<p>餐桌号</p>
-							<p>就餐时间</p>
-						</li>
-						<li>
-							<p>人数</p>
-							<p>餐桌号</p>
-							<p>就餐时间</p>
-						</li>
-						<li>
-							<p>人数</p>
-							<p>餐桌号</p>
-							<p>就餐时间</p>
-						</li>
-						<li>
-							<p>人数</p>
-							<p>餐桌号</p>
-							<p>就餐时间</p>
-						</li>
-					</ul>
+					<ul class = "table-list" id = "table-list"></ul>
 				</div>
 			</div>
 		</main>
@@ -326,14 +281,7 @@
 		<!--订单列表-->
 		<div id = "orderWrap">
 			<h4 class = "title"><span class = "icon_close" id = "close"></span><p>订单列表</p></h4>
-			<ul>
-				<li>
-					<a href = "##">
-						<p><span>宾客</span><span>就餐:-95.00</span></p>
-						<p class = "info"><span>未打印</span><span>2017-12-12 07:12:12</span></p>
-					</a>
-				</li>
-			</ul>
+			<ul></ul>
 		</div>
 		
 		<!--销售明细-->
@@ -372,7 +320,7 @@
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<!--<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>-->
 <script type="text/javascript" src="js/template.js" ></script>
 <script type="text/javascript" src="js/select.js" ></script>
 <script type="text/javascript" src="js/comm.js" ></script>
@@ -462,13 +410,19 @@
 		}
 		var str = '',str1 = '';
 		for(var i = 0; i < info.data.length;i++){
-			str +='<li data-status="'+info.data[i].status+'" data-table="'+info.data[i].title+'"><span><p>'+info.data[i].title+'</p></span></li>';
+			str +='<li data-status="'+info.data[i].status+'" data-tableid="'+info.data[i].id+'" data-tablename="'+info.data[i].title+'"><span><p>'+info.data[i].title+'</p></span></li>';
 			
-			str1 +='<li data-status="'+info.data[i].status+'"data-table="'+info.data[i].title+'">'+
+			str1 +='<li data-status="'+info.data[i].status+'"data-tablename="'+info.data[i].title+'" data-tableid = "'+info.data[i].id+'">'+
 						'<p>人数:'+info.data[i].user_count+'</p>'+
-						'<p>餐桌号:'+info.data[i].title+'</p>'+
-						'<p>就餐时间:'+new Date(info.data[i].dateline).getHours()+':'+new Date(info.data[i].dateline).getMinutes()+'</p>'+
-					'</li>'
+						'<p>餐桌号:'+info.data[i].title+'</p>';
+						if(!info.data[i].dateline){
+							str1+='<p>就餐时间:</p>';
+						}else{
+							str1+='<p>就餐时间:'+new Date(info.data[i].dateline).getHours()+':'+new Date(info.data[i].dateline).getMinutes()+'</p>';
+						}
+						
+					str+='</li>'
+					
 		}
 		$('#tableWrap ul').html(str);
 		$('#table-list').html(str1);
@@ -479,7 +433,12 @@
 		console.log($(this).data('status'))
 		if($(this).data('status')==0){
 			$('#status0Wrap').show();
-			$('#tableNum').html($(this).data('table'));
+			$('#tableNum').html($(this).data('tablename'));
+			console.log($(this).data('tableid'))
+			$('#tableNum').attr('data-tableid',$(this).data('tableid'));
+		}
+		if($(this).data('status')==2){
+			window.location.href = "sale.html?tableid="+$(this).data('tableid');
 		}
 	})
 	$('#searchBtn').on('click',function(){
@@ -500,6 +459,7 @@
 		var tableNum = $('#tableNum').html();
 		var custNum = $('#custNum').val();
 		var custName = $('#memberName').val();
+		var tableid = $('#tableNum').data('tableid');
 		var _value = {
 			'id':time,
 			'tableNum':tableNum,
@@ -508,7 +468,8 @@
 			'orderNum':time,
 			'time':time,
 			'dealwith':'',
-			'status':0
+			'status':0,
+			"tableid":tableid
 		}
 		_value = JSON.stringify(_value)
 		window.localStorage.setItem(time,_value);
@@ -523,5 +484,23 @@
 	
 	$('.addWrap .icon_close').on('click',function(){
 		$(this).parents('.addWrap').hide();
+	})
+	
+	/*"weid":window.localStorage.getItem('weid'),"storeid":window.localStorage.getItem('storeid'),*/
+	/*购物车查询*/
+	comm.getAjax('/cart/index',{},function(info){
+		console.log(info);
+		var str = '';
+		if(info.data.length){
+			for(var i = 0; i < info.data.length; i++){
+				str+='<li>'+
+						'<a href ="sale.html?tableid='+info.data[i].table_id+'">'+
+							'<p><span>'+info.data[i].name+'</span><span>就餐:'+info.data[i].table_title+'</span></p>'+
+							'<p class = "info"><span>未打印</span><span>'+info.data[i].create_time+'</span></p>'+
+						'</a>'+
+					'</li>'
+			}
+			$('#orderWrap ul').html(str);
+		}
 	})
 </script>
