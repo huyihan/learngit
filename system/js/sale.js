@@ -12,6 +12,8 @@ var	currTableId,//当前餐桌的id
 	menu_id,//当前使用的菜单id
 	_TabIndex = 0,//当前显示的tab的下标;
 	orderDetailstr,//订单详细信息
+	cartsaveData,//订单商品
+	goodsArr=[],//订单中的商品数组
 	isAdd;//判断购物车新增或者修改
 window.localStorage.setItem('remark','');//清空上次的备注信息
 if(orderNum){//新增购物车
@@ -86,17 +88,6 @@ $('._left .orderDetail').html(orderDetailstr);
    			selectArr.push(info.rows.item(i).title);
    			idArr.push(info.rows.item(i).id);
    		}
-   		/*var select4 = new select();
-		select4.init({
-			trigger:'#demo4',//input框de包裹div
-			contentArr:selectArr,//
-			values:idArr,
-			initCon:selectArr[0],
-			isInput:false,//是否可以输入  默认为true 可以模糊查询
-			success:function(){
-				
-			}
-		})*/
 		/*菜单中的商品分类*/
 		//comm.getAjax('/menu/menu_category',dataMenu,callback1)
    	};
@@ -143,12 +134,6 @@ $('._left .orderDetail').html(orderDetailstr);
 		
 	}
 	/*菜单商品*/
-	function getgoodfun(){
-		db.transaction(function(context){
-			context.executeSql('')
-		})
-	}
-	
 	function getGood(classfyId){
 		var goodsStr = '';
 		db.transaction(function(context){
@@ -349,33 +334,16 @@ function orderList(goodsid,marketprice,title,status){
 	$('#payBtn').on('click',function(){
 		var dealwith = $('.dealwith span').html();
 		cartsaveORupdate();
+		window.localStorage.setItem('currGoodsArr',JSON.stringify(goodsArr));
 		window.location.href = 'pay.html?orderid='+currOrderid+'&tableid='+currTableId;
-		/*db.transaction(function(context){
-			context.executeSql('CREATE TABLE IF NOT EXISTS orderTable(table_id,order_id,remark,goods_name,goods_id,goods_num,goods_price,goods_total,dealwith)',[]);
-			
-			for(var i = 0;i < $('.list-ul .list-li').length;i++){
-				var goods_name = $('.list-ul .list-li').eq(i).find('.name').html();
-				var goods_id = $('.list-ul .list-li').eq(i).data('goodsid');
-				var goods_num = $('.list-ul .list-li').eq(i).find('.num').html();
-				var goods_price = $('.list-ul .list-li').eq(i).data('marketprice');
-				var goods_total = comm.mul(goods_num,goods_price);
-				
-				context.executeSql('INSERT OR REPLACE INTO orderTable VALUES(?,?,?,?,?,?,?,?,?)',['C004',orderNum,'备注',goods_name,goods_id,goods_num,goods_price,goods_total,dealwith],function(tx,result){
-					console.log(result);
-					//window.location.href = 'pay.html?orderNum='+orderNum;
-				})
-			}
-			
-			context.executeSql('UPDATE takeorderTable SET dealwith = ? WHERE tableNum= ?',[dealwith,'C004'],function(tx,result){console.log(result)},function(tx,result){console.log(result)});
-		})*/
+		
 		
 	})
 	
 	
 	/*购物车新增 或修改*/
-	console.log(isAdd);
-	function cartsaveORupdate(){
-		var goodsArr=[];
+	function getGoodsArr(){
+		goodsArr=[];
 		for(var i = 0; i < $('._left .list-ul .list-li').length;i++){
 			goodsArr.push({ "name":$('.list-ul .list-li').eq(i).find('.name').html(),                          
 				        "good_id":$('.list-ul .list-li').eq(i).data('goodsid'),                               
@@ -385,10 +353,14 @@ function orderList(goodsid,marketprice,title,status){
 				        "status":$('.list-ul .list-li').eq(i).data('status'),        
 			})
 		}
+	}
+	getGoodsArr();
+	function cartsaveORupdate(){
+		getGoodsArr();
 		console.log(isAdd);
 		if(isAdd){
 			
-			var cartsaveData = {
+			cartsaveData = {
 				"weid": window.localStorage.getItem('weid'),
 				"storeid":window.localStorage.getItem('storeid'),      
 				"table_id": currTableId,       
@@ -402,7 +374,7 @@ function orderList(goodsid,marketprice,title,status){
 			cartsaveData = JSON.stringify(cartsaveData);
 			comm.getAjax('/cart/save',cartsaveData,cartsaveORupdateCallback)
 		}else{
-			var cartsaveData = {
+			cartsaveData = {
 				"id":currCartid,      
 				"person": currPerson,         
 				"name":currName,        

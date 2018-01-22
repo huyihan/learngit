@@ -29,7 +29,8 @@
 	//window.location.href="index00.html";
 	
 	/*menu_id:1 冬季菜单  menu_id:14 夏季菜单*/
-	
+	window.localStorage.setItem('weid','4');
+	window.localStorage.setItem('storeid','1');
 	db.transaction(function(context){
 		context.executeSql('CREATE TABLE IF NOT EXISTS menuidTable(menu_id unique)',[]);
 		context.executeSql('INSERT OR REPLACE INTO menuidTable VALUES(?)',['1']);

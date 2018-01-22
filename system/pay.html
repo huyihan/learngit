@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
     	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>支付列表</title>
-		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+		<!--<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />-->
 		<link rel="stylesheet" href="css/comm.css" />
 	</head>
 	<style>
@@ -81,6 +81,8 @@
 			border:none;
 			text-align: right;
 			padding-right:.1rem;
+			font-size:.2rem;
+			color:#fff;
 		}
 		._center .cal_con ol{
 			overflow: hidden;
@@ -178,6 +180,8 @@
 			height:.4rem;
 			line-height:.4rem;
 			text-align:right;
+			color:#fff;
+			font-size:.20rem;
 		}
 		
 	</style>
@@ -187,12 +191,11 @@
 			<div id = "container">
 				<div class = "_left">
 					<ul class = "card-list">
-						<li>
+						<li data-paytype = "6">
 							<img src = "img/183836527368980243.png" />
+							<p>现金支付</p>
 						</li>
-						<li>
-							<img src = "img/183836527368980243.png" />
-						</li>
+						
 					</ul>
 					<div class = "chooseWrap">
 						<button class = "active">单选择</button>
@@ -242,17 +245,17 @@
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>
+<!--<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>-->
 <script type="text/javascript" src="js/template.js" ></script>
 <script type="text/javascript" src="js/calculate.js" ></script>
 <script type="text/javascript" src="js/comm.js" ></script>
 <script>
 	template();
-	
-	
-	var orderNum=comm.getQueryString('orderNum');
-	
-	db.transaction(function(context){
+	var orderNum=comm.getQueryString('orderid'),//订单号
+	tableid=comm.getQueryString('tableid'),//当前餐桌id;
+	dealwith=0,//应付金额
+	orderInfo;//订单相关信息
+	/*db.transaction(function(context){
 		context.executeSql('SELECT * FROM takeorderTable WHERE orderNum=?',[orderNum],function(tx,result){
 			console.log(result);
 			if(result.rows.length==0){return;}
@@ -260,71 +263,76 @@
 			$('.dealwith input').val(result.rows.item(0).dealwith);
 			$('#just').data('value',result.rows.item(0).dealwith);
 		})
-	})
+	})*/
 	
 	var calculate1 = new calculate();
 	calculate1.init({
 		trigger:'.calculate'
 	})
-	
-	$('._center').on('click',' ol li',function(){
-		
-		$('#prefer').val($(this).data('value'))
-	})
-	 var preferStr = $('#prefer').val();
+	var preferStr = $('#prefer').val();
 	 
-	 $('._center').on('click','._number',function(){
+	$('._center').on('click',' ol li',function(){
+		$('#prefer').val($(this).data('value'));
+		preferStr = $('#prefer').val();
+	})
+	
+	$('._center').on('click','._number',function(){
 	 	preferStr+=$(this).html();
 	 	$('#prefer').val(preferStr);
 	 	$('#payTotal input').val(preferStr);
-	 	$('#lcount input').val(comm.sub(preferStr,'60'))
-	 })
-	 $('.clearScreen').click(function(){
+	 	$('#lcount input').val(comm.sub(preferStr,dealwith))
+	})
+	$('.clearScreen').click(function(){
 		$('#prefer').val(' ');
 		preferStr = '';
 	})
-	 $('.tab').on('click',function(){
-		console.log(String(preferVal).length);
-		preferVal = preferVal.splice(0,String(preferVal).length-1)[0];
-		console.log(preferVal);
+	$('.tab').on('click',function(){
+		console.log(preferStr);
+		preferStr = preferStr.substring(0,String(preferStr).length-1);
+		$('#prefer').val(preferStr);
 	})
-	 
-	 
-	 /*支付完成  上传订单 改变订单状态*/
+	
+	/*获取购物车订单信息*/
+	comm.getAjax('/cart/read',{"table_id":tableid},function(info){
+		console.log(info);
+	 	orderInfo = info;
+	 	for(var i = 0; i < info.data.cartsgoods.length; i++){
+	 		dealwith = comm.add(dealwith,info.data.cartsgoods[i].total);
+	 		
+	 	}
+	 	console.log(dealwith)
+	 	$('.dealwith input').val(dealwith);
+	 	$('#prefer').attr('placeholder',dealwith);
+		$('#just').data('value',dealwith);
+	})
+	 /*支付完成  生成订单*/
 	$('#submitBtn').on('click',function(){
-		//db.transaction('SELECT FROM ')
-		
-		
-		
-		
+		console.log(orderInfo)
 		var payData = {
-				"weid": "4",        //品牌标识
-				"storeid": "1",       //门店标识
-				"table_id": "1",       //餐桌id
-				"person": "4",          //就餐人数
-				"name":"李",            //客户姓名
-				"create_time":"2018-01-04 13:20:20",        //创建时间
-				"order_id":"4120180104132020",                //订单编号
-				"remark":"666",                                        //备注
-				"goods": [                                                //商品数组
-				    {
-				        "name": "111",                                //商品名称
-				        "good_id": "1",                                //商品id
-				        "num":"1",                                       //商品数量
-				        "price":"30",                                   //商品单价
-				        "total":"30"                                     //商品总价
-				    },
-				    {
-				        "name": "222",
-				        "good_id": "2",
-				        "num":"1",
-				        "price":"20",
-				        "total":"20"
-				    }
-				  ]
-				
-			}
-		
+			"create_date":comm.getTime(new Date().valueOf()).split(' ')[0],                       //创建日期
+			"weid": localStorage.getItem('weid'),                       //品牌标识
+			"storeid": localStorage.getItem('storeid'),                      //门店标识
+			"tables": tableid,                        //餐桌id
+			"counts":orderInfo.data.person,                        //就餐人数
+			"username":orderInfo.data.name,                     //会员姓名
+			"fan_id":"",                         //会员id（零时用户为空）
+			"pos_id":"1",                              //终端号
+			"meal_time":(new Date(orderInfo.data.create_time).valueOf()),                         //就餐时间
+			"finish_time":comm.getTime(new Date().valueOf()),                           //完成时间（时分秒）
+			"ordersn":orderInfo.data.order_id,                                  //订单号
+			"tablezonesid":"2",                                                    //餐桌区域id
+			"remark":orderInfo.data.remark,                                                    //备注
+			"status":"2",                                //订单状态(详细说明见文档备注)
+			"paytype":"6",                             //支付方式(详细说明见文档备注)
+			"transid":"",                        //支付成功返回的内部订单号
+			"totalnum":orderInfo.data.cartsgoods.length,                                                  //商品总数
+			"totalprice":"30",                                               //折扣前总金额（退款时为负数）
+			"discount":"5",                                          //总折扣金额（退款时为负数）
+			"price":"35",                                          //备注
+			"goods":orderInfo.data.cartsgoods
+		}
+		payData = JSON.stringify(payData);
+		console.log(payData)
 		comm.getAjax('/order/save',payData,function(info){
 			console.log(info)
 		})

@@ -269,10 +269,6 @@
 				background: url(img/icon--tj--01@2x.png) no-repeat right bottom;
 				background-size:contain;
 			}
-			
-			
-			
-			
 			#addGoodsWrap{
 				background-size:cover;
 				position:absolute;
@@ -524,41 +520,50 @@
 					</div>
 					
 					
-					
+					<!--添加商品-->
 					<div id = "addGoodsWrap">
 						<div class = "empty"></div>
 						<div class = "content">
 							<h3>新产品</h3>
-							<div class = "basicInfo">
-								<h4>基本信息</h4>
-								<dl>
-									<dt>
-										<a href="javascript:;" class="file">
-    										<input type = "file"  capture="camera" name="imageUpload" id = "FileUpload"/>
-    										<div id="preview" style="width: 1.15rem;height:1.15rem;"></div>
-										</a>
-									</dt>
-									<dd><span>默认名称</span><input type = "text"/></dd>
-									<dd><span>库存数</span> <input type = "text"/></dd> 
-									<dd><span>编号</span> <input type = "text"/></dd>
-								</dl>
-							</div>
-							<ul  class = "list">
-								<li>
-									<lable>价格<input type = "text"/></lable>
-									<lable>成本<input type = "text"/></lable>
-								</li>
-								<li><lable>产品分类<div id = "list"></div></lable></li>
-								<li style = "border:none;">
-									<lable>打印机<div id = "log"></div></lable>
-									<lable>厨显<div id = "show"></div></lable>
-								</li>
-								<li style = "border:none;"></li>
-								<li style = "padding:0 1rem;border:none;">
-									<button class = "cancelBtn" id = "cancelBtn">取消</button>
-									<button class = "submitBtn" id = "submitBtn">确定</button>
-								</li>
-							</ul>
+							<form id = "myform" action="http://101.132.109.253:8881/index.php/Index/good/save" method="post" enctype="multipart/form-data" target="rfFrame">
+								<div class = "basicInfo">
+									<h4>基本信息</h4>
+									<input type = "hidden" name = "weid" value = "4"/>
+									<input type = "hidden" name = "storeid" value = "1"/>
+									<input type = "hidden" name = "pcate" value = "1"/>
+									<input type = "hidden" name = "printer_id" value = "1"/>
+									<input type = "hidden" name = "cookhouse_id" value = "1"/>
+									
+									<dl>
+										<dt>
+											<a href="javascript:;" class="file">
+	    										<input type = "file"  capture="camera" name="thumb" id = "FileUpload"/>
+	    										<div id="preview" style="width: 1.15rem;height:1.15rem;"></div>
+											</a>
+										</dt>
+										<dd><span>默认名称</span><input type = "text" name = "title"/></dd>
+										<dd><span>库存数</span> <input type = "text" name = "counts" value = "-1"/></dd> 
+										<dd><span>编号</span> <input type = "text" name = "number"/></dd>
+									</dl>
+								</div>
+								<ul  class = "list">
+									<li>
+										<lable>价格<input type = "text" name = "marketprice"/></lable>
+										<lable>成本<input type = "text" name = "cost"/></lable>
+									</li>
+									<li><lable>产品分类<div id = "list"></div></lable></li>
+									<li style = "border:none;">
+										<lable>打印机<div id = "log"></div></lable>
+										<lable>厨显<div id = "show"></div></lable>
+									</li>
+									<li style = "border:none;"></li>
+									<li style = "padding:0 1rem;border:none;">
+										<button class = "cancelBtn" id = "cancelBtn">取消</button>
+										<button class = "submitBtn" id = "submitBtn" type = "submit">确定</button>
+									</li>
+								</ul>
+							</form>
+							<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe> 
 						</div>
 					</div>
 			
@@ -586,9 +591,11 @@
 <script type="text/javascript" src="plugin/sortable/Sortable.js" ></script>
 <script type="text/javascript" src="js/select1.js" ></script>
 <script type="text/javascript" src="js/comm.js" ></script>
+<script type="text/javascript" src="plugin/jqueryform/jquery.form.js" ></script>
 <script>
 template();	
-
+$('input[name="weid"]').val(window.localStorage.getItem('weid'));
+$('input[name="storeid"]').val(window.localStorage.getItem('storeid'));
 	/*获取商品列表*/
 	db.transaction(function(context){
 		context.executeSql('SELECT * FROM goodTable',[],function(tx,result){
@@ -610,12 +617,15 @@ template();
 		//var _val = '%'+$(this).val()+'%';
 		var _val = $(this).val();
 		var selectstr="SELECT * FROM goodTable WHERE title LIKE '%"+_val+"%'";
+		productList(_val,selectstr);
+	})
+	function getproductList(_val,selectstr){
 		db.transaction(function(context){
 			context.executeSql(selectstr,[],function(tx,result){
 				console.log(result);
 				var str='';
 				for(var i = 0;i < result.rows.length;i++){
-					str+='<li data-id = "'+result.rows.item(i).id+'">'+
+					str+='<li draggable="true" data-id = "'+result.rows.item(i).id+'">'+
 							'<img src = "http://101.132.109.253:8881/thumb/'+result.rows.item(i).thumb+'">'+
 							'<p><span>'+result.rows.item(i).title+'</span><span class = "price" style = "float:right">￥'+result.rows.item(i).marketprice+'</span></p>'+
 							'<p style = "margin-top:.1rem;">'+result.rows.item(i).number+'</p>'+
@@ -627,9 +637,8 @@ template();
 				console.log(result);
 			})
 		})
-	})
-
-	
+	}
+	getproductList('',"SELECT * FROM goodTable")
 
 	/*添加菜单*/
 	$('.addOrderBtn').on('click',function(){
@@ -669,121 +678,31 @@ template();
 	/*确定*/
 	$('#cancelBtn').on('click',function(){
 		$('#addGoodsWrap').removeClass('active');
-		/*var goodsaveData = {
-			
-		}
-		comm.getAjax('/good/save',goodsaveData,function(info){
-			console.log(info);
-		})*/
-
-		
-
-/*comm.getAjax('/good/save',{'thumb':'',
-				'pcate':'12',
-				'title':'12',
-				'counts':'12',	
-				'printer_id':'12',	
-				'cookhouse_id':'12',
-				'cost':'12'
-			},function(info){
-			console.log(info);
-		})
-		*/
-		/*$.ajax({
-			url;"http://101.132.109.253:8881/index.php/Index/good/save",
-			data:{'thumb':'',
-				'pcate':'12',
-				'title':'12',
-				'counts':'12',	
-				'printer_id':'12',	
-				'cookhouse_id':'12',
-				'cost':'12'
-			},
-			type:'post',
-			sucess:function(info){
-				console.log(info);
-			}
-		})*/
 	})
-	$('#submitBtn').on('click',function(){
-		$('#addGoodsWrap').removeClass('active');
-       	var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
-       	if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
-           /*alert("请选择图片");
-           return;*/
-       	}
-       	var formFile = new FormData();
-       	formFile.append("action", "UploadVMKImagePath");  
-       	formFile.append("file", fileObj); //加入文件对象
-       	
-       	console.log(formFile)
- 
-        /*var data = {
-        	'weid':'4',
-        	'storeid':'1',
-        	'headimgurl':fileObj,
-        	'surname':$('.surname').find('input').val(),
-        	'nickname':$('.nickname').find('input').val(),
-        	'mobile':$('.mobile').find('input').val(),
-        	'tel':$('.tel').find('input').val(),
-        	'idCard':$('.idCard').find('input').val(),
-        	'postcode':$('.postcode').find('input').val()
-        };*/
-        var addgoodsdata = {
-        	'weid':'4',
-        	'storeid':'1',
-        	'headimgurl':'formFile',
-        	'surname':'李',
-        	'nickname':'一',
-        	'mobile':'1234',
-        	'tel':'1234',
-        	'idCard':'12345',
-        	'postcode':'12345'
-        };
-        /*cache: false,//上传文件无需缓存
-           	processData: false,//用于对data参数进行序列化处理 这里必须false
-           	contentType: false, //必须*/
-       	$.ajax({
-            url: "http://101.132.109.253:8881/index.php/Index/good/save",
-           	data: formFile,
-           	type: "Post",
-           	dataType: "json",
-           	cache: false,//上传文件无需缓存
-           	processData: false,//用于对data参数进行序列化处理 这里必须false
-           	contentType: false, //必须
-           	success: function (result) {
-           		console.log(result)
-               	//alert("上传完成!");
+	$("#submitBtn").click(function(){
+        var options  = {    
+            url:'http://101.132.109.253:8881/index.php/Index/good/save',
+            type:'post',
+            beforeSend:function(xhr){//请求之前
+                  
+            },    
+            success:function(data){   
+　　　　　　		console.log(data);
+				//alert('会员添加成功')
+				$('#addGoodsWrap').removeClass('active');
+            },
+　　 			complete:function(xhr,status,data){//请求完成
+               	console.log(xhr);
+               	console.log(data);
+               //	alert('会员添加成功')
            	},
-           	error:function(info){
-           		console.log(info)
-           	}
-       	})
-		
- 
-       // var data = formFile;
-       /*	$.ajax({
-            url: "http://101.132.109.253:8881/index.php/Index/good/save",
-           	data: addgoodsdata,
-           	type: "Post",
-           	dataType: "json",
-           	cache: false,//上传文件无需缓存
-           	processData: false,//用于对data参数进行序列化处理 这里必须false
-           	contentType: false, //必须
-           	success: function (result) {
-           		console.log(result)
-               	//alert("上传完成!");
-           	},
-           	error:function(data){
-           		console.log(data)
-           	}
-       	})
-		*/
-		
-		
-		
-	})
-	
+            error: function(xhr,status,msg){
+                alert("状态码"+status+"; "+msg)
+                    // layer.msg('玩命加载中..');
+                }    
+        };    
+       	$("#myform").ajaxSubmit(options);
+   });    
 	
 var abc = document.getElementById('wrap');
 var _TabIndex = 0;//当前显示的tab的下标

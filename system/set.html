@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设置</title>
+		<!--<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />-->
+		<link rel="stylesheet" href="css/comm.css" />
+		<style type="text/css">
+			main{
+				background: url(img/BG--01.png) no-repeat center;
+				background-size:cover;
+			}
+			#container{
+				display:flex;
+				flex-flow:row;
+			}
+			#container ._left{
+				width:3.2rem;
+				color:#fff;
+				border-right:solid .01rem #fff;
+			}
+			._left dt{
+				height:.5rem;
+				background:#5e6062;
+				text-align:center;
+				line-height:.5rem;
+				
+			}
+			
+			._left dd{
+				height:.82rem;
+				line-height:.72rem;
+				padding-left:.25rem;
+				border-bottom:solid .1rem #2c2b2b;
+			}
+			
+			#container ._right{
+				flex:1;
+				color:#fff;
+			}
+			._right h2{
+				background:#5a501a;
+				display:flex;
+				flex-flow:row;
+				height:.5rem;
+				line-height:.5rem;
+				border-bottom:solid .01rem #e7d21c;
+				text-align: center;
+			}
+			._right h2 p{
+				color:#e7d21c;
+				flex:3;
+			}
+			._right h2 span{
+				flex:1;
+				color:#fff;
+			}
+			._right .content .tab-con{
+				display:none;
+			}
+			._right .content .tab-con.active{
+				display:block;
+			}
+			.content dt{
+				height:.55rem;
+				line-height:.55rem;
+				text-align:left;
+				background: #242424;
+				font-size:.18rem;
+				padding-left:.18rem;
+			}
+			.content dd{
+				height:.5rem;
+				line-height:.36rem;
+				padding:.07rem .5rem .07rem .18rem;
+				border-bottom:solid .01rem #fff;
+				font-size:.18rem;
+				display:flex;
+				flex-flow:row;
+			}
+			.content dd span{
+				width:1.7rem;
+			}
+			.content dd input{
+				flex:1;
+				border:solid .01rem #fff;
+				background:transparent;
+				border-radius:.04rem;
+				color:#fff;
+				font-size:.18rem;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<main data-role = "content">
+			<header class = "headerWrap"></header>
+			<div id = "container">
+				<div class = "_left">
+					<dl>
+						<dt>系统设置</dt>
+						<dd class = "tab-header">通用设置</dd>
+						<dd class = "tab-header">用户设置</dd>
+						<dd class = "tab-header">门店设置</dd>
+						<dd class = "tab-header">打印机/厨房系统设置</dd>
+						<dd class = "tab-header">用户界面设置</dd>
+						<dd class = "tab-header">支持设备设置</dd>
+						<dd class = "tab-header">复位设置</dd>
+					</dl>
+				</div>
+				<div class = "_right">
+					
+					<div class = "content">
+						<!--通用设置-->
+						<div class = "tab-con">
+							<h2>
+								<p>通用设置</p>
+								<span>保存</span>
+							</h2>
+							<dl>
+								<dt>公司描述</dt>
+								<dd><span>公司名称</span><input type = "text" /></dd>
+								<dd><span>税务注册号</span><input type = "text" /></dd>
+								<dd><span>打印机IP</span><input type = "text" /></dd>
+							</dl>
+						</div>
+						<div class = "tab-con active">
+							<h2>
+								<p>用户设置</p>
+								<span>添加</span>
+								<span>编辑</span>
+							</h2>
+							<h3>
+								<span>用户</span>
+								<span>用户组别</span>
+							</h3>
+						</div>
+						<div class = "tab-con"></div>
+						<div class = "tab-con"></div>
+						<div class = "tab-con"></div>
+						<div class = "tab-con"></div>
+						<div class = "tab-con"></div>
+					</div>
+				</div>
+			</div> 
+		</main>
+		<div class = "menuWrap"></div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<!--<script type="text/javascript" src="js/jquery.mobile-1.4.5.js" ></script>-->
+<script type="text/javascript" src="js/template.js" ></script>
+<script>
+	template();
+	
+</script>
